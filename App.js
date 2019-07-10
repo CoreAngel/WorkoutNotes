@@ -1,8 +1,36 @@
-import React from 'react';
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import React from "react";
+import {View, StyleSheet} from 'react-native'
+import {createStackNavigator, createAppContainer} from "react-navigation";
 
-export default function App() {
-  return (
-    null
-  );
-}
+import {SignIn, SignUp} from './src/screens';
+
+
+const AppNavigator = createStackNavigator({
+    signIn: SignIn,
+    signUp: SignUp,
+}, {
+    mode: 'card',
+    headerMode: 'none',
+});
+
+const AppContainer = createAppContainer(AppNavigator);
+
+export default () => {
+
+    return (
+        <View style={styles.container}>
+            <View style={styles.menuBar}/>
+            <AppContainer/>
+        </View>
+    )
+};
+
+const styles = StyleSheet.create({
+    menuBar: {
+        height: 25,
+        backgroundColor: '#c8c8c8',
+    },
+    container: {
+        flex: 1,
+    }
+});
