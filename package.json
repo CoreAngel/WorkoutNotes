@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/CoreAngel/WorkoutNotesServer#readme",
   "dependencies": {
+    "@hapi/joi": "^15.1.0",
     "bcrypt": "^3.0.6",
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
