@@ -12,12 +12,15 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true,
-        minlength: 6,
         maxlength: 256
     },
     password: {
         type: String,
         required: true
+    },
+    token: {
+        type: String,
+        default: ''
     },
     created: {
         type: Date,
