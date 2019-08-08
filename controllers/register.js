@@ -7,24 +7,22 @@ const registerController = async (req, res) => {
     const {error, value} = validateRegister(req.body);
 
     if(error !== null) {
-        res.send({
+        return res.send({
             status: 'Error',
             type: 'validation',
             data: error
         }).end();
-        return;
     }
 
     const { login, email, password } = value;
     const data = await userModel.findOne({login});
 
     if(data !== null) {
-        res.send({
+        return res.send({
             status: 'Error',
             type: 'validation',
             data: ['Login exists!']
         }).end();
-        return;
     }
     const hashedPassword = await hashPassword(password);
 
@@ -41,16 +39,15 @@ const registerController = async (req, res) => {
         const { nModified } = await user.updateOne({token: generatedToken});
 
         if (nModified !== 1) {
-            res.status(503).end();
-            return;
+            return res.status(503).end();
         }
 
-        res.send({
+        return res.send({
             status: 'OK',
             token: generatedToken
         }).end();
     } catch (e) {
-        res.status(503).end();
+        return res.status(503).end();
     }
 };
 
