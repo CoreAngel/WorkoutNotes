@@ -1,12 +1,21 @@
-const userModel = require('./../models/user');
-const validateRegister = require('./../validations/register');
-const { hashPassword } = require('./../utils/crypto');
-const { generateToken } = require('./../utils/token');
+import { Response, Request } from 'express';
+import { UserModel, IUser } from '../models/user';
+import {IRegister, RegisterValidator} from '../validations/register';
+const { hashPassword } = require('../utils/crypto');
+const { generateToken } = require('../utils/token');
 
-const registerController = async (req, res) => {
-    const {error, value} = validateRegister(req.body);
+const registerController = async (req: Request, res: Response) => {
+    const registerData: IRegister = {
+        login: req.body.login,
+        email: req.body.email,
+        password: req.body.password,
+        confirmPassword: req.body.confirmPassword
+    };
 
-    if(error !== null) {
+    const registerValidator: RegisterValidator = new RegisterValidator();
+    const {valid, error, value} = registerValidator.validate(registerData);
+
+    if(!valid) {
         return res.send({
             status: 'Error',
             type: 'validation',
@@ -15,7 +24,7 @@ const registerController = async (req, res) => {
     }
 
     const { login, email, password } = value;
-    const data = await userModel.findOne({login});
+    const data = await UserModel.findOne({login});
 
     if(data !== null) {
         return res.send({
@@ -26,7 +35,7 @@ const registerController = async (req, res) => {
     }
     const hashedPassword = await hashPassword(password);
 
-    const user = new userModel({
+    const user: IUser = new UserModel({
         login,
         email,
         password: hashedPassword
