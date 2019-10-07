@@ -1,8 +1,7 @@
 import { sign, verify,  } from 'jsonwebtoken'
 
-class Token {
-
-    public static generateToken = async (id: string): Promise<string> => {
+export class Token {
+    public static generate = async (id: string): Promise<string> => {
         const privateKey: string = process.env.JWT || '';
 
         const data = {
@@ -12,7 +11,7 @@ class Token {
         return sign(data, privateKey);
     };
 
-    public static verifyToken = async (token: string): Promise<string | object> => {
+    public static verify = async (token: string): Promise<string | object> => {
         const privateKey: string = process.env.JWT || '';
 
         return new Promise<string | object>((resolve, reject) => {

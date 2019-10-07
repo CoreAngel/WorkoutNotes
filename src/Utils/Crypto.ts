@@ -1,6 +1,6 @@
 import { genSaltSync, hashSync, compareSync } from 'bcrypt';
 
-class Crypto {
+export class Crypto {
     private static saltRounds: number = 10;
 
     public static generateSalt = async (): Promise<string> => {

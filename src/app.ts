@@ -1,20 +1,25 @@
 import express, { Application } from 'express';
 import { ApplicationPreConfig } from './config';
-import { authRouter } from './routes/auth'
+import { AbstractController } from './Controllers/AbstractController'
+import { AuthController } from './Controllers/AuthController'
 
 class App {
     private port: number;
     private app: Application;
     private configInstance: ApplicationPreConfig;
+    private controllers: Array<AbstractController>;
 
     constructor(port: number) {
         this.port = port;
+        this.controllers = [
+            new AuthController()
+        ];
 
         this.configInstance = new ApplicationPreConfig();
         this.app = express();
 
         this.initializeMiddlewares();
-        this.initializeControllers();
+        this.initializeRoutes();
         this.listen();
     };
 
@@ -22,8 +27,10 @@ class App {
         this.app.use(express.json())
     };
 
-    private initializeControllers = (): void => {
-        this.app.use('/auth', authRouter);
+    private initializeRoutes = (): void => {
+        this.controllers.map((controller) => {
+            this.app.use('/', controller.router);
+        });
     };
 
     private listen = (): void  => {
@@ -33,7 +40,7 @@ class App {
     }
 }
 
-const appInstance: App = new App(3000);
+const appInstance = new App(3000);
 
 
 
