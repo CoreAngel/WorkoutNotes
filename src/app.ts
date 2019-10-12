@@ -6,21 +6,32 @@ import { AuthController } from './Controllers/AuthController'
 class App {
     private port: number;
     private app: Application;
-    private configInstance: ApplicationPreConfig;
-    private controllers: Array<AbstractController>;
+    private controllers: AbstractController[];
+    public configurePromises: Promise<any>[] = [];
 
     constructor(port: number) {
+        console.log('Configures the server...');
+
         this.port = port;
         this.controllers = [
             new AuthController()
         ];
 
-        this.configInstance = new ApplicationPreConfig();
+        const promises = ApplicationPreConfig.configure();
         this.app = express();
 
         this.initializeMiddlewares();
         this.initializeRoutes();
-        this.listen();
+        const listenAppPromise = this.listen();
+
+        this.configurePromises.push(...promises);
+        this.configurePromises.push(listenAppPromise);
+
+        Promise.all(this.configurePromises).then(() => {
+            console.log('The server is running');
+        }).catch((e) => {
+            console.error(e);
+        })
     };
 
     private initializeMiddlewares = (): void => {
@@ -33,10 +44,17 @@ class App {
         });
     };
 
-    private listen = (): void  => {
-        this.app.listen(this.port, () => {
-            console.log(`Listen on the port ${this.port}`);
-        });
+    private listen = (): Promise<any>  => {
+        return new Promise((resolve: any, reject: any) => {
+            try {
+                this.app.listen(this.port, () => {
+                    resolve();
+                });
+            } catch (e) {
+                reject(e);
+            }
+        })
+
     }
 }
 

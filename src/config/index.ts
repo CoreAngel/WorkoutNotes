@@ -1,28 +1,36 @@
 import { config } from 'dotenv';
-import { connect } from 'mongoose';
+import { connect, Mongoose, disconnect} from 'mongoose';
 
 export class ApplicationPreConfig {
 
-    constructor() {
-        this.dotenvConfig();
-        this.mongooseConfig();
-    };
-
-    private dotenvConfig = (): void => {
+    private static dotenvConfig = (): void => {
         config();
     };
 
-    private mongooseConfig = (): void => {
+    private static connectToDB = async (): Promise<Mongoose> => {
         const mongoUrl: string = process.env.MONGODB || '';
 
-        connect(
+        return connect(
             mongoUrl,
             {
                 useCreateIndex: true,
                 useNewUrlParser: true
             }
         )
-        .then(() => { console.log("connected to db") })
-        .catch((e) => { throw e });
     };
+
+    public static configure = (): Promise<any>[] => {
+        const promises: Promise<any>[] = [];
+
+        ApplicationPreConfig.dotenvConfig();
+        const dbPromise = ApplicationPreConfig.connectToDB();
+
+        promises.push(dbPromise);
+
+        return promises;
+    };
+
+    public static closeDB = (): Promise<void> => {
+        return disconnect();
+    }
 }
