@@ -1,12 +1,14 @@
-import express, { Application } from 'express';
+import express, { Application, Response, Request } from 'express';
 import { ApplicationPreConfig } from './config';
 import { AbstractController } from './Controllers/AbstractController'
 import { AuthController } from './Controllers/AuthController'
+import { RouteDefinition } from './Controllers/Decorators'
+import 'reflect-metadata';
 
 class App {
     private port: number;
     private app: Application;
-    private controllers: AbstractController[];
+    private controllers: any[];
     public configurePromises: Promise<any>[] = [];
 
     constructor(port: number) {
@@ -14,7 +16,7 @@ class App {
 
         this.port = port;
         this.controllers = [
-            new AuthController()
+            AuthController
         ];
 
         const promises = ApplicationPreConfig.configure();
@@ -40,7 +42,15 @@ class App {
 
     private initializeRoutes = (): void => {
         this.controllers.map((controller) => {
-            this.app.use('/', controller.router);
+            const instance = new controller();
+            const prefix = Reflect.getMetadata('ROUTE_PREFIX', controller);
+            const routes: Array<RouteDefinition> = Reflect.getMetadata('ROUTES', controller);
+
+            routes.map(route => {
+                this.app[route.requestMethod](prefix + route.path, (req: Request, res: Response) => {
+                    instance[route.methodName](req, res);
+                });
+            });
         });
     };
 

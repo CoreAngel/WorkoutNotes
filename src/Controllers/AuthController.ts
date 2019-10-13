@@ -4,19 +4,13 @@ import { IRegister, RegisterValidator } from '../Validators/RegisterValidator';
 import { RespondStatus, RespondErrorType, AbstractController } from './AbstractController';
 import { Crypto } from '../Utils/Crypto';
 import { Token } from '../Utils/Token';
+import { Controller } from './Decorators/Controller'
+import { Post } from './Decorators/HttpMethods'
 
-export class AuthController extends AbstractController {
-    path: string = '/auth';
+@Controller('/auth')
+export class AuthController implements AbstractController {
 
-    constructor() {
-        super();
-        this.initializeRoutes();
-    }
-
-    initializeRoutes = (): void => {
-        this.router.post(`${this.path}/register`, this.register);
-    };
-
+    @Post('/register')
     public register = async (req: Request, res: Response) => {
         const registerData: IRegister = {
             login: req.body.login,
