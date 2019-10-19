@@ -1,71 +1,45 @@
-import express, { Application, Response, Request } from 'express';
-import { ApplicationPreConfig } from './config';
-import { AbstractController } from './Controllers/AbstractController'
+import { config as DotEnvConfig } from 'dotenv';
 import { AuthController } from './Controllers/AuthController'
-import { RouteDefinition } from './Controllers/Decorators'
+import {Server, ServerOptions} from "./Server/Server";
+import { EventEmitter } from 'events'
 import 'reflect-metadata';
+import {Mongo} from "./Config/Mongo";
 
-class App {
-    private port: number;
-    private app: Application;
-    private controllers: any[];
-    public configurePromises: Promise<any>[] = [];
+
+export enum ServerEvents {
+    SERVER_READY= 'server.ready',
+    SERVER_ERROR = 'server.error'
+}
+
+export class App {
+    public static mediator: EventEmitter = new EventEmitter();
+    private static controllers: any[] = [
+            AuthController
+    ];
 
     constructor(port: number) {
-        console.log('Configures the server...');
+        this.configurationBeforeRun();
 
-        this.port = port;
-        this.controllers = [
-            AuthController
-        ];
+        const serverOptions: ServerOptions = {
+            port,
+            controllers: App.controllers
+        };
 
-        const promises = ApplicationPreConfig.configure();
-        this.app = express();
-
-        this.initializeMiddlewares();
-        this.initializeRoutes();
-        const listenAppPromise = this.listen();
-
-        this.configurePromises.push(...promises);
-        this.configurePromises.push(listenAppPromise);
-
-        Promise.all(this.configurePromises).then(() => {
-            console.log('The server is running');
-        }).catch((e) => {
-            console.error(e);
+        Server.start(serverOptions).then(server => {
+            App.mediator.emit(ServerEvents.SERVER_READY, server);
+            console.log('Server running');
+        }).catch(err => {
+            App.mediator.emit(ServerEvents.SERVER_ERROR, err);
+            console.error('Server error');
+            Mongo.disconnect();
+            process.exit(-1);
         })
     };
 
-    private initializeMiddlewares = (): void => {
-        this.app.use(express.json())
+    private configurationBeforeRun = () => {
+        DotEnvConfig();
+        Mongo.connect();
     };
-
-    private initializeRoutes = (): void => {
-        this.controllers.map((controller) => {
-            const instance = new controller();
-            const prefix = Reflect.getMetadata('ROUTE_PREFIX', controller);
-            const routes: Array<RouteDefinition> = Reflect.getMetadata('ROUTES', controller);
-
-            routes.map(route => {
-                this.app[route.requestMethod](prefix + route.path, (req: Request, res: Response) => {
-                    instance[route.methodName](req, res);
-                });
-            });
-        });
-    };
-
-    private listen = (): Promise<any>  => {
-        return new Promise((resolve: any, reject: any) => {
-            try {
-                this.app.listen(this.port, () => {
-                    resolve();
-                });
-            } catch (e) {
-                reject(e);
-            }
-        })
-
-    }
 }
 
 const appInstance = new App(3000);
