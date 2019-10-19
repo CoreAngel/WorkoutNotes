@@ -1,7 +1,7 @@
 import {Request, Response} from 'express';
 import {IUser, UserModel} from '../Models/UserModel';
 import {IRegister, RegisterValidator} from '../Validators/RegisterValidator';
-import {AbstractController, RespondErrorType, RespondStatus} from './AbstractController';
+import {AbstractController} from './AbstractController';
 import {Crypto} from '../Utils/Crypto';
 import {Token} from '../Utils/Token';
 import {Controller} from './Decorators/Controller'
