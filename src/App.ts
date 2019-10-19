@@ -1,9 +1,10 @@
 import { config as DotEnvConfig } from 'dotenv';
 import { AuthController } from './Controllers/AuthController'
 import {Server, ServerOptions} from "./Server/Server";
+import {DBEvents, Mongo} from "./Config/Mongo";
 import { EventEmitter } from 'events'
 import 'reflect-metadata';
-import {DBEvents, Mongo} from "./Config/Mongo";
+
 
 export enum ApplicationEvents {
     APP_READY= 'server.ready',
@@ -69,7 +70,3 @@ export class App {
 }
 
 const appInstance = new App(3000);
-
-
-
-

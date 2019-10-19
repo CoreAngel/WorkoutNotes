@@ -31,7 +31,4 @@ export abstract class AbstractController {
     protected sendErrorValidation = (body: object) => {
         return this.sendError(RespondErrorType.VALIDATION, body);
     };
-
-
-
 }

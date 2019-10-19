@@ -1,7 +1,5 @@
 import express, { Application, Response, Request } from 'express';
 import {RouteDefinition} from "../Controllers/Decorators";
-import {AuthController} from "../Controllers/AuthController";
-import {AbstractController} from "../Controllers/AbstractController";
 
 export interface ServerOptions {
     port: number
