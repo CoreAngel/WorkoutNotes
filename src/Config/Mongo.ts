@@ -23,7 +23,7 @@ export class Mongo {
                 console.log('DB running');
             }).catch(e => {
                 App.mediator.emit(DBEvents.DB_ERROR, e);
-                console.error('DB error');
+                console.error(`DB error ${e}`);
             })
         });
     };
