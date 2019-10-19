@@ -1,56 +1,43 @@
-import { Response, Request } from 'express';
-import { UserModel, IUser } from '../Models/UserModel';
-import { IRegister, RegisterValidator } from '../Validators/RegisterValidator';
-import { RespondStatus, RespondErrorType, AbstractController } from './AbstractController';
-import { Crypto } from '../Utils/Crypto';
-import { Token } from '../Utils/Token';
-import { Controller } from './Decorators/Controller'
-import { Post } from './Decorators/HttpMethods'
+import {Request, Response} from 'express';
+import {IUser, UserModel} from '../Models/UserModel';
+import {IRegister, RegisterValidator} from '../Validators/RegisterValidator';
+import {AbstractController, RespondErrorType, RespondStatus} from './AbstractController';
+import {Crypto} from '../Utils/Crypto';
+import {Token} from '../Utils/Token';
+import {Controller} from './Decorators/Controller'
+import {Post} from './Decorators/HttpMethods'
 
 @Controller('/auth')
-export class AuthController implements AbstractController {
+export class AuthController extends AbstractController {
 
     @Post('/register')
     public register = async (req: Request, res: Response) => {
+        const {login, email, password, confirmPassword} = req.body;
         const registerData: IRegister = {
-            login: req.body.login,
-            email: req.body.email,
-            password: req.body.password,
-            confirmPassword: req.body.confirmPassword
+            login,
+            email,
+            password,
+            confirmPassword
         };
 
         const registerValidator = new RegisterValidator();
         const {valid, error} = registerValidator.validate(registerData);
 
         if(!valid) {
-            return res.send({
-                status: RespondStatus.ERROR,
-                type: RespondErrorType.VALIDATION,
-                data: error
-            }).end();
+            return res.send(this.sendErrorValidation(error)).end();
         }
 
-        const { login } = registerData;
         const data = await UserModel.findOne({login});
-
         if(data !== null) {
-            return res.send({
-                status: RespondStatus.ERROR,
-                type: RespondErrorType.VALIDATION,
-                data: ['Login exists!']
-            }).end();
+            return res.send(this.sendErrorValidation(['Login exists!'])).end();
         }
 
         this.createUser(registerData).then((token: string) => {
-            return res.send({
-                status: RespondStatus.OK,
-                token: token
-            }).end();
+            return res.send(this.sendOK({token})).end();
         }).catch(() => {
-            return res.status(503).send({
-                status: RespondStatus.ERROR,
-                type: RespondErrorType.SERVER
-            }).end();
+            return res.status(503)
+                .send(this.sendErrorServer({}))
+                .end();
         })
     };
 
