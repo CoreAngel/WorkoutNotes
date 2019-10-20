@@ -1,5 +1,5 @@
 import { connect, disconnect} from 'mongoose';
-import {App, ServerEvents} from '../App'
+import {App, ServerEvents} from '../Server/App'
 
 export enum DBEvents {
     DB_READY = 'db.ready',
@@ -20,7 +20,6 @@ export class Mongo {
                 }
             ).then(db => {
                 App.mediator.emit(DBEvents.DB_READY, db);
-                console.log('DB running');
             }).catch(e => {
                 App.mediator.emit(DBEvents.DB_ERROR, e);
                 console.error(`DB error ${e}`);

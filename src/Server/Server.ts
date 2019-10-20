@@ -1,5 +1,6 @@
 import express, { Application, Response, Request } from 'express';
 import {RouteDefinition} from "../Controllers/Decorators";
+import {Server as HttpServer} from "http";
 
 export interface ServerOptions {
     port: number
@@ -8,6 +9,7 @@ export interface ServerOptions {
 
 export class Server {
     public static app: Application;
+    public static server: HttpServer;
 
     public static start = (options: ServerOptions): Promise<Application> => {
         Server.app = express();
@@ -15,9 +17,14 @@ export class Server {
         Server.initializeRoutes(options.controllers);
 
         return new Promise((resolve, reject) => {
-            Server.app.listen(options.port, () => {
-                resolve(Server.app);
-            })
+            try {
+                Server.server = Server.app.listen(options.port, () => {
+                    resolve(Server.app);
+                })
+            } catch (e) {
+                reject(e);
+            }
+
         });
     };
 

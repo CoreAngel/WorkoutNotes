@@ -1,8 +1,9 @@
 import { config as DotEnvConfig } from 'dotenv';
-import { AuthController } from './Controllers/AuthController'
-import {Server, ServerOptions} from "./Server/Server";
-import {DBEvents, Mongo} from "./Config/Mongo";
+import { AuthController } from '../Controllers/AuthController'
+import {Server, ServerOptions} from "./Server";
+import {DBEvents, Mongo} from "../Config/Mongo";
 import { EventEmitter } from 'events'
+import {Server as HttpServer} from "http";
 import 'reflect-metadata';
 
 export enum ApplicationEvents {
@@ -20,6 +21,7 @@ export class App {
     private static controllers: any[] = [
             AuthController
     ];
+    public server: HttpServer | undefined;
 
     constructor(port: number) {
         this.applicationFullyRunning();
@@ -30,9 +32,9 @@ export class App {
             controllers: App.controllers
         };
 
-        Server.start(serverOptions).then(server => {
-            App.mediator.emit(ServerEvents.SERVER_READY, server);
-            console.log('Server running');
+        Server.start(serverOptions).then(app => {
+            this.server = Server.server;
+            App.mediator.emit(ServerEvents.SERVER_READY, app);
         }).catch(err => {
             App.mediator.emit(ServerEvents.SERVER_ERROR, err);
             console.error(`Server error ${err}`);
@@ -66,7 +68,12 @@ export class App {
         Promise.all<void>(promises)
             .then(() => App.mediator.emit(ApplicationEvents.APP_READY))
             .catch(() => App.mediator.emit((ApplicationEvents.APP_ERROR)));
-    }
-}
+    };
 
-const appInstance = new App(3000);
+    public close = () => {
+        Mongo.disconnect();
+        if(this.server != null) {
+            this.server.close();
+        }
+    };
+}
