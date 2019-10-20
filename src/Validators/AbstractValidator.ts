@@ -13,7 +13,7 @@ export abstract class AbstractValidator {
     protected abstract schema: SchemaMap;
 
     protected validateSchema = (data: IValidationInput): IValidationResult => {
-        const {error, value}: { error: ValidationError, value: IRegister } = <any>Joi.validate(data, Joi.object().keys(this.schema), {abortEarly: false});
+        const {error, value}: { error: ValidationError, value: IValidationInput } = <any>Joi.validate(data, Joi.object().keys(this.schema), {abortEarly: false});
 
         const errors: string[] = [];
         if(error !== null) {
@@ -30,4 +30,21 @@ export abstract class AbstractValidator {
     };
 
     public abstract validate(data: IValidationInput): IValidationResult;
+
+    public static testSchema = (data: IValidationInput, schema: SchemaMap): IValidationResult => {
+        const {error, value}: { error: ValidationError, value: IValidationInput } = <any>Joi.validate(data, Joi.object().keys(schema), {abortEarly: false});
+
+        const errors: string[] = [];
+        if(error !== null) {
+            error.details.map(({message}) => {
+                errors.push(message);
+            })
+        }
+
+        return {
+            valid: errors.length === 0,
+            error: errors,
+            value,
+        }
+    }
 }
