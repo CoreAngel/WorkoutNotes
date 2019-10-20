@@ -5,7 +5,6 @@ import {DBEvents, Mongo} from "./Config/Mongo";
 import { EventEmitter } from 'events'
 import 'reflect-metadata';
 
-
 export enum ApplicationEvents {
     APP_READY= 'server.ready',
     APP_ERROR = 'server.error'
@@ -23,6 +22,7 @@ export class App {
     ];
 
     constructor(port: number) {
+        this.applicationFullyRunning();
         this.configurationBeforeRun();
 
         const serverOptions: ServerOptions = {
@@ -38,12 +38,12 @@ export class App {
             console.error(`Server error ${err}`);
         });
 
-        App.mediator.once(ApplicationEvents.APP_READY, () => console.log('Application running'))
+        App.mediator.once(ApplicationEvents.APP_READY, () => console.log('Application running'));
         App.mediator.once(ApplicationEvents.APP_ERROR, () => {
             console.log('Application error');
             Mongo.disconnect();
             process.exit(-1);
-        })
+        });
     };
 
     private configurationBeforeRun = (): void => {
@@ -56,11 +56,11 @@ export class App {
 
         promises.push(new Promise((resolve, reject) => {
             App.mediator.once(ServerEvents.SERVER_READY, () => resolve());
-            App.mediator.once(ServerEvents.SERVER_READY, () => reject());
+            App.mediator.once(ServerEvents.SERVER_ERROR, () => reject());
         }));
         promises.push(new Promise((resolve, reject) => {
             App.mediator.once(DBEvents.DB_READY, () => resolve());
-            App.mediator.once(DBEvents.DB_READY, () => reject());
+            App.mediator.once(DBEvents.DB_ERROR, () => reject());
         }));
 
         Promise.all<void>(promises)
