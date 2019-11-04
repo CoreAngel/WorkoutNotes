@@ -1,9 +1,9 @@
 {
   "expo": {
-    "name": "Workout Notes",
-    "slug": "WorkoutNotes",
+    "name": "WorkoutNotes",
+    "slug": "none",
     "privacy": "public",
-    "sdkVersion": "33.0.0",
+    "sdkVersion": "35.0.0",
     "platforms": [
       "ios",
       "android",
