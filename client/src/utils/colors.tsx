@@ -1,5 +1,4 @@
-
-export enum COLORS {
+export enum Colors {
     WHITE = '#FFFFFF',
     WHITE70 = 'rgba(255, 255, 255, 0.7)',
     PRIMARY = '#FD9F9F',

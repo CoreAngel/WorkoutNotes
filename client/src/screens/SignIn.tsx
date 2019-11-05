@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import {Card, Button, Input} from "react-native-elements";
 
-import {COLORS} from '../utils/colors'
+import { Colors } from '../utils/colors'
 import {NavigationSwitchProp} from "react-navigation";
 
 
@@ -30,7 +30,7 @@ export const SignIn: FC<{navigation: NavigationSwitchProp<{screen: string}>}> = 
                     placeholder="Password..."
                     label='Password'
                 />
-                {loader ? <ActivityIndicator size="large" color={COLORS.PRIMARY}/> :
+                {loader ? <ActivityIndicator size="large" color={Colors.PRIMARY}/> :
                     <View>
                         <Button
                             buttonStyle={styles.button}
@@ -62,9 +62,9 @@ const styles = StyleSheet.create({
     },
     text: {
         textAlign: 'center',
-        color: COLORS.PRIMARY,
+        color: Colors.PRIMARY,
     },
     button: {
-        backgroundColor: COLORS.PRIMARY
+        backgroundColor: Colors.PRIMARY
     }
 });

@@ -1,7 +1,7 @@
 import React, {FC, ReactElement} from 'react';
 import {Text, TouchableOpacity, View, StyleSheet} from "react-native";
 import styled from 'styled-components/native';
-import { COLORS } from '../../utils/colors'
+import { Colors } from '../../utils/colors'
 import {ArrowIcon, AddIcon, PlayIcon} from '../icons'
 
 
@@ -12,7 +12,7 @@ interface Props {
 
 export const RoundedButton: FC<Props> = ({size = '56px', type}): ReactElement => {
     const TouchableButton = styled.TouchableOpacity`
-        background: ${COLORS.PRIMARY};
+        background: ${Colors.PRIMARY};
         width: ${size};
         height: ${size};
         border-radius: 9999px;
