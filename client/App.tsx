@@ -1,9 +1,11 @@
 import React from "react";
-import {View, StyleSheet} from 'react-native'
-import {createSwitchNavigator, createAppContainer} from "react-navigation";
+import {StyleSheet, View} from 'react-native'
+import {createAppContainer, createSwitchNavigator} from "react-navigation";
 
 
-import {SignIn, SignUp} from './src/screens';
+import {SignIn} from './src/screens/SignIn';
+import {SignUp} from './src/screens/SignUp';
+import {RoundedButtonType, RoundedButton} from "./src/components/buttons";
 
 
 const AppNavigator = createSwitchNavigator({
@@ -21,6 +23,9 @@ export default () => {
   return (
       <View style={styles.container}>
         <View style={styles.menuBar}/>
+        <RoundedButton type={RoundedButtonType.PLAY}/>
+        <RoundedButton type={RoundedButtonType.ADD}/>
+        <RoundedButton type={RoundedButtonType.ARROW}/>
         <AppContainer/>
       </View>
   )
