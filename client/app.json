@@ -11,6 +11,10 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
+    "packagerOpts": {
+      "config": "metro.config.js",
+      "sourceExts": ["js", "jsx", "svg", "ts", "tsx"]
+    },
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
