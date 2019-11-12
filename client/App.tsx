@@ -1,42 +1,26 @@
 import React from "react";
-import {StyleSheet, View} from 'react-native'
-import {createAppContainer, createSwitchNavigator} from "react-navigation";
+import { Navigation } from './src/navigation'
+import styled from 'styled-components/native'
+import {Colors} from "./src/utils/colors";
+import Constants from 'expo-constants'
+import {SafeAreaView} from 'react-navigation';
+import {Platform} from "react-native";
 
-
-import {SignIn} from './src/screens/SignIn';
-import {SignUp} from './src/screens/SignUp';
-import {RoundedButtonType, RoundedButton} from "./src/components/buttons";
-
-
-const AppNavigator = createSwitchNavigator({
-  signIn: SignIn,
-  signUp: SignUp,
-}, {
-  // mode: 'card',
-  // headerMode: 'none',
-});
-
-const AppContainer = createAppContainer(AppNavigator);
+if (Platform.OS === 'android') {
+    // @ts-ignore
+    SafeAreaView.setStatusBarHeight(0);
+}
 
 export default () => {
-
   return (
-      <View style={styles.container}>
-        <View style={styles.menuBar}/>
-        <RoundedButton type={RoundedButtonType.PLAY}/>
-        <RoundedButton type={RoundedButtonType.ADD}/>
-        <RoundedButton type={RoundedButtonType.ARROW}/>
-        <AppContainer/>
-      </View>
+      <AppContainer>
+        <Navigation/>
+      </AppContainer>
   )
 };
 
-const styles = StyleSheet.create({
-  menuBar: {
-    height: 25,
-    backgroundColor: '#c8c8c8',
-  },
-  container: {
-    flex: 1,
-  }
-});
+const AppContainer = styled.View`
+  flex: 1;
+  backgroundColor: ${Colors.SECONDARY};
+  padding-top: ${Constants.statusBarHeight};
+`;

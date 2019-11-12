@@ -10,9 +10,19 @@ import {Card, Button, Input} from "react-native-elements";
 
 import { Colors } from '../utils/colors'
 import {NavigationSwitchProp} from "react-navigation";
+import {HomeHeader} from "../components/navigation";
 
+interface Props {
+    navigation: NavigationSwitchProp<{screen: string}>,
+}
 
-export const SignIn: FC<{navigation: NavigationSwitchProp<{screen: string}>}> = ({navigation}) => {
+interface NavigationOptions {
+    navigationOptions: object
+}
+
+type HomeScreen<Props> = FC<Props> & NavigationOptions;
+
+export const SignIn: HomeScreen<Props> = ({navigation}) => {
 
     const [loader, setLoader] = useState(false);
 
@@ -46,6 +56,10 @@ export const SignIn: FC<{navigation: NavigationSwitchProp<{screen: string}>}> = 
             </Card>
         </View>
     )
+};
+
+SignIn.navigationOptions = {
+    header: HomeHeader,
 };
 
 const styles = StyleSheet.create({
