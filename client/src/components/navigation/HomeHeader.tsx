@@ -3,15 +3,20 @@ import styled from 'styled-components/native'
 import {Colors} from "../../utils/colors";
 import {LogoIcon, ProfileIcon} from "../icons";
 import { Header } from 'react-navigation-stack'
+import {DrawerActions, NavigationDrawerProp} from "react-navigation-drawer";
 
-export const HomeHeader: FC = (): ReactElement => {
+interface Props {
+    navigation: NavigationDrawerProp
+}
+
+export const HomeHeader: FC<Props> = ({navigation}): ReactElement => {
     return <Container>
         <HeaderContainer>
             <LogotypeContainer>
                 <LogoIcon/>
                 <AppName>Workout Notes</AppName>
             </LogotypeContainer>
-            <ProfileButton>
+            <ProfileButton onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>
                 <ProfileIcon/>
             </ProfileButton>
         </HeaderContainer>
