@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 41.681 31.56" preserveAspectRatio="xMidYMid meet">
+  <g id="Group_288" data-name="Group 288" transform="translate(-19.631 -24.924)">
+    <g id="Group_286" data-name="Group 286" transform="matrix(0.927, -0.375, 0.375, 0.927, 28.877, 31.267)">
+      <rect id="Rectangle_160" data-name="Rectangle 160" width="25.983" height="4.072" rx="0.5" transform="translate(9.186 0) rotate(45)" fill="#fff"/>
+      <rect id="Rectangle_161" data-name="Rectangle 161" width="17.451" height="2.521" rx="0.5" transform="translate(14.671 0.548) rotate(45)" fill="#fff"/>
+      <rect id="Rectangle_162" data-name="Rectangle 162" width="9.695" height="1.939" rx="0.5" transform="translate(19.469 1.234) rotate(45)" fill="#fff"/>
+      <rect id="Rectangle_163" data-name="Rectangle 163" width="1.357" height="1.551" rx="0.5" transform="translate(24.817 3.839) rotate(135)" fill="#fff"/>
+      <path id="Rectangle_164" data-name="Rectangle 164" d="M.5,0H18.614a0,0,0,0,1,0,0V1.745a0,0,0,0,1,0,0H.5a.5.5,0,0,1-.5-.5V.5A.5.5,0,0,1,.5,0Z" transform="translate(15.767 13.162) rotate(135)" fill="#fff"/>
+      <path id="Polygon_1" data-name="Polygon 1" d="M.873,0l.873,1.939H0Z" transform="translate(1.234 27.696) rotate(-135)" fill="#fff"/>
+    </g>
+    <path id="Path_81" data-name="Path 81" d="M-433.449,167.42s-11.307-.7-12.687-2.416,6.713-1.238,4.38-3.094-7.95,0-11.33-.476" transform="translate(473 -111.326)" fill="none" stroke="#fff" stroke-linecap="round" stroke-width="0.5"/>
+  </g>
+</svg>
