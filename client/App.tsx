@@ -3,12 +3,16 @@ import { Navigation } from './src/navigation'
 import styled from 'styled-components/native'
 import {Colors} from "./src/utils/colors";
 import Constants from 'expo-constants'
-import {SafeAreaView} from 'react-navigation';
+import {SafeAreaView, SafeAreaViewProps} from 'react-navigation';
 import {Platform} from "react-native";
 
+interface SafeAreaWithSetStatusBarHeight<SafeAreaViewProps> extends React.ComponentClass<SafeAreaViewProps> {
+    setStatusBarHeight(height: number): void
+}
+
+
 if (Platform.OS === 'android') {
-    // @ts-ignore
-    SafeAreaView.setStatusBarHeight(0);
+    (SafeAreaView as SafeAreaWithSetStatusBarHeight<SafeAreaViewProps>).setStatusBarHeight(0);
 }
 
 export default () => {
