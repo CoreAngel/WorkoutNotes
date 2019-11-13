@@ -1,10 +1,10 @@
 import React, {FC} from "react";
 import styled from 'styled-components/native'
-import {Colors} from "../../utils/colors";
+import {Colors} from "../../utils/Colors";
 import {CloseIcon} from '../icons'
 import {DrawerOption} from './DrawerOption'
 import {TouchableOpacity} from "react-native";
-import {DrawerActions} from "react-navigation-drawer";
+import {DrawerActions, DrawerContentComponentProps} from "react-navigation-drawer";
 import {NavigationSwitchProp} from "react-navigation";
 
 const data = [
@@ -33,11 +33,7 @@ const data = [
     },
 ];
 
-interface Props {
-    navigation: NavigationSwitchProp
-}
-
-export const Drawer: FC<Props> = ({navigation}) => {
+export const Drawer: FC<DrawerContentComponentProps> = ({navigation}) => {
     return <Container>
         <CloseIconContainer>
             <TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>

@@ -1,6 +1,6 @@
 import React, {FC} from "react";
 import styled from 'styled-components/native'
-import {Colors} from "../../utils/colors";
+import {Colors} from "../../utils/Colors";
 import {TouchableWithoutFeedback} from "react-native";
 
 interface Props {

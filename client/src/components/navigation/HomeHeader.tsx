@@ -1,6 +1,6 @@
 import React, {FC, ReactElement} from "react";
 import styled from 'styled-components/native'
-import {Colors} from "../../utils/colors";
+import {Colors} from "../../utils/Colors";
 import {LogoIcon, ProfileIcon} from "../icons";
 import { Header } from 'react-navigation-stack'
 import {DrawerActions, NavigationDrawerProp} from "react-navigation-drawer";

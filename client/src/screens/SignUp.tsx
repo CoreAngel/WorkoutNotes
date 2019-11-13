@@ -2,7 +2,7 @@ import React, {FC, ReactElement, useState} from "react";
 import {View, StyleSheet, Text, TouchableOpacity, ActivityIndicator} from "react-native";
 import {Card, Button, Input} from "react-native-elements";
 
-import { Colors } from '../utils/colors'
+import { Colors } from '../utils/Colors'
 import {NavigationSwitchProp} from "react-navigation";
 
 

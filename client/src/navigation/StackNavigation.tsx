@@ -1,17 +1,16 @@
 import {createStackNavigator, StackViewTransitionConfigs, Header} from "react-navigation-stack";
-import Constants from 'expo-constants'
 import {SignIn} from "../screens/SignIn";
 import {SignUp} from "../screens/SignUp";
-import {Colors} from "../utils/colors";
-import { Platform } from 'react-native';
-import { SafeAreaView } from 'react-navigation';
+import {Home} from "../screens/Home";
+import {Colors} from "../utils/Colors";
 
 
 export const StackNavigator = createStackNavigator({
+    Home: Home,
     signIn: SignIn,
     signUp: SignUp,
 }, {
-    initialRouteName: 'signIn',
+    initialRouteName: 'Home',
     transitionConfig: () => StackViewTransitionConfigs.SlideFromRightIOS,
     cardStyle: {
         backgroundColor: Colors.DARK
