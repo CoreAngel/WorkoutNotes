@@ -3,7 +3,7 @@ import { Tile } from '../components/Tile'
 import {HomeHeader} from "../components/navigation";
 import {NavigationSwitchProp} from "react-navigation";
 import styled from 'styled-components/native'
-import { RoundedButtonType } from './../components/buttons'
+import { RoundedButtonType } from '../components/buttons'
 import {FlatList} from "react-native";
 
 interface NavigationOptions {
@@ -42,7 +42,7 @@ const data = [
     }
 ];
 
-export const Home: HomeScreen<Props> = ({navigation}) => {
+export const Home: HomeScreen<Props> = () => {
     return <FlatList
                 contentContainerStyle={{
                     paddingTop: 20,

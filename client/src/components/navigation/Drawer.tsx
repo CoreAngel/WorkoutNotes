@@ -4,8 +4,8 @@ import {Colors} from "../../utils/Colors";
 import {CloseIcon} from '../icons'
 import {DrawerOption} from './DrawerOption'
 import {TouchableOpacity} from "react-native";
-import {DrawerActions, DrawerContentComponentProps} from "react-navigation-drawer";
-import {NavigationSwitchProp} from "react-navigation";
+import {DrawerContentComponentProps} from "react-navigation-drawer";
+import {drawer} from '../../navigation'
 
 const data = [
     {
@@ -36,7 +36,7 @@ const data = [
 export const Drawer: FC<DrawerContentComponentProps> = ({navigation}) => {
     return <Container>
         <CloseIconContainer>
-            <TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>
+            <TouchableOpacity onPress={drawer.close}>
                 <CloseIcon height="25px"/>
             </TouchableOpacity>
         </CloseIconContainer>
