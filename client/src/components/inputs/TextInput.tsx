@@ -1,4 +1,4 @@
-import React, {FC, useState} from "react";
+import React, {FC, useState, useEffect} from "react";
 import {Animated, NativeSyntheticEvent, TextInputEndEditingEventData, View} from 'react-native'
 import styled from "styled-components/native";
 import {Colors} from "../../utils/Colors";
@@ -25,7 +25,7 @@ export const TextInput: FC<Props> = ({label, onChangeText, onEndEditing, error =
     });
     const [labelAnimation] = useState(new Animated.Value(InputState.INACTIVE));
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (inputState.active && inputState.text === "") {
             Animated.timing(
                 labelAnimation,
