@@ -36,67 +36,63 @@ export const CheckBox: FC<Props> = ({
     defaultValue = false,
     animationDuration = 100,
    }) => {
-
-    const CheckBoxBorder = styled(Animated.View)`
-      width: ${size};
-      height: ${size};
-      border-width: ${borderSize};
-      border-radius: ${size/8};
-    `;
-
-    const CheckBoxBG = styled(Animated.View)`
-      width: ${size};
-      height: ${size};
-      background-color: ${fillColor};
-      border-radius: ${size/8};
-      border-width: ${borderSize};
-      border-color: ${activeBorderColor};
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 0;
-      bottom: 0;
-    `;
-
-    const [state, setState] = useState(defaultValue);
-    const [animationValue] = useState(new Animated.Value(0));
+    const [state, setState] = useState({
+        value: defaultValue,
+        isAnimated: false,
+        animation: new Animated.Value(0)
+    });
+    const {animation, isAnimated, value} = state;
 
     useEffect(() => {
-        if (state) {
-            Animated.timing(animationValue,
+        if (value) {
+            Animated.timing(animation,
             {
                 toValue: CheckBoxState.CHECKED,
                 duration: animationDuration,
-            }).start()
+            }).start(() => setState({
+                ...state,
+                isAnimated: false
+            }))
         } else {
-            Animated.timing(animationValue,
+            Animated.timing(animation,
             {
                 toValue: CheckBoxState.UNCHECKED,
                 duration: animationDuration
-            }).start()
+            }).start(() => setState({
+                ...state,
+                isAnimated: false
+            }))
         }
-    }, [state]);
+    }, [value]);
 
     const styleBorder = {
-        borderColor: animationValue.interpolate({
+        borderColor: animation.interpolate({
             inputRange: [CheckBoxState.UNCHECKED, CheckBoxState.CHECKED],
             outputRange: [inactiveBorderColor, activeBorderColor]
         })
     };
-    const styleBG = { opacity: animationValue };
+    const styleBG = { opacity: animation };
 
     const labelFontSize = {
-        color: animationValue.interpolate({
+        color: animation.interpolate({
             inputRange: [CheckBoxState.UNCHECKED, CheckBoxState.CHECKED],
             outputRange: [inactiveLabelColor, activeLabelColor]
         })
     };
 
+    const CheckBoxBorder = checkBoxBorder(size, borderSize);
+    const CheckBoxBG = checkBoxBG(size, fillColor, borderSize, activeBorderColor);
+
     return (
         <Container>
             <TouchableWithoutFeedback onPress={() => {
-                setState(!state);
-                onChange && onChange(!state);
+                if (isAnimated) return;
+                setState({
+                    ...state,
+                    isAnimated: true,
+                    value: !value
+                });
+                onChange && onChange(!value);
             }}>
                 <View>
                     <CheckBoxBorder style={styleBorder}/>
@@ -129,4 +125,25 @@ const SvgContainer = styled.View`
 const Label = styled(Animated.Text)`
   margin-left: 20px;
   font-size: 16px;
+`;
+
+const checkBoxBorder = (size, borderSize) => styled(Animated.View)`
+  width: ${size};
+  height: ${size};
+  border-width: ${borderSize};
+  border-radius: ${size/8};
+`;
+
+const checkBoxBG = (size, fillColor, borderSize, activeBorderColor) => styled(Animated.View)`
+  width: ${size};
+  height: ${size};
+  background-color: ${fillColor};
+  border-radius: ${size/8};
+  border-width: ${borderSize};
+  border-color: ${activeBorderColor};
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
 `;
