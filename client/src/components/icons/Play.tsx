@@ -1,5 +1,5 @@
 import React, {FC, ReactElement} from "react";
-import Play from "./../../../assets/play.svg";
+import Play from "../../../assets/svg/play.svg";
 import styled from 'styled-components/native'
 
 interface Props {

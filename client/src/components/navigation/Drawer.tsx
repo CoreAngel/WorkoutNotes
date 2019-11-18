@@ -1,6 +1,6 @@
 import React, {FC} from "react";
 import styled from 'styled-components/native'
-import {Colors} from "../../utils/Colors";
+import {Colors} from "../../utils";
 import {CloseIcon} from '../icons'
 import {DrawerOption} from './DrawerOption'
 import {TouchableOpacity} from "react-native";

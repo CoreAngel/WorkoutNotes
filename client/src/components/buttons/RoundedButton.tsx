@@ -1,7 +1,7 @@
 import React, {FC, ReactElement} from 'react';
-import {Text, TouchableOpacity, View, StyleSheet} from "react-native";
+import {View} from "react-native";
 import styled from 'styled-components/native';
-import { Colors } from '../../utils/Colors'
+import { Colors } from '../../utils'
 import {ArrowIcon, AddIcon, PlayIcon} from '../icons'
 
 

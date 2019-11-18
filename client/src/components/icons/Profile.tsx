@@ -1,5 +1,5 @@
 import React, {FC, ReactElement} from "react";
-import Profile from "./../../../assets/profile.svg";
+import Profile from "../../../assets/svg/profile.svg";
 import styled from 'styled-components/native'
 
 interface Props {

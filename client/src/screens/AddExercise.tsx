@@ -1,6 +1,6 @@
 import React, {FC, useState} from "react";
 import styled from "styled-components/native";
-import {Colors} from "../utils/Colors";
+import {Colors, DefaultTextFont} from "../utils";
 import {TextInput, CheckBox, Select} from '../components/inputs'
 import { cloneDeep } from 'lodash'
 import {Button} from "../components/buttons";
@@ -100,9 +100,8 @@ const TextInputContainer = styled.View`
   margin-bottom: 20px;
 `;
 
-const SettingsLabel = styled.Text`
+const SettingsLabel = styled(DefaultTextFont)`
   color: ${Colors.WHITE70};
-  font-size: 16px;
   margin-top: 30px;
 `;
 

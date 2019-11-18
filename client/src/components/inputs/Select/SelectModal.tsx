@@ -1,7 +1,7 @@
 import React, {FC} from "react";
 import styled from "styled-components/native";
 import {Dimensions, FlatList, Modal, TouchableNativeFeedback} from "react-native";
-import {Colors} from "../../../utils/Colors";
+import {Colors, DefaultTextFont} from "../../../utils";
 import {Button} from "../../buttons";
 
 interface Props {
@@ -70,7 +70,7 @@ const Window = styled.View`
   max-width: ${3 * (Dimensions.get('window').width/4)};
 `;
 
-const itemText = (selected) => styled.Text`
+const itemText = (selected) => styled(DefaultTextFont)`
   color: ${selected ? Colors.WHITE : Colors.WHITE70};
   font-size: 18px;
   padding: 10px 10px;

@@ -1,6 +1,6 @@
 import React, {FC} from "react";
 import styled from "styled-components/native";
-import {Colors} from "../../utils/Colors";
+import {Colors, DefaultTextFont} from "../../utils";
 
 interface Props {
     label: string
@@ -26,6 +26,6 @@ const touchableButton = (color) => styled.TouchableOpacity`
   border-radius: 3px;
 `;
 
-const Text = styled.Text`
+const Text = styled(DefaultTextFont)`
   color: ${Colors.WHITE};
 `;

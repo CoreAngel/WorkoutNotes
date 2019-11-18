@@ -1,7 +1,7 @@
 import React, {FC, useEffect, useState} from "react";
-import {Picker, TouchableNativeFeedback, View} from 'react-native'
+import {TouchableNativeFeedback, View} from 'react-native'
 import styled from "styled-components/native";
-import {Colors} from "../../../utils/Colors";
+import {Colors, DefaultTextFont} from "../../../utils";
 import {SelectModal} from "./SelectModal";
 
 interface Props {
@@ -57,7 +57,7 @@ const arrowIcon = (arrowColor) => styled.View`
     transform: translateY(-3px);
 `;
 
-const textValue = (pickerTextColor) => styled.Text`
+const textValue = (pickerTextColor) => styled(DefaultTextFont)`
   color: ${pickerTextColor};
   padding: 10px 30px 10px 10px;
 `;

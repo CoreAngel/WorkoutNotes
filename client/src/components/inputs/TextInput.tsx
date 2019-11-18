@@ -1,7 +1,7 @@
 import React, {FC, useState, useEffect} from "react";
 import {Animated, NativeSyntheticEvent, TextInputEndEditingEventData, View} from 'react-native'
 import styled from "styled-components/native";
-import {Colors} from "../../utils/Colors";
+import {DefaultAnimatedTextFont, DefaultTextFont, Colors} from "../../utils";
 
 enum InputState {
     ACTIVE = 1,
@@ -87,8 +87,7 @@ export const TextInput: FC<Props> = ({label, onChangeText, onEndEditing, error =
     );
 };
 
-const Label = styled(Animated.Text)`
-  font-size: 16px;
+const Label = styled(DefaultAnimatedTextFont)`
   height: 22px;
   color: ${Colors.WHITE70};
 `;
@@ -103,7 +102,7 @@ const InputContainer = styled(Animated.View)`
   border-bottom-width: 2px;
 `;
 
-const ErrorLabel = styled.Text`
+const ErrorLabel = styled(DefaultTextFont)`
   color: ${Colors.RED_LIGHT};
   font-size: 14px;
   margin-top: 5px;

@@ -1,10 +1,11 @@
-import React from "react";
+import React, {FC, useEffect, useState} from "react";
 import Navigation from './src/navigation'
 import styled from 'styled-components/native'
 import {Colors} from "./src/utils/Colors";
 import Constants from 'expo-constants'
 import {SafeAreaView, SafeAreaViewProps} from 'react-navigation';
-import {Platform, YellowBox} from "react-native";
+import {Platform, YellowBox, Text} from "react-native";
+import * as Font from 'expo-font';
 
 interface SafeAreaWithSetStatusBarHeight<SafeAreaViewProps> extends React.ComponentClass<SafeAreaViewProps> {
     setStatusBarHeight(height: number): void
@@ -16,12 +17,25 @@ if (Platform.OS === 'android') {
 
 YellowBox.ignoreWarnings(['Require cycle: src\\navigation\\index.tsx']);
 
-export default () => {
-  return (
-      <AppContainer>
-          <Navigation/>
-      </AppContainer>
-  )
+const App: FC = () => {
+    const [state, setState] = useState({
+        isFontLoaded: false,
+    });
+
+    useEffect(() => {
+        Font.loadAsync({
+            'Roboto': require('./assets/fonts/Roboto-Regular.ttf'),
+        }).then(() => {
+            setState({isFontLoaded: true})
+        });
+    }, []);
+
+    return (
+        state.isFontLoaded &&
+        <AppContainer>
+            <Navigation/>
+        </AppContainer>
+    )
 };
 
 const AppContainer = styled.View`
@@ -29,3 +43,5 @@ const AppContainer = styled.View`
   backgroundColor: ${Colors.SECONDARY};
   padding-top: ${Constants.statusBarHeight};
 `;
+
+export default App;

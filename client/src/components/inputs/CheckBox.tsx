@@ -1,6 +1,6 @@
 import React, {FC, useEffect, useState} from "react";
 import {Animated, TouchableWithoutFeedback, View} from 'react-native'
-import {Colors} from "../../utils/Colors";
+import {Colors, DefaultAnimatedTextFont} from "../../utils";
 import styled from "styled-components/native";
 import Svg, {Path} from "react-native-svg";
 
@@ -122,9 +122,8 @@ const SvgContainer = styled.View`
   bottom: 0;
 `;
 
-const Label = styled(Animated.Text)`
+const Label = styled(DefaultAnimatedTextFont)`
   margin-left: 20px;
-  font-size: 16px;
 `;
 
 const checkBoxBorder = (size, borderSize) => styled(Animated.View)`

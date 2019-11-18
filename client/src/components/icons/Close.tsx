@@ -1,5 +1,5 @@
 import React, {FC, ReactElement} from "react";
-import Close from "./../../../assets/close.svg";
+import Close from "../../../assets/svg/close.svg";
 import styled from 'styled-components/native'
 
 interface Props {

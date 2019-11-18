@@ -1,6 +1,6 @@
 import React, {FC, ReactElement} from "react";
 import styled from 'styled-components/native'
-import {Colors} from "../../utils/Colors";
+import {Colors, DefaultTextFont} from "../../utils";
 import {LogoIcon, ProfileIcon} from "../icons";
 import { Header } from 'react-navigation-stack'
 import {NavigationDrawerProp} from "react-navigation-drawer";
@@ -39,7 +39,7 @@ const LogotypeContainer = styled.View`
   flex-direction: row;
 `;
 
-const AppName = styled.Text`
+const AppName = styled(DefaultTextFont)`
   margin-left: 10px;
   color: ${Colors.WHITE};
   font-size: 22px;

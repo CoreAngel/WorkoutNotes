@@ -1,6 +1,6 @@
 import React, {FC} from "react";
 import styled from 'styled-components/native'
-import {Colors} from "../../utils/Colors";
+import {Colors, DefaultTextFont} from "../../utils";
 import {TouchableWithoutFeedback} from "react-native";
 
 interface Props {
@@ -24,7 +24,6 @@ const OptionContainer = styled.View`
   padding-bottom: 10px;
 `;
 
-const Option = styled.Text`
+const Option = styled(DefaultTextFont)`
   color: ${Colors.WHITE};
-  font-size: 16px;
 `;

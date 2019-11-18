@@ -1,5 +1,5 @@
 import React, {FC, ReactElement} from "react";
-import Arrow from "./../../../assets/arrow.svg";
+import Arrow from "../../../assets/svg/arrow.svg";
 import styled from 'styled-components/native'
 
 interface Props {
