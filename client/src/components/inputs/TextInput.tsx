@@ -12,7 +12,7 @@ const AnimationDuration = 200;
 
 interface Props {
     label: string
-    onChangeText?: (text: string) => void,
+    onChangeText: (text: string) => void,
     onEndEditing?: (e: NativeSyntheticEvent<TextInputEndEditingEventData>) => void,
     error?: string
 }
