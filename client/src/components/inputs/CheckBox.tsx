@@ -12,6 +12,7 @@ enum CheckBoxState {
 interface Props {
     onChange: (status: boolean) => void
     label: string
+    defaultValue: boolean
     size?: number
     borderSize?: number
     inactiveBorderColor?: string
@@ -19,27 +20,26 @@ interface Props {
     inactiveLabelColor?: string
     activeLabelColor?: string
     fillColor?: string
-    defaultValue?: boolean
     animationDuration?: number
 }
 
 export const CheckBox: FC<Props> = ({
     onChange,
     label,
-    size = 25,
+    defaultValue,
+    size = 20,
     borderSize = 2,
     inactiveBorderColor = Colors.PRIMARY70,
     activeBorderColor = Colors.PRIMARY,
     inactiveLabelColor = Colors.WHITE70,
     activeLabelColor = Colors.WHITE,
     fillColor = Colors.PRIMARY,
-    defaultValue = false,
     animationDuration = 100,
    }) => {
     const [state, setState] = useState({
         value: defaultValue,
         isAnimated: false,
-        animation: new Animated.Value(0)
+        animation: new Animated.Value(defaultValue ? CheckBoxState.CHECKED : CheckBoxState.UNCHECKED)
     });
     const {animation, isAnimated, value} = state;
 
