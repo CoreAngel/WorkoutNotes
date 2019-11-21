@@ -124,6 +124,8 @@ const SvgContainer = styled.View`
 
 const Label = styled(DefaultAnimatedTextFont)`
   margin-left: 20px;
+  margin-top: auto;
+  margin-bottom: auto;
 `;
 
 const checkBoxBorder = (size, borderSize) => styled(Animated.View)`
