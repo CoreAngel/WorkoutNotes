@@ -1,5 +1,4 @@
-import {Select} from './Select'
+import Select from './Select';
+import SelectModal from './SelectModal';
 
-export {
-    Select
-}
+export { Select, SelectModal };

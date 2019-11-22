@@ -1,24 +1,24 @@
-import React, {FC, ReactElement} from "react";
-import Profile from "../../../assets/svg/profile.svg";
-import styled from 'styled-components/native'
+import React, { FC } from 'react';
+import styled from 'styled-components/native';
+import Profile from '../../../assets/svg/profile.svg';
 
 interface Props {
-    width?: string
-    height?: string
+    width?: string;
+    height?: string;
 }
 
-export const ProfileIcon: FC<Props> = ({width, height}): ReactElement => {
+const ProfileIcon: FC<Props> = ({ width, height }: Props) => {
     const ProfileContainer = styled.View`
         aspect-ratio: 1;
-        width: ${width ? width : 'auto'};
-        height: ${height ? height : 'auto'};
+        width: ${width != null ? width : 'auto'};
+        height: ${height != null ? height : 'auto'};
     `;
 
     return (
         <ProfileContainer>
             <Profile />
         </ProfileContainer>
-    )
+    );
 };
 
-
+export default ProfileIcon;

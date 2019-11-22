@@ -1,24 +1,24 @@
-import React, {FC, ReactElement} from "react";
-import Close from "../../../assets/svg/close.svg";
-import styled from 'styled-components/native'
+import React, { FC } from 'react';
+import styled from 'styled-components/native';
+import Close from '../../../assets/svg/close.svg';
 
 interface Props {
-    width?: string
-    height?: string
+    width?: string;
+    height?: string;
 }
 
-export const CloseIcon: FC<Props> = ({width, height}): ReactElement => {
+const CloseIcon: FC<Props> = ({ width, height }: Props) => {
     const CloseContainer = styled.View`
         aspect-ratio: 1;
-        width: ${width ? width : 'auto'};
-        height: ${height ? height : 'auto'};
+        width: ${width != null ? width : 'auto'};
+        height: ${height != null ? height : 'auto'};
     `;
 
     return (
         <CloseContainer>
             <Close />
         </CloseContainer>
-    )
+    );
 };
 
-
+export default CloseIcon;

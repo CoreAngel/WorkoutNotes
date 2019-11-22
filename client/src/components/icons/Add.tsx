@@ -1,24 +1,24 @@
-import React, {FC, ReactElement} from "react";
-import Add from "../../../assets/svg/add.svg";
-import styled from 'styled-components/native'
+import React, { FC } from 'react';
+import styled from 'styled-components/native';
+import Add from '../../../assets/svg/add.svg';
 
 interface Props {
-    width?: string
-    height?: string
+    width?: string;
+    height?: string;
 }
 
-export const AddIcon: FC<Props> = ({width, height}): ReactElement => {
+const AddIcon: FC<Props> = ({ width, height }: Props) => {
     const ArrowContainer = styled.View`
         aspect-ratio: 1;
-        width: ${width ? width : 'auto'};
-        height: ${height ? height : 'auto'};
+        width: ${width != null ? width : 'auto'};
+        height: ${height != null ? height : 'auto'};
     `;
 
     return (
         <ArrowContainer>
             <Add />
         </ArrowContainer>
-    )
+    );
 };
 
-
+export default AddIcon;

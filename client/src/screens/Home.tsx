@@ -1,18 +1,18 @@
-import React, {FC} from "react";
-import { Tile } from '../components/Tile'
-import {HomeHeader} from "../components/navigation";
-import {NavigationSwitchProp} from "react-navigation";
-import styled from 'styled-components/native'
-import { RoundedButtonType } from '../components/buttons'
-import {FlatList} from "react-native";
+import React, { FC } from 'react';
+import { FlatList } from 'react-native';
+import { NavigationSwitchProp } from 'react-navigation';
+import styled from 'styled-components/native';
+import Tile from '../components/Tile';
+import { HomeHeader } from '../components/navigation';
+import { RoundedButtonType } from '../components/buttons';
 
 interface NavigationOptions {
-    navigationOptions: object
+    navigationOptions: object;
 }
 type HomeScreen<Props> = FC<Props> & NavigationOptions;
 
 interface Props {
-    navigation: NavigationSwitchProp<{screen: string}>,
+    navigation: NavigationSwitchProp<{ screen: string }>;
 }
 
 const data = [
@@ -42,28 +42,38 @@ const data = [
     }
 ];
 
-export const Home: HomeScreen<Props> = () => {
-    return <FlatList
-                contentContainerStyle={{
-                    paddingTop: 20,
-                    paddingBottom: 20
-                }}
-                data={data}
-                renderItem={({ item }) => {
-                    return (
-                        <TileContainer key={item.id}>
-                            <Tile title={item.title} desc={item.desc} button={item.button}/>
-                        </TileContainer>
-                    )
-                }}
-                keyExtractor={item => item.id.toString()}
+const Home: HomeScreen<Props> = () => {
+    const containerStyle = {
+        paddingTop: 20,
+        paddingBottom: 20
+    };
+
+    return (
+        <FlatList
+            contentContainerStyle={containerStyle}
+            data={data}
+            renderItem={({ item }) => {
+                return (
+                    <TileContainer key={item.id}>
+                        <Tile
+                            title={item.title}
+                            desc={item.desc}
+                            button={item.button}
+                        />
+                    </TileContainer>
+                );
+            }}
+            keyExtractor={item => item.id.toString()}
         />
+    );
 };
 
 Home.navigationOptions = {
-    header: HomeHeader,
+    header: HomeHeader
 };
 
 const TileContainer = styled.View`
-  margin: 10px 20px;
+    margin: 10px 20px;
 `;
+
+export default Home;

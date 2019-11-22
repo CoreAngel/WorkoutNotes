@@ -1,31 +1,44 @@
-import React, {FC} from "react";
-import styled from "styled-components/native";
-import {Colors, DefaultTextFont} from "../../utils";
+import React, { FC } from 'react';
+import styled from 'styled-components/native';
+import { Colors, DefaultTextFont } from '../../utils';
 
 interface Props {
-    label: string
-    onClick: () => void
-    color?: string
+    label: string;
+    onClick: () => void;
+    color?: string;
 }
 
-export const Button: FC<Props> = ({
+const Button: FC<Props> = ({
     label,
     onClick,
     color = Colors.PRIMARY
-}) => {
-    const TouchableButton = touchableButton(color);
-
-    return <TouchableButton onPress={onClick}>
-        <Text>{label}</Text>
-    </TouchableButton>
+}: Props) => {
+    return (
+        <TouchableButton
+            styledObj={{
+                color
+            }}
+            onPress={onClick}
+        >
+            <Text>{label}</Text>
+        </TouchableButton>
+    );
 };
 
-const touchableButton = (color) => styled.TouchableOpacity`
-  background-color: ${color};
-  padding: 8px 30px;
-  border-radius: 3px;
+interface TouchableButtonProps {
+    styledObj: {
+        color: string;
+    };
+}
+
+const TouchableButton = styled.TouchableOpacity<TouchableButtonProps>`
+    background-color: ${({ styledObj }) => styledObj.color};
+    padding: 8px 30px;
+    border-radius: 3px;
 `;
 
 const Text = styled(DefaultTextFont)`
-  color: ${Colors.WHITE};
+    color: ${Colors.WHITE};
 `;
+
+export default Button;

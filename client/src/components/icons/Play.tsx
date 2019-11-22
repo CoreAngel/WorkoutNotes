@@ -1,17 +1,17 @@
-import React, {FC, ReactElement} from "react";
-import Play from "../../../assets/svg/play.svg";
-import styled from 'styled-components/native'
+import React, { FC } from 'react';
+import styled from 'styled-components/native';
+import Play from '../../../assets/svg/play.svg';
 
 interface Props {
-    width?: string
-    height?: string
+    width?: string;
+    height?: string;
 }
 
-export const PlayIcon: FC<Props> = ({width, height}): ReactElement => {
+const PlayIcon: FC<Props> = ({ width, height }: Props) => {
     const ArrowContainer = styled.View`
         aspect-ratio: 1;
-        width: ${width ? width : 'auto'};
-        height: ${height ? height : 'auto'};
+        width: ${width != null ? width : 'auto'};
+        height: ${height != null ? height : 'auto'};
         transform: translateX(2px);
     `;
 
@@ -19,7 +19,7 @@ export const PlayIcon: FC<Props> = ({width, height}): ReactElement => {
         <ArrowContainer>
             <Play />
         </ArrowContainer>
-    )
+    );
 };
 
-
+export default PlayIcon;

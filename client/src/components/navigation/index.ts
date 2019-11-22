@@ -1,7 +1,4 @@
-import {HomeHeader} from './HomeHeader'
-import {Drawer} from './Drawer'
+import HomeHeader from './HomeHeader';
+import Drawer from './Drawer';
 
-export {
-    HomeHeader,
-    Drawer
-}
+export { HomeHeader, Drawer };

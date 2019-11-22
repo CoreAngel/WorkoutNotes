@@ -1,16 +1,24 @@
-import React, {FC, ReactElement} from 'react';
-import {View} from "react-native";
+import React, { FC, ReactElement } from 'react';
+import { View } from 'react-native';
 import styled from 'styled-components/native';
-import { Colors } from '../../utils'
-import {ArrowIcon, AddIcon, PlayIcon} from '../icons'
+import { Colors } from '../../utils';
+import { ArrowIcon, AddIcon, PlayIcon } from '../icons';
 
-
-interface Props {
-    size?: string
-    type: RoundedButtonType
+export enum RoundedButtonType {
+    ARROW,
+    ADD,
+    PLAY
 }
 
-export const RoundedButton: FC<Props> = ({size = '56px', type}): ReactElement => {
+interface Props {
+    size?: string;
+    type: RoundedButtonType;
+}
+
+export const RoundedButton: FC<Props> = ({
+    size = '56px',
+    type
+}: Props): ReactElement => {
     const TouchableButton = styled.TouchableOpacity`
         background: ${Colors.PRIMARY};
         width: ${size};
@@ -19,19 +27,13 @@ export const RoundedButton: FC<Props> = ({size = '56px', type}): ReactElement =>
         padding: 20px;
     `;
 
-    return <View>
-        <TouchableButton activeOpacity={0.7}>
-            {type == RoundedButtonType.ARROW && <ArrowIcon/>}
-            {type == RoundedButtonType.ADD && <AddIcon/>}
-            {type == RoundedButtonType.PLAY && <PlayIcon/>}
-        </TouchableButton>
-    </View>;
+    return (
+        <View>
+            <TouchableButton activeOpacity={0.7}>
+                {type === RoundedButtonType.ARROW && <ArrowIcon />}
+                {type === RoundedButtonType.ADD && <AddIcon />}
+                {type === RoundedButtonType.PLAY && <PlayIcon />}
+            </TouchableButton>
+        </View>
+    );
 };
-
-export enum RoundedButtonType {
-    ARROW,
-    ADD,
-    PLAY
-}
-
-

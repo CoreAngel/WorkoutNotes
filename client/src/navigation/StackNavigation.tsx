@@ -1,28 +1,32 @@
-import {createStackNavigator, StackViewTransitionConfigs, Header} from "react-navigation-stack";
-import {SignIn} from "../screens/SignIn";
-import {SignUp} from "../screens/SignUp";
-import {Home} from "../screens/Home";
-import {Colors} from "../utils/Colors";
+import {
+    createStackNavigator,
+    StackViewTransitionConfigs
+} from 'react-navigation-stack';
+import { Home, AddExercise, SignUp, SignIn } from '../screens';
+import { Colors } from '../utils';
 
-
-export const StackNavigator = createStackNavigator({
-    Home: Home,
-    signIn: SignIn,
-    signUp: SignUp,
-}, {
-    initialRouteName: 'Home',
-    transitionConfig: () => StackViewTransitionConfigs.SlideFromRightIOS,
-    cardStyle: {
-        backgroundColor: Colors.DARK
+const StackNavigator = createStackNavigator(
+    {
+        Home,
+        AddExercise,
+        signIn: SignIn,
+        signUp: SignUp
     },
-    defaultNavigationOptions: {
-        headerStyle: {
-            paddingTop: 0,
-            backgroundColor: Colors.SECONDARY,
+    {
+        initialRouteName: 'AddExercise',
+        transitionConfig: () => StackViewTransitionConfigs.SlideFromRightIOS,
+        cardStyle: {
+            backgroundColor: Colors.DARK
         },
-        headerTintColor: Colors.WHITE,
+        defaultNavigationOptions: {
+            headerStyle: {
+                paddingTop: 0,
+                backgroundColor: Colors.SECONDARY
+            },
+            headerTintColor: Colors.WHITE
+        }
     }
-});
+);
 
 StackNavigator.navigationOptions = ({ navigation }) => {
     let drawerLockMode = 'unlocked';
@@ -30,6 +34,8 @@ StackNavigator.navigationOptions = ({ navigation }) => {
         drawerLockMode = 'locked-closed';
     }
     return {
-        drawerLockMode,
+        drawerLockMode
     };
 };
+
+export default StackNavigator;

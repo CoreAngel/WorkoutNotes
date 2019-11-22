@@ -1,8 +1,8 @@
-import React, {FC, useEffect, useState} from "react";
-import {Animated, TouchableWithoutFeedback, View} from 'react-native'
-import {Colors, DefaultAnimatedTextFont} from "../../utils";
-import styled from "styled-components/native";
-import Svg, {Path} from "react-native-svg";
+import React, { FC, useState } from 'react';
+import { Animated, TouchableWithoutFeedback, View } from 'react-native';
+import styled from 'styled-components/native';
+import Svg, { Path } from 'react-native-svg';
+import { Colors, DefaultAnimatedTextFont, useAnimation } from '../../utils';
 
 enum CheckBoxState {
     UNCHECKED = 0,
@@ -10,20 +10,20 @@ enum CheckBoxState {
 }
 
 interface Props {
-    onChange: (status: boolean) => void
-    label: string
-    defaultValue: boolean
-    size?: number
-    borderSize?: number
-    inactiveBorderColor?: string
-    activeBorderColor?: string
-    inactiveLabelColor?: string
-    activeLabelColor?: string
-    fillColor?: string
-    animationDuration?: number
+    onChange: (status: boolean) => void;
+    label: string;
+    defaultValue: boolean;
+    size?: number;
+    borderSize?: number;
+    inactiveBorderColor?: string;
+    activeBorderColor?: string;
+    inactiveLabelColor?: string;
+    activeLabelColor?: string;
+    fillColor?: string;
+    animationDuration?: number;
 }
 
-export const CheckBox: FC<Props> = ({
+const CheckBox: FC<Props> = ({
     onChange,
     label,
     defaultValue,
@@ -34,36 +34,18 @@ export const CheckBox: FC<Props> = ({
     inactiveLabelColor = Colors.WHITE70,
     activeLabelColor = Colors.WHITE,
     fillColor = Colors.PRIMARY,
-    animationDuration = 100,
-   }) => {
-    const [state, setState] = useState({
-        value: defaultValue,
-        isAnimated: false,
-        animation: new Animated.Value(defaultValue ? CheckBoxState.CHECKED : CheckBoxState.UNCHECKED)
+    animationDuration = 100
+}: Props) => {
+    const [value, setValue] = useState(defaultValue);
+    const { animation, isAnimated } = useAnimation({
+        doAnimation: value,
+        duration: animationDuration,
+        fromValue: CheckBoxState.UNCHECKED,
+        toValue: CheckBoxState.CHECKED,
+        defaultValue: defaultValue
+            ? CheckBoxState.CHECKED
+            : CheckBoxState.UNCHECKED
     });
-    const {animation, isAnimated, value} = state;
-
-    useEffect(() => {
-        if (value) {
-            Animated.timing(animation,
-            {
-                toValue: CheckBoxState.CHECKED,
-                duration: animationDuration,
-            }).start(() => setState({
-                ...state,
-                isAnimated: false
-            }))
-        } else {
-            Animated.timing(animation,
-            {
-                toValue: CheckBoxState.UNCHECKED,
-                duration: animationDuration
-            }).start(() => setState({
-                ...state,
-                isAnimated: false
-            }))
-        }
-    }, [value]);
 
     const styleBorder = {
         borderColor: animation.interpolate({
@@ -80,26 +62,41 @@ export const CheckBox: FC<Props> = ({
         })
     };
 
-    const CheckBoxBorder = checkBoxBorder(size, borderSize);
-    const CheckBoxBG = checkBoxBG(size, fillColor, borderSize, activeBorderColor);
-
     return (
         <Container>
-            <TouchableWithoutFeedback onPress={() => {
-                if (isAnimated) return;
-                setState({
-                    ...state,
-                    isAnimated: true,
-                    value: !value
-                });
-                onChange && onChange(!value);
-            }}>
+            <TouchableWithoutFeedback
+                onPress={() => {
+                    if (isAnimated) return;
+                    setValue(!value);
+                    if (onChange) {
+                        onChange(!value);
+                    }
+                }}
+            >
                 <View>
-                    <CheckBoxBorder style={styleBorder}/>
-                    <CheckBoxBG style={styleBG}/>
+                    <CheckBoxBorder
+                        styles={{
+                            size,
+                            borderSize
+                        }}
+                        style={styleBorder}
+                    />
+                    <CheckBoxBG
+                        styles={{
+                            size,
+                            borderSize,
+                            activeBorderColor,
+                            fillColor
+                        }}
+                        style={styleBG}
+                    />
                     <SvgContainer>
                         <Svg width={size} height={size} viewBox="0 0 25 25">
-                            <Path d="M3.421,7.854l-1.4,1.4,5.06,4.706,8.885-8.619L14.6,3.988l-7.638,7.33Z" transform="translate(3.5 4)" fill={Colors.SECONDARY}/>
+                            <Path
+                                d="M3.421,7.854l-1.4,1.4,5.06,4.706,8.885-8.619L14.6,3.988l-7.638,7.33Z"
+                                transform="translate(3.5 4)"
+                                fill={Colors.SECONDARY}
+                            />
                         </Svg>
                     </SvgContainer>
                 </View>
@@ -110,41 +107,59 @@ export const CheckBox: FC<Props> = ({
 };
 
 const Container = styled.View`
-  flex-direction: row;
-  align-content: center;
+    flex-direction: row;
+    align-content: center;
 `;
 
 const SvgContainer = styled.View`
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
 `;
 
 const Label = styled(DefaultAnimatedTextFont)`
-  margin-left: 20px;
-  margin-top: auto;
-  margin-bottom: auto;
+    margin-left: 20px;
+    margin-top: auto;
+    margin-bottom: auto;
 `;
 
-const checkBoxBorder = (size, borderSize) => styled(Animated.View)`
-  width: ${size};
-  height: ${size};
-  border-width: ${borderSize};
-  border-radius: ${size/8};
+interface CheckBoxBorderProps {
+    styles: {
+        size: number;
+        borderSize: number;
+    };
+}
+
+const CheckBoxBorder = styled(Animated.View)<CheckBoxBorderProps>`
+    width: ${({ styles }) => styles.size};
+    height: ${({ styles }) => styles.size};
+    border-width: ${({ styles }) => styles.borderSize};
+    border-radius: ${({ styles }) => styles.size / 8};
 `;
 
-const checkBoxBG = (size, fillColor, borderSize, activeBorderColor) => styled(Animated.View)`
-  width: ${size};
-  height: ${size};
-  background-color: ${fillColor};
-  border-radius: ${size/8};
-  border-width: ${borderSize};
-  border-color: ${activeBorderColor};
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
+interface CheckBoxBGProps {
+    styles: {
+        size: number;
+        borderSize: number;
+        activeBorderColor: string;
+        fillColor: string;
+    };
+}
+
+const CheckBoxBG = styled(Animated.View)<CheckBoxBGProps>`
+    width: ${({ styles }) => styles.size};
+    height: ${({ styles }) => styles.size};
+    background-color: ${({ styles }) => styles.fillColor};
+    border-radius: ${({ styles }) => styles.size / 8};
+    border-width: ${({ styles }) => styles.borderSize};
+    border-color: ${({ styles }) => styles.activeBorderColor};
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
 `;
+
+export default CheckBox;

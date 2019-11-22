@@ -1,4 +1,4 @@
-export enum Colors {
+enum Colors {
     WHITE = '#FFFFFF',
     WHITE70 = 'rgba(255, 255, 255, 0.7)',
     PRIMARY = '#FD9F9F',
@@ -7,5 +7,7 @@ export enum Colors {
     SECONDARY = '#212121',
     DARK = '#303030',
     RED = '#8D0000',
-    RED_LIGHT = '#ff1811',
+    RED_LIGHT = '#ff1811'
 }
+
+export default Colors;

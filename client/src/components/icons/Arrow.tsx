@@ -1,24 +1,24 @@
-import React, {FC, ReactElement} from "react";
-import Arrow from "../../../assets/svg/arrow.svg";
-import styled from 'styled-components/native'
+import React, { FC } from 'react';
+import styled from 'styled-components/native';
+import Arrow from '../../../assets/svg/arrow.svg';
 
 interface Props {
-    width?: string
-    height?: string
+    width?: string;
+    height?: string;
 }
 
-export const ArrowIcon: FC<Props> = ({width, height}): ReactElement => {
+const ArrowIcon: FC<Props> = ({ width, height }: Props) => {
     const ArrowContainer = styled.View`
         aspect-ratio: 1;
-        width: ${width ? width : 'auto'};
-        height: ${height ? height : 'auto'};
+        width: ${width != null ? width : 'auto'};
+        height: ${height != null ? height : 'auto'};
     `;
 
     return (
         <ArrowContainer>
             <Arrow />
         </ArrowContainer>
-    )
+    );
 };
 
-
+export default ArrowIcon;
