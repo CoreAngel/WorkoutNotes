@@ -1,4 +1,4 @@
-import { sign, verify } from 'jsonwebtoken'
+import { sign, verify } from 'jsonwebtoken';
 
 export class Token {
     public static generate = async (id: string): Promise<string> => {
@@ -6,7 +6,7 @@ export class Token {
 
         const data = {
             userId: id,
-            date: new Date(),
+            date: new Date()
         };
         return sign(data, privateKey);
     };
@@ -21,6 +21,5 @@ export class Token {
                 reject(e);
             }
         });
-
     };
 }

@@ -1,49 +1,63 @@
 {
-  "name": "workoutnotesserver",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start": "node dist/index.js",
-    "dev": "nodemon src/index.ts",
-    "build": "tsc -p .",
-    "test": "mocha"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/CoreAngel/WorkoutNotesServer.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/CoreAngel/WorkoutNotesServer/issues"
-  },
-  "homepage": "https://github.com/CoreAngel/WorkoutNotesServer#readme",
-  "dependencies": {
-    "@hapi/joi": "^15.1.0",
-    "bcrypt": "^3.0.6",
-    "dotenv": "^8.0.0",
-    "express": "^4.17.1",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.7.5",
-    "reflect-metadata": "^0.1.13"
-  },
-  "devDependencies": {
-    "@types/bcrypt": "^3.0.0",
-    "@types/chai": "^4.2.3",
-    "@types/dotenv": "^6.1.1",
-    "@types/express": "^4.17.1",
-    "@types/hapi__joi": "^15.0.4",
-    "@types/jsonwebtoken": "^8.3.4",
-    "@types/mocha": "^5.2.7",
-    "@types/mongoose": "^5.5.18",
-    "@types/node": "^12.7.8",
-    "@types/supertest": "^2.0.8",
-    "chai": "^4.2.0",
-    "mocha": "^6.2.2",
-    "nodemon": "^1.19.1",
-    "supertest": "^4.0.2",
-    "ts-node": "^8.4.1",
-    "typescript": "^3.6.3"
-  }
+    "name": "workoutnotesserver",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "node dist/index.js",
+        "dev": "nodemon src/index.ts",
+        "build": "tsc -p .",
+        "test": "mocha",
+        "lint": "tsc --noEmit && eslint --ext .js,.jsx,.ts,.tsx ./",
+        "prettier:write": "npx prettier --write **/*.{js,jsx,ts,tsx,json} && npx prettier --write *.{js,jsx,ts,tsx,json}"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/CoreAngel/WorkoutNotesServer.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/CoreAngel/WorkoutNotesServer/issues"
+    },
+    "homepage": "https://github.com/CoreAngel/WorkoutNotesServer#readme",
+    "dependencies": {
+        "@hapi/joi": "^15.1.0",
+        "bcrypt": "^3.0.6",
+        "dotenv": "^8.0.0",
+        "express": "^4.17.1",
+        "jsonwebtoken": "^8.5.1",
+        "mongoose": "^5.7.5",
+        "reflect-metadata": "^0.1.13"
+    },
+    "devDependencies": {
+        "@types/bcrypt": "^3.0.0",
+        "@types/chai": "^4.2.3",
+        "@types/dotenv": "^6.1.1",
+        "@types/express": "^4.17.1",
+        "@types/hapi__joi": "^15.0.4",
+        "@types/jsonwebtoken": "^8.3.4",
+        "@types/mocha": "^5.2.7",
+        "@types/mongoose": "^5.5.18",
+        "@types/node": "^12.7.8",
+        "@types/supertest": "^2.0.8",
+        "@typescript-eslint/eslint-plugin": "^2.11.0",
+        "@typescript-eslint/parser": "^2.11.0",
+        "chai": "^4.2.0",
+        "eslint": "^6.7.2",
+        "eslint-config-prettier": "^6.7.0",
+        "husky": "^3.1.0",
+        "mocha": "^6.2.2",
+        "nodemon": "^1.19.1",
+        "prettier": "^1.19.1",
+        "pretty-quick": "^2.0.1",
+        "supertest": "^4.0.2",
+        "ts-node": "^8.4.1",
+        "typescript": "^3.6.3"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "pretty-quick --staged && npm run lint"
+        }
+    }
 }

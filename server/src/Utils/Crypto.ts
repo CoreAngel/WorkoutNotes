@@ -1,7 +1,7 @@
 import { genSaltSync, hashSync, compareSync } from 'bcrypt';
 
 export class Crypto {
-    private static saltRounds: number = 10;
+    private static saltRounds = 10;
 
     public static generateSalt = async (): Promise<string> => {
         return genSaltSync(Crypto.saltRounds);
@@ -12,7 +12,10 @@ export class Crypto {
         return hashSync(password, salt);
     };
 
-    public static comparePassword = async (password: string, hash: string): Promise<boolean> => {
+    public static comparePassword = async (
+        password: string,
+        hash: string
+    ): Promise<boolean> => {
         return compareSync(password, hash);
     };
 }

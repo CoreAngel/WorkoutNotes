@@ -1,23 +1,26 @@
 import 'reflect-metadata';
-import { RouteDefinition, HttpMethod } from "./index";
+import { RouteDefinition, HttpMethod } from './index';
 
 const httpMethodFactory = (method: HttpMethod) => {
     return (path: string): PropertyDecorator => {
-        return (target: Object, propertyKey: symbol | string): void => {
+        return (target: object, propertyKey: symbol | string): void => {
             if (!Reflect.hasMetadata('ROUTES', target.constructor)) {
                 Reflect.defineMetadata('ROUTES', [], target.constructor);
             }
 
-            const routes: RouteDefinition[] = Reflect.getMetadata('ROUTES', target.constructor);
+            const routes: RouteDefinition[] = Reflect.getMetadata(
+                'ROUTES',
+                target.constructor
+            );
 
             routes.push({
                 requestMethod: method,
                 path,
-                methodName: <string>propertyKey
+                methodName: propertyKey as string
             });
             Reflect.defineMetadata('routes', routes, target.constructor);
         };
-    }
+    };
 };
 
 export const Get = httpMethodFactory('get');

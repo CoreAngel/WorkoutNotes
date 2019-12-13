@@ -1,8 +1,17 @@
 import { SchemaMap } from '@hapi/joi';
-import { AbstractValidator, IValidationInput, IValidationResult } from './AbstractValidator';
-import { loginSchema, emailSchema, passwordSchema, confirmPasswordSchema } from './Schemas'
+import {
+    AbstractValidator,
+    ValidationInput,
+    ValidationResult
+} from './AbstractValidator';
+import {
+    loginSchema,
+    emailSchema,
+    passwordSchema,
+    confirmPasswordSchema
+} from './Schemas';
 
-export interface IRegister extends IValidationInput {
+export interface Register extends ValidationInput {
     login: string;
     email: string;
     password: string;
@@ -22,7 +31,7 @@ export class RegisterValidator extends AbstractValidator {
         };
     }
 
-    public validate = (data: IRegister): IValidationResult => {
+    public validate = (data: Register): ValidationResult => {
         return this.validateSchema(data);
-    }
+    };
 }

@@ -1,3 +1,3 @@
-import {App} from "./Server/App";
+import { App } from './Server/App';
 
-const appInstance = new App(3000);
+new App(3000);

@@ -1,8 +1,8 @@
-import Joi from "@hapi/joi";
+import Joi, { StringSchema } from '@hapi/joi';
 
-export const loginSchema = (() => {
-    const min: number = 4;
-    const max: number = 36;
+export const loginSchema = ((): StringSchema => {
+    const min = 4;
+    const max = 36;
 
     return Joi.string()
         .alphanum()
@@ -13,7 +13,8 @@ export const loginSchema = (() => {
             errors.map(err => {
                 switch (err.type) {
                     case 'string.alphanum':
-                        err.message = 'Login can only contain a-z, A-Z, and 0-9!';
+                        err.message =
+                            'Login can only contain a-z, A-Z, and 0-9!';
                         break;
                     case 'string.min':
                     case 'string.max':
@@ -45,9 +46,9 @@ export const emailSchema = Joi.string()
         return errors;
     });
 
-export const passwordSchema = (() => {
-    const min: number = 6;
-    const max: number = 64;
+export const passwordSchema = ((): StringSchema => {
+    const min = 6;
+    const max = 64;
 
     return Joi.string()
         .min(min)
@@ -79,7 +80,8 @@ export const confirmPasswordSchema = Joi.string()
                     err.message = 'Confirm password is required field!';
                     break;
                 case 'any.allowOnly':
-                    err.message = 'Password and confirm password field must be equal!';
+                    err.message =
+                        'Password and confirm password field must be equal!';
                     break;
             }
         });

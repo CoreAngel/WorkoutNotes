@@ -1,50 +1,69 @@
-import Joi, { SchemaMap, ValidationError } from "@hapi/joi";
-import {IRegister} from "./RegisterValidator";
+import Joi, { SchemaMap, ValidationError } from '@hapi/joi';
 
-export interface IValidationInput {}
+export type ValidationInput = object;
 
-export interface IValidationResult {
+export interface ValidationResult {
     valid: boolean;
-    error: Array<any>;
-    value: IValidationInput
+    error: Array<string>;
+    value: ValidationInput;
 }
 
 export abstract class AbstractValidator {
     protected abstract schema: SchemaMap;
 
-    protected validateSchema = (data: IValidationInput): IValidationResult => {
-        const {error, value}: { error: ValidationError, value: IValidationInput } = <any>Joi.validate(data, Joi.object().keys(this.schema), {abortEarly: false});
+    protected validateSchema = (data: ValidationInput): ValidationResult => {
+        const {
+            error,
+            value
+        }: { error: ValidationError; value: ValidationInput } = Joi.validate(
+            data,
+            Joi.object().keys(this.schema),
+            {
+                abortEarly: false
+            }
+        );
 
         const errors: string[] = [];
-        if(error !== null) {
-            error.details.map(({message}) => {
+        if (error !== null) {
+            error.details.map(({ message }) => {
                 errors.push(message);
-            })
+            });
         }
 
         return {
             valid: errors.length === 0,
             error: errors,
-            value,
-        }
+            value
+        };
     };
 
-    public abstract validate(data: IValidationInput): IValidationResult;
+    public abstract validate(data: ValidationInput): ValidationResult;
 
-    public static testSchema = (data: IValidationInput, schema: SchemaMap): IValidationResult => {
-        const {error, value}: { error: ValidationError, value: IValidationInput } = <any>Joi.validate(data, Joi.object().keys(schema), {abortEarly: false});
+    public static testSchema = (
+        data: ValidationInput,
+        schema: SchemaMap
+    ): ValidationResult => {
+        const {
+            error,
+            value
+        }: {
+            error: ValidationError;
+            value: ValidationInput;
+        } = Joi.validate(data, Joi.object().keys(schema), {
+            abortEarly: false
+        });
 
         const errors: string[] = [];
-        if(error !== null) {
-            error.details.map(({message}) => {
+        if (error !== null) {
+            error.details.map(({ message }) => {
                 errors.push(message);
-            })
+            });
         }
 
         return {
             valid: errors.length === 0,
             error: errors,
-            value,
-        }
-    }
+            value
+        };
+    };
 }

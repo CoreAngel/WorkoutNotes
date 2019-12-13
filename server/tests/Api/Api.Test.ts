@@ -1,7 +1,8 @@
-import {App, ApplicationEvents, ServerEvents} from '../../src/Server/App'
-import {Application} from "express";
-import { before } from 'mocha'
-import {AuthControllerTests} from "./Controllers/AuthControllerTest";
+import { App, ApplicationEvents, ServerEvents } from '../../src/Server/App';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { Application } from 'express';
+import { before } from 'mocha';
+import { AuthControllerTests } from './Controllers/AuthControllerTest';
 
 declare global {
     namespace NodeJS {
@@ -13,17 +14,15 @@ declare global {
 }
 
 describe('API', () => {
-
-    before((done) => {
+    before(done => {
         global.testApplication = new App(3000);
 
-        App.mediator.once(ServerEvents.SERVER_READY, (server) => {
+        App.mediator.once(ServerEvents.SERVER_READY, server => {
             global.testServer = server;
         });
         App.mediator.once(ApplicationEvents.APP_READY, () => {
             done();
-        })
-
+        });
     });
 
     after(() => {
@@ -32,8 +31,5 @@ describe('API', () => {
 
     describe('AuthController', () => {
         AuthControllerTests.runTests();
-    })
-
-
-
+    });
 });
