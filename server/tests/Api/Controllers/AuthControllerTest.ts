@@ -14,7 +14,7 @@ export class AuthControllerTests {
         });
     };
 
-    private static runRegister = () => {
+    private static runRegister = (): void => {
         it('Should create user', async () => {
             const response = await request(global.testServer)
                 .post('/auth/register')
