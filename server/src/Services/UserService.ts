@@ -52,7 +52,7 @@ export class UserService {
     };
 
     public static isUserWithLoginExist(login: string): Promise<boolean> {
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async resolve => {
             UserModel.findOne({ login }).then(user => {
                 resolve(user != null);
             });
