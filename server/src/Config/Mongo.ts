@@ -13,7 +13,8 @@ export class Mongo {
 
             connect(mongoUrl, {
                 useCreateIndex: true,
-                useNewUrlParser: true
+                useNewUrlParser: true,
+                useUnifiedTopology: true
             })
                 .then(db => {
                     App.mediator.emit(DBEvents.DB_READY, db);

@@ -1,9 +1,7 @@
 import { Request, Response } from 'express';
-import { User, UserModel } from '../Models/UserModel';
 import { Register, RegisterValidator } from '../Validators/RegisterValidator';
 import { AbstractController } from './AbstractController';
-import { Crypto } from '../Utils/Crypto';
-import { Token } from '../Utils/Token';
+import { UserService } from '../Services/UserService';
 import { Controller } from './Decorators/Controller';
 import { Post } from './Decorators/HttpMethods';
 
@@ -26,12 +24,12 @@ export class AuthController extends AbstractController {
             return res.send(this.sendErrorValidation(error)).end();
         }
 
-        const data = await UserModel.findOne({ login });
-        if (data !== null) {
-            return res.send(this.sendErrorValidation(['Login exists!'])).end();
-        }
-
-        this.createUser(registerData)
+        // UserService.isUserWithLoginExist(login).then(status => {
+        //     if (status) {
+        //         return res.send(this.sendErrorValidation(['Login exists!'])).end();
+        //     }
+        // });
+        UserService.createUser(registerData)
             .then((token: string) => {
                 return res.send(this.sendOK({ token })).end();
             })
@@ -41,34 +39,5 @@ export class AuthController extends AbstractController {
                     .send(this.sendErrorServer({}))
                     .end();
             });
-    };
-
-    private createUser = async (data: Register): Promise<string> => {
-        return new Promise(async (resolve, reject) => {
-            const { login, email, password } = data;
-            const hashedPassword = await Crypto.hashPassword(password);
-
-            const user: User = new UserModel({
-                login,
-                email,
-                password: hashedPassword
-            });
-
-            try {
-                const data = await user.save();
-                const userId = data._id;
-                const generatedToken = await Token.generate(userId);
-                const { nModified } = await user.updateOne({
-                    token: generatedToken
-                });
-
-                if (nModified !== 1) {
-                    reject('No user created');
-                }
-                resolve(generatedToken);
-            } catch (e) {
-                reject('Error with db');
-            }
-        });
     };
 }
