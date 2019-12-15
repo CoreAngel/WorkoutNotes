@@ -5,7 +5,6 @@ import { UserService } from '../Services/UserService';
 import { Controller } from './Decorators/Controller';
 import { Post } from './Decorators/HttpMethods';
 import { ValidationErrorException } from '../Exceptions/ErrorResults/ValidationErrorException';
-import { AbstractErrorException } from '../Exceptions/ErrorResults/AbstractErrorException';
 
 @Controller('/auth')
 export class AuthController extends AbstractController {

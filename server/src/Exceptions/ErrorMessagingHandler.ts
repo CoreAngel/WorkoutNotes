@@ -24,7 +24,7 @@ export class ErrorMessagingHandler {
         error.send();
     };
 
-    private handleDefaultErrors = (error: object | null | undefined) => {
+    private handleDefaultErrors = (error: object | null | undefined): void => {
         console.log(error);
     };
 }
