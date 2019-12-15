@@ -3,6 +3,8 @@ import { User, UserModel } from '../Models/UserModel';
 import { Register } from '../Validators/RegisterValidator';
 import { Crypto } from '../Utils/Crypto';
 import { Token } from '../Utils/Token';
+import { ValidationErrorException } from '../Exceptions/ErrorResults/ValidationErrorException';
+import { DbErrorException } from '../Exceptions/ErrorResults/DbErrorException';
 
 export class UserService {
     public static createUser = (data: Register): Promise<string> => {
@@ -17,37 +19,32 @@ export class UserService {
             });
 
             let session: ClientSession;
-            db.startSession()
-                .then(_session => {
-                    session = _session;
-                    session.startTransaction();
+            try {
+                session = await db.startSession();
+                session.startTransaction();
+            } catch (e) {
+                return reject(new DbErrorException());
+            }
 
-                    return UserService.isUserWithLoginExist(user.login);
-                })
-                .then(status => {
-                    if (status) {
-                        throw 'Login exists!';
-                    }
-                })
-                .then(() => {
-                    return user.save({ session });
-                })
-                .then(data => {
-                    const userId = data._id;
+            const status = await UserService.isUserWithLoginExist(user.login);
+            if (status) {
+                await session.abortTransaction();
+                session.endSession();
+                return reject(new ValidationErrorException(['Login exists!']));
+            }
 
-                    return Token.generate(userId);
-                })
-                .then(async token => {
-                    await session.commitTransaction();
-                    resolve(token);
-                })
-                .catch(async () => {
-                    await session.abortTransaction();
-                    reject('Error with db');
-                })
-                .finally(() => {
-                    session.endSession();
-                });
+            try {
+                const data = await user.save({ session });
+                const userId = data._id;
+                const token = await Token.generate(userId);
+                await session.commitTransaction();
+                resolve(token);
+            } catch (e) {
+                await session.abortTransaction();
+                return reject(new DbErrorException());
+            } finally {
+                session.endSession();
+            }
         });
     };
 

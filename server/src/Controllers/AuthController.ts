@@ -4,6 +4,8 @@ import { AbstractController } from './AbstractController';
 import { UserService } from '../Services/UserService';
 import { Controller } from './Decorators/Controller';
 import { Post } from './Decorators/HttpMethods';
+import { ValidationErrorException } from '../Exceptions/ErrorResults/ValidationErrorException';
+import { AbstractErrorException } from '../Exceptions/ErrorResults/AbstractErrorException';
 
 @Controller('/auth')
 export class AuthController extends AbstractController {
@@ -21,23 +23,18 @@ export class AuthController extends AbstractController {
         const { valid, error } = registerValidator.validate(registerData);
 
         if (!valid) {
-            return res.send(this.sendErrorValidation(error)).end();
+            throw new ValidationErrorException(error, res);
         }
 
-        // UserService.isUserWithLoginExist(login).then(status => {
-        //     if (status) {
-        //         return res.send(this.sendErrorValidation(['Login exists!'])).end();
-        //     }
-        // });
         UserService.createUser(registerData)
             .then((token: string) => {
-                return res.send(this.sendOK({ token })).end();
-            })
-            .catch(() => {
                 return res
-                    .status(503)
-                    .send(this.sendErrorServer({}))
+                    .status(200)
+                    .send({ token })
                     .end();
+            })
+            .catch(e => {
+                this.throwCustomErrors(e, res);
             });
     };
 }

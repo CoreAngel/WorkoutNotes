@@ -2,6 +2,7 @@ import { config as DotEnvConfig } from 'dotenv';
 import { AuthController } from '../Controllers/AuthController';
 import { Server, ServerOptions } from './Server';
 import { DBEvents, Mongo } from '../Config/Mongo';
+import { ErrorMessagingHandler } from '../Exceptions/ErrorMessagingHandler';
 import { EventEmitter } from 'events';
 import { Server as HttpServer } from 'http';
 import 'reflect-metadata';
@@ -53,6 +54,7 @@ export class App {
     private configurationBeforeRun = (): void => {
         DotEnvConfig();
         Mongo.connect();
+        new ErrorMessagingHandler();
     };
 
     private applicationFullyRunning = (): void => {
