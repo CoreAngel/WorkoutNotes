@@ -4,7 +4,7 @@ export interface User extends Document {
     login: string;
     email: string;
     password: string;
-    token: string;
+    key: string;
     created: Date;
     lastLogin: Date;
 }
@@ -28,9 +28,9 @@ const userSchema: Schema<User> = new Schema<User>({
         type: String,
         required: true
     },
-    token: {
+    key: {
         type: String,
-        default: ''
+        required: true
     },
     created: {
         type: Date,

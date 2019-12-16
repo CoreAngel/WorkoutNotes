@@ -1,25 +1,33 @@
 import { sign, verify } from 'jsonwebtoken';
 
+export type TokenPayload = {
+    id: string;
+    key: string;
+    iat: number;
+};
+
 export class Token {
-    public static generate = async (id: string): Promise<string> => {
+    public static generate = async (
+        id: string,
+        key: string
+    ): Promise<string> => {
         const privateKey: string = process.env.JWT || '';
 
         const data = {
-            userId: id,
-            date: new Date()
+            id,
+            key
         };
         return sign(data, privateKey);
     };
 
-    public static verify = async (token: string): Promise<string | object> => {
-        const privateKey: string = process.env.JWT || '';
-
-        return new Promise<string | object>((resolve, reject) => {
-            try {
-                resolve(verify(token, privateKey));
-            } catch (e) {
-                reject(e);
-            }
-        });
+    public static verify = async (
+        token: string
+    ): Promise<TokenPayload | null> => {
+        try {
+            const privateKey: string = process.env.JWT || '';
+            return verify(token, privateKey) as TokenPayload;
+        } catch (e) {
+            return null;
+        }
     };
 }

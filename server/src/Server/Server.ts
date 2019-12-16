@@ -1,6 +1,9 @@
 import express, { Application, Response, Request } from 'express';
 import { RouteDefinition } from '../Controllers/Decorators';
+import { authExcludedPath } from '../Config/AuthenticationExcludedPath';
+import { authenticationMiddleware } from '../Middlewares/AuthenticationMiddleware';
 import { Server as HttpServer } from 'http';
+import { middlewareUnlessPath } from '../Utils/MiddlewareUnlessPath';
 
 export interface ServerOptions {
     port: number;
@@ -24,6 +27,9 @@ export class Server {
 
     private static initializeMiddlewares = (): void => {
         Server.app.use(express.json());
+        Server.app.use(
+            middlewareUnlessPath(authenticationMiddleware, authExcludedPath)
+        );
     };
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

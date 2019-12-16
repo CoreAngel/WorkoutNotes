@@ -10,8 +10,6 @@ export abstract class AbstractController {
             const e = error as AbstractErrorException;
             e.setResponse(res);
             throw e;
-        } else {
-            throw error;
         }
     };
 }
