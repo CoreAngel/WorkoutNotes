@@ -11,20 +11,15 @@ export class Server {
     public static app: Application;
     public static server: HttpServer;
 
-    public static start = (options: ServerOptions): Promise<Application> => {
+    public static start = async (
+        options: ServerOptions
+    ): Promise<Application> => {
         Server.app = express();
         Server.initializeMiddlewares();
         Server.initializeRoutes(options.controllers);
 
-        return new Promise((resolve, reject) => {
-            try {
-                Server.server = Server.app.listen(options.port, () => {
-                    resolve(Server.app);
-                });
-            } catch (e) {
-                reject(e);
-            }
-        });
+        Server.server = Server.app.listen(options.port);
+        return Server.app;
     };
 
     private static initializeMiddlewares = (): void => {
