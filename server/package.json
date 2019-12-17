@@ -8,6 +8,7 @@
         "dev": "nodemon src/index.ts",
         "build": "tsc -p .",
         "test": "mocha",
+        "test-api": "cross-env api=true mocha",
         "lint": "tsc --noEmit && eslint --ext .js,.jsx,.ts,.tsx ./ --max-warnings=0",
         "prettier:write": "npx prettier --write **/*.{js,jsx,ts,tsx,json} && npx prettier --write *.{js,jsx,ts,tsx,json}"
     },

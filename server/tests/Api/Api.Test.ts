@@ -13,23 +13,25 @@ declare global {
     }
 }
 
-describe('API', () => {
-    before(done => {
-        global.testApplication = new App(4000);
+if (process.env.api) {
+    describe('API', () => {
+        before(done => {
+            global.testApplication = new App(4000);
 
-        App.mediator.once(ServerEvents.SERVER_READY, server => {
-            global.testServer = server;
+            App.mediator.once(ServerEvents.SERVER_READY, server => {
+                global.testServer = server;
+            });
+            App.mediator.once(ApplicationEvents.APP_READY, () => {
+                done();
+            });
         });
-        App.mediator.once(ApplicationEvents.APP_READY, () => {
-            done();
+
+        after(() => {
+            global.testApplication.close();
+        });
+
+        describe('AuthController', () => {
+            AuthControllerTests.runTests();
         });
     });
-
-    after(() => {
-        global.testApplication.close();
-    });
-
-    describe('AuthController', () => {
-        AuthControllerTests.runTests();
-    });
-});
+}
