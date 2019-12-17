@@ -2,7 +2,7 @@ import { App, ApplicationEvents, ServerEvents } from '../../src/Server/App';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Application } from 'express';
 import { before } from 'mocha';
-import { AuthControllerTests } from './Controllers/AuthControllerTest';
+import { AuthControllerTests } from './Paths/AuthControllerTest';
 
 declare global {
     namespace NodeJS {
@@ -15,7 +15,7 @@ declare global {
 
 describe('API', () => {
     before(done => {
-        global.testApplication = new App(3000);
+        global.testApplication = new App(4000);
 
         App.mediator.once(ServerEvents.SERVER_READY, server => {
             global.testServer = server;
