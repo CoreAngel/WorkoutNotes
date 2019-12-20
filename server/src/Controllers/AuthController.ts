@@ -37,6 +37,7 @@ export class AuthController extends AbstractController {
                 .end();
         } catch (e) {
             this.throwCustomErrors(e, res);
+            throw e;
         }
     };
 
