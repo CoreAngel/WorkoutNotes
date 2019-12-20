@@ -1,7 +1,7 @@
 import { Response } from 'express';
 import { AbstractErrorException } from './AbstractErrorException';
 
-export class LoginErrorExecption extends AbstractErrorException {
+export class LoginErrorException extends AbstractErrorException {
     constructor(res: Response | null = null) {
         super(res);
     }

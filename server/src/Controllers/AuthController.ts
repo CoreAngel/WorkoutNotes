@@ -6,7 +6,7 @@ import { UserService } from '../Services/UserService';
 import { Controller } from './Decorators/Controller';
 import { Post } from './Decorators/HttpMethods';
 import { ValidationErrorException } from '../Exceptions/ErrorResults/ValidationErrorException';
-import { LoginErrorExecption } from '../Exceptions/ErrorResults/LoginErrorExecption';
+import { LoginErrorException } from '../Exceptions/ErrorResults/LoginErrorException';
 import { Crypto } from '../Utils/Crypto';
 import { Token } from '../Utils/Token';
 
@@ -29,16 +29,15 @@ export class AuthController extends AbstractController {
             throw new ValidationErrorException(error, res);
         }
 
-        UserService.createUser(registerData)
-            .then((token: string) => {
-                return res
-                    .status(200)
-                    .send({ token })
-                    .end();
-            })
-            .catch(e => {
-                this.throwCustomErrors(e, res);
-            });
+        try {
+            const token = await UserService.createUser(registerData);
+            return res
+                .status(200)
+                .send({ token })
+                .end();
+        } catch (e) {
+            this.throwCustomErrors(e, res);
+        }
     };
 
     @Post('/login')
@@ -58,12 +57,12 @@ export class AuthController extends AbstractController {
 
         const user = await UserService.getUserByLogin(login);
         if (!user) {
-            throw new LoginErrorExecption(res);
+            throw new LoginErrorException(res);
         }
 
         const status = await Crypto.comparePassword(password, user.password);
         if (!status) {
-            throw new LoginErrorExecption(res);
+            throw new LoginErrorException(res);
         }
 
         const token = await Token.generate(user._id, user.key);
