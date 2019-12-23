@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'styled-components/native';
-import { Colors } from '../../utils';
 import { TouchableWithoutFeedback } from 'react-native';
+import { Colors } from '../../utils';
 
 interface Props {
     onClick: () => void;
@@ -10,9 +10,27 @@ interface Props {
 }
 
 const DownIcon: FC<Props> = ({ onClick, height = 20, width = 26 }: Props) => {
-    const Container = container(height, width);
-    const LeftArm = leftArm(height, width);
-    const RightArm = rightArm(height, width);
+    const Container = styled.View`
+        height: ${height}px;
+        width: ${width - 4}px;
+        flex-direction: row;
+    `;
+
+    const LeftArm = styled.View`
+        background-color: ${Colors.GRAY};
+        height: 3px;
+        width: ${width / 2}px;
+        transform: translateX(-${width / 2}px) rotate(30deg)
+            translateX(${width / 2}px) translateY(${height / 2 + 6}px);
+    `;
+
+    const RightArm = styled.View`
+        background-color: ${Colors.GRAY};
+        height: 3px;
+        width: ${width / 2}px;
+        transform: translateX(${width / 2}px) rotate(-30deg)
+            translateX(-${width / 2}px) translateY(${height / 2 + 6}px);
+    `;
 
     return (
         <Button>
@@ -29,28 +47,6 @@ const DownIcon: FC<Props> = ({ onClick, height = 20, width = 26 }: Props) => {
 const Button = styled.View`
     margin-left: 5px;
     margin-right: 5px;
-`;
-
-const container = (height, width) => styled.View`
-    height: ${height}px;
-    width: ${width - 4}px;
-    flex-direction: row;
-`;
-
-const leftArm = (height, width) => styled.View`
-    background-color: ${Colors.GRAY};
-    height: 3px;
-    width: ${width / 2}px;
-    transform: translateX(-${width / 2}px) rotate(30deg)
-        translateX(${width / 2}px) translateY(${height / 2 + 6}px);
-`;
-
-const rightArm = (height, width) => styled.View`
-    background-color: ${Colors.GRAY};
-    height: 3px;
-    width: ${width / 2}px;
-    transform: translateX(${width / 2}px) rotate(-30deg)
-        translateX(-${width / 2}px) translateY(${height / 2 + 6}px);
 `;
 
 export default DownIcon;
