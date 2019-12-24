@@ -1,61 +1,125 @@
 import React, { FC, useState } from 'react';
 import styled from 'styled-components/native';
 import { cloneDeep } from 'lodash';
+import { connect } from 'react-redux';
 import { Colors, DefaultTextFont } from '../utils';
 import { TextInput, CheckBox, Select } from '../components/inputs';
 import { Button } from '../components/buttons';
+import {
+    Exercise,
+    Time,
+    TimeUnit,
+    Weight,
+    WeightUnit
+} from '../redux/exercise/types';
+import { SelectItem } from '../components/inputs/Select/Select';
+import { addExercise } from '../redux/exercise/exerciseActions';
 
-const weightItems = [
-    { label: 'kilograms', value: 'kg', selected: true },
-    { label: 'pounds', value: 'lb', selected: false }
-];
+const weightItems = Weight.map(item => {
+    return {
+        label: item.name,
+        value: item.unit,
+        selected: item.defaultSelected
+    };
+});
 
-const timeItems = [
-    { label: 'seconds', value: 's', selected: true },
-    { label: 'minutes', value: 'min', selected: false },
-    { label: 'hours', value: 'h', selected: false }
-];
+const timeItems = Time.map(item => {
+    return {
+        label: item.name,
+        value: item.unit,
+        selected: item.defaultSelected
+    };
+});
 
-const AddExercise: FC = () => {
+interface Props {
+    addExerciseAction: (exercise: Exercise) => void;
+}
+
+const AddExercise: FC<Props> = ({ addExerciseAction }: Props) => {
     const [state, setState] = useState({
         name: '',
         desc: '',
         settings: {
             weight: {
                 selected: true,
-                unit: weightItems.filter(item => item.selected).pop(),
+                unit: weightItems.filter(item => item.selected).pop().value,
                 addBody: false
             },
             time: {
                 selected: true,
-                unit: timeItems.filter(item => item.selected).pop()
+                unit: timeItems.filter(item => item.selected).pop().value
             }
         }
     });
 
+    const onChangeName = (text: string) => {
+        setState({
+            ...state,
+            name: text
+        });
+    };
+
+    const onChangeDesc = (text: string) => {
+        setState({
+            ...state,
+            desc: text
+        });
+    };
+
+    const onChangeWeightStatus = (status: boolean) => {
+        const clonedState = cloneDeep(state);
+        clonedState.settings.weight.selected = status;
+        setState({ ...clonedState });
+    };
+
+    const onChangeWeightBodyStatus = (status: boolean) => {
+        const clonedState = cloneDeep(state);
+        clonedState.settings.weight.addBody = status;
+        setState({ ...clonedState });
+    };
+
+    const onChangeTimeStatus = (status: boolean) => {
+        const clonedState = cloneDeep(state);
+        clonedState.settings.time.selected = status;
+        setState({ ...clonedState });
+    };
+
+    const onChangeWeightUnit = (item: SelectItem) => {
+        const clonedState = cloneDeep(state);
+        clonedState.settings.weight.unit = item.value as WeightUnit;
+        setState({ ...clonedState });
+    };
+
+    const onChangeTimeUnit = (item: SelectItem) => {
+        const clonedState = cloneDeep(state);
+        clonedState.settings.time.unit = item.value as TimeUnit;
+        setState({ ...clonedState });
+    };
+
+    const saveExercise = () => {
+        const exercise: Exercise = {
+            name: state.name,
+            desc: state.desc,
+            time: {
+                checked: state.settings.time.selected,
+                unit: state.settings.time.unit
+            },
+            weight: {
+                body: state.settings.weight.addBody,
+                checked: state.settings.weight.selected,
+                unit: state.settings.weight.unit
+            }
+        };
+        addExercise(exercise);
+    };
+
     return (
         <Container>
             <TextInputContainer>
-                <TextInput
-                    onChangeText={text =>
-                        setState({
-                            ...state,
-                            name: text
-                        })
-                    }
-                    label="Name"
-                />
+                <TextInput onChangeText={onChangeName} label="Name" />
             </TextInputContainer>
             <TextInputContainer>
-                <TextInput
-                    onChangeText={text =>
-                        setState({
-                            ...state,
-                            desc: text
-                        })
-                    }
-                    label="Description"
-                />
+                <TextInput onChangeText={onChangeDesc} label="Description" />
             </TextInputContainer>
 
             <SettingsLabel>Settings</SettingsLabel>
@@ -63,55 +127,29 @@ const AddExercise: FC = () => {
                 <OptionWithSelect>
                     <CheckBox
                         label="Weight"
-                        onChange={status => {
-                            const clonedState = cloneDeep(state);
-                            clonedState.settings.weight.selected = status;
-                            setState({ ...clonedState });
-                        }}
+                        onChange={onChangeWeightStatus}
                         defaultValue={state.settings.weight.selected}
                     />
-                    <Select
-                        items={weightItems}
-                        onChange={item => {
-                            const clonedState = cloneDeep(state);
-                            clonedState.settings.weight.unit = item;
-                            setState({ ...clonedState });
-                        }}
-                    />
+                    <Select items={weightItems} onChange={onChangeWeightUnit} />
                 </OptionWithSelect>
                 <SubOption>
                     <CheckBox
                         label="Add body weight"
-                        onChange={status => {
-                            const clonedState = cloneDeep(state);
-                            clonedState.settings.weight.addBody = status;
-                            setState({ ...clonedState });
-                        }}
+                        onChange={onChangeWeightBodyStatus}
                         defaultValue={state.settings.weight.addBody}
                     />
                 </SubOption>
                 <OptionWithSelect>
                     <CheckBox
                         label="Time"
-                        onChange={status => {
-                            const clonedState = cloneDeep(state);
-                            clonedState.settings.time.selected = status;
-                            setState({ ...clonedState });
-                        }}
+                        onChange={onChangeTimeStatus}
                         defaultValue={state.settings.time.selected}
                     />
-                    <Select
-                        items={timeItems}
-                        onChange={item => {
-                            const clonedState = cloneDeep(state);
-                            clonedState.settings.time.unit = item;
-                            setState({ ...clonedState });
-                        }}
-                    />
+                    <Select items={timeItems} onChange={onChangeTimeUnit} />
                 </OptionWithSelect>
             </SettingsContainer>
             <SaveButtonContainer>
-                <Button label="Save" onClick={() => null} />
+                <Button label="Save" onClick={saveExercise} />
             </SaveButtonContainer>
         </Container>
     );
@@ -154,4 +192,11 @@ const SaveButtonContainer = styled.View`
     margin-left: auto;
 `;
 
-export default AddExercise;
+const mapDispatchToProps = {
+    addExerciseAction: addExercise
+};
+
+export default connect(
+    null,
+    mapDispatchToProps
+)(AddExercise);

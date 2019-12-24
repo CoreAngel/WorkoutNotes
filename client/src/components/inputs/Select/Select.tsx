@@ -4,7 +4,7 @@ import styled from 'styled-components/native';
 import { Colors, DefaultTextFont } from '../../../utils';
 import SelectModal from './SelectModal';
 
-interface SelectItem {
+export interface SelectItem {
     label: string;
     value: string;
     selected: boolean;
