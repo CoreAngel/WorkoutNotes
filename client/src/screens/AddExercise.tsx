@@ -110,7 +110,7 @@ const AddExercise: FC<Props> = ({ addExerciseAction }: Props) => {
                 unit: state.settings.weight.unit
             }
         };
-        addExercise(exercise);
+        addExerciseAction(exercise);
     };
 
     return (
