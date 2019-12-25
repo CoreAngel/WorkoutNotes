@@ -1,4 +1,4 @@
-import { ADD_EXERCISE, DELETE_EXERCISE, Exercise } from './types';
+import { ADD_EXERCISE, DELETE_EXERCISE, Exercise, SET_INDEX } from './types';
 
 export const addExercise = (exercise: Exercise) => ({
     type: ADD_EXERCISE,
@@ -8,4 +8,9 @@ export const addExercise = (exercise: Exercise) => ({
 export const deleteExercise = (exercise: Exercise) => ({
     type: DELETE_EXERCISE,
     exercise
+});
+
+export const setIndex = (index: number) => ({
+    type: SET_INDEX,
+    index
 });

@@ -41,6 +41,7 @@ export const Time = [
 ];
 
 export type Exercise = {
+    id?: number;
     name: string;
     desc: string;
     weight: {
@@ -56,18 +57,29 @@ export type Exercise = {
 
 export type ExerciseState = {
     exercises: Exercise[];
+    index: number;
 };
 
-export const ADD_EXERCISE = 'ADD_EXERCISE';
-export const DELETE_EXERCISE = 'DELETE_EXERCISE';
+const PREFIX = 'exercise';
+export const ADD_EXERCISE = `${PREFIX}/ADD_EXERCISE`;
+export const DELETE_EXERCISE = `${PREFIX}/DELETE_EXERCISE`;
+export const SET_INDEX = `${PREFIX}/SET_INDEX`;
 
-interface AddExerciseAction {
+export interface AddExerciseAction {
     type: typeof ADD_EXERCISE;
     exercise: Exercise;
 }
-interface DeleteExerciseAction {
+export interface DeleteExerciseAction {
     type: typeof DELETE_EXERCISE;
     exercise: Exercise;
 }
 
-export type ExerciseAction = AddExerciseAction | DeleteExerciseAction;
+export interface SetIndexAction {
+    type: typeof SET_INDEX;
+    index: number;
+}
+
+export type ExerciseAction =
+    | AddExerciseAction
+    | DeleteExerciseAction
+    | SetIndexAction;
