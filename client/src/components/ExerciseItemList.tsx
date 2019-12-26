@@ -6,19 +6,28 @@ import { DeleteIcon, DownIcon, UpIcon } from './icons';
 interface Props {
     index: number;
     name: string;
+    onDelete: (index: number) => void;
+    onUp: (index: number) => void;
+    onDown: (index: number) => void;
 }
 
-const ExerciseItemList: FC<Props> = ({ index, name }: Props) => {
+const ExerciseItemList: FC<Props> = ({
+    index,
+    name,
+    onDelete,
+    onDown,
+    onUp
+}: Props) => {
     return (
         <Container>
             <TextContainer>
-                <ItemText>{`${index}. `}</ItemText>
+                <ItemText>{`${index + 1}. `}</ItemText>
                 <ItemText>{name}</ItemText>
             </TextContainer>
             <IconsContainer>
-                <UpIcon onClick={() => {}} />
-                <DownIcon onClick={() => {}} />
-                <DeleteIcon onClick={() => {}} />
+                <UpIcon onClick={() => onUp(index)} />
+                <DownIcon onClick={() => onDown(index)} />
+                <DeleteIcon onClick={() => onDelete(index)} />
             </IconsContainer>
         </Container>
     );

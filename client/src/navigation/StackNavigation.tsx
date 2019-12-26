@@ -14,7 +14,7 @@ const StackNavigator = createStackNavigator(
         signUp: SignUp
     },
     {
-        initialRouteName: 'AddExercise',
+        initialRouteName: 'CreateSuperset',
         transitionConfig: () => StackViewTransitionConfigs.SlideFromRightIOS,
         cardStyle: {
             backgroundColor: Colors.DARK
