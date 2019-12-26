@@ -7,7 +7,7 @@ import { Colors, DefaultTextFont } from '../utils';
 import { TextInput, Picker } from '../components/inputs';
 import ExerciseItemList from '../components/ExerciseItemList';
 import { Button } from '../components/buttons';
-import { State as GlobalStore } from '../redux/store';
+import { Store as GlobalStore } from '../redux/store';
 import { addSuperset } from '../redux/superset/supersetActions';
 import { Exercise } from '../redux/exercise/types';
 import { PickerItem } from '../components/inputs/Picker';

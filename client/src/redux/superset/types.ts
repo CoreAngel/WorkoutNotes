@@ -10,7 +10,7 @@ export type Superset = {
     exercises: SupersetExercise[];
 };
 
-export type SupersetState = {
+export type SupersetStore = {
     supersets: Superset[];
     index: number;
 };

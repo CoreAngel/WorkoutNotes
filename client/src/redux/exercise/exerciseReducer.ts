@@ -4,14 +4,14 @@ import {
     DELETE_EXERCISE,
     DeleteExerciseAction,
     ExerciseAction,
-    ExerciseState,
+    ExerciseStore,
     SET_INDEX,
     SetIndexAction,
     TimeUnit,
     WeightUnit
 } from './types';
 
-const initialState: ExerciseState = {
+const initialState: ExerciseStore = {
     exercises: [
         {
             id: 0,

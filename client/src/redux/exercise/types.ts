@@ -55,7 +55,7 @@ export type Exercise = {
     };
 };
 
-export type ExerciseState = {
+export type ExerciseStore = {
     exercises: Exercise[];
     index: number;
 };

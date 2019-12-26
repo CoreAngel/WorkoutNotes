@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 import exerciseReducer from './exercise/exerciseReducer';
 import supersetReducer from './superset/supersetReducer';
-import { ExerciseState } from './exercise/types';
-import { SupersetState } from './superset/types';
+import { ExerciseStore } from './exercise/types';
+import { SupersetStore } from './superset/types';
 
-export type State = {
-    exercise: ExerciseState;
-    superset: SupersetState;
+export type Store = {
+    exercise: ExerciseStore;
+    superset: SupersetStore;
 };
 
 const rootReducer = combineReducers({

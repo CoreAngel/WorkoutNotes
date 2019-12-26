@@ -8,10 +8,10 @@ import {
     ModifySupersetAction,
     SET_INDEX,
     SetIndexAction,
-    SupersetState
+    SupersetStore
 } from './types';
 
-const initialState: SupersetState = {
+const initialState: SupersetStore = {
     supersets: [],
     index: 0
 };
