@@ -12,7 +12,7 @@ import {
     Weight,
     WeightUnit
 } from '../redux/exercise/types';
-import { SelectItem } from '../components/inputs/Select/Select';
+import { SelectItem } from '../components/inputs/Select';
 import { addExercise } from '../redux/exercise/exerciseActions';
 
 const weightItems = Weight.map(item => {
@@ -32,7 +32,7 @@ const timeItems = Time.map(item => {
 });
 
 interface Props {
-    addExerciseAction: (exercise: Exercise) => void;
+    addExerciseAction: typeof addExercise;
 }
 
 const AddExercise: FC<Props> = ({ addExerciseAction }: Props) => {

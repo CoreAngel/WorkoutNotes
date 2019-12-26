@@ -6,11 +6,56 @@ import {
     ExerciseAction,
     ExerciseState,
     SET_INDEX,
-    SetIndexAction
+    SetIndexAction,
+    TimeUnit,
+    WeightUnit
 } from './types';
 
 const initialState: ExerciseState = {
-    exercises: [],
+    exercises: [
+        {
+            id: 0,
+            name: 'Bench press',
+            desc: 'description',
+            weight: {
+                checked: true,
+                unit: WeightUnit.KG,
+                body: false
+            },
+            time: {
+                checked: false,
+                unit: TimeUnit.MIN
+            }
+        },
+        {
+            id: 1,
+            name: 'Squad',
+            desc: 'description',
+            weight: {
+                checked: true,
+                unit: WeightUnit.KG,
+                body: false
+            },
+            time: {
+                checked: false,
+                unit: TimeUnit.MIN
+            }
+        },
+        {
+            id: 2,
+            name: 'Dead lift',
+            desc: 'description',
+            weight: {
+                checked: true,
+                unit: WeightUnit.KG,
+                body: false
+            },
+            time: {
+                checked: false,
+                unit: TimeUnit.MIN
+            }
+        }
+    ],
     index: 0
 };
 
