@@ -4,11 +4,8 @@ import { Platform } from 'react-native';
 import styled from 'styled-components/native';
 import Constants from 'expo-constants';
 import { Provider } from 'react-redux';
-import { applyMiddleware, createStore } from 'redux';
-import thunkMiddleware from 'redux-thunk';
-import loggerMiddleware from 'redux-logger';
 import { SafeAreaView, SafeAreaViewProps } from 'react-navigation';
-import reducer from './src/redux/store';
+import store from './src/redux/store';
 import Navigation from './src/navigation/Navigation';
 import { Colors } from './src/utils';
 
@@ -22,11 +19,6 @@ if (Platform.OS === 'android') {
         SafeAreaViewProps
     >).setStatusBarHeight(0);
 }
-
-const store = createStore(
-    reducer,
-    applyMiddleware(thunkMiddleware, loggerMiddleware)
-);
 
 const RobotoRegular = require('./assets/fonts/Roboto-Regular.ttf');
 

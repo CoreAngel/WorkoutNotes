@@ -1,4 +1,6 @@
-import { combineReducers } from 'redux';
+import { applyMiddleware, combineReducers, createStore } from 'redux';
+import loggerMiddleware from 'redux-logger';
+import thunkMiddleware from 'redux-thunk';
 import exerciseReducer from './exercise/exerciseReducer';
 import supersetReducer from './superset/supersetReducer';
 import { ExerciseStore } from './exercise/types';
@@ -9,9 +11,14 @@ export type Store = {
     superset: SupersetStore;
 };
 
-const rootReducer = combineReducers({
+const reducers = combineReducers({
     exercise: exerciseReducer,
     superset: supersetReducer
 });
 
-export default rootReducer;
+const store = createStore(
+    reducers,
+    applyMiddleware(thunkMiddleware, loggerMiddleware)
+);
+
+export default store;
