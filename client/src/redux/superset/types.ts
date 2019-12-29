@@ -40,7 +40,7 @@ export interface SetIndexAction {
     index: number;
 }
 
-export type ExerciseAction =
+export type SupersetAction =
     | AddSupersetAction
     | DeleteSupersetAction
     | ModifySupersetAction

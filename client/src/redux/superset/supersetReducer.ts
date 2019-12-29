@@ -3,7 +3,7 @@ import {
     AddSupersetAction,
     DELETE_SUPERSET,
     DeleteSupersetAction,
-    ExerciseAction,
+    SupersetAction,
     MODIFY_SUPERSET,
     ModifySupersetAction,
     SET_INDEX,
@@ -16,7 +16,7 @@ const initialState: SupersetStore = {
     index: 0
 };
 
-const supersetReducer = (state = initialState, action: ExerciseAction) => {
+const supersetReducer = (state = initialState, action: SupersetAction) => {
     switch (action.type) {
         case ADD_SUPERSET: {
             const addAction = action as AddSupersetAction;
