@@ -3,13 +3,10 @@ import { TouchableNativeFeedback, View } from 'react-native';
 import { cloneDeep } from 'lodash';
 import styled from 'styled-components/native';
 import { Colors, DefaultTextFont } from '../../utils';
-import Modal from './Modal';
+import Modal from './modal/Modal';
+import ItemListSelect, { SelectItem } from './modal/ItemListSelect';
 
-export interface SelectItem {
-    label: string;
-    value: string;
-    selected: boolean;
-}
+export { SelectItem };
 
 interface Props {
     items: SelectItem[];
@@ -24,34 +21,28 @@ const Select: FC<Props> = ({
     arrowColor = Colors.GRAY,
     pickerTextColor = Colors.WHITE
 }: Props) => {
+    const [isModalVisible, setModalVisible] = useState(false);
     const [itemsState, setItemsState] = useState(items);
-    const [selectedItem, setSelectedItem] = useState(
-        items.filter(item => item.selected).pop()
-    );
-    const [isModalVisible, setIsModalVisible] = useState(false);
+    const selectedItem = items.filter(item => item.selected).pop();
 
-    const setItems = (item: SelectItem) => {
+    const selectItem = (item: SelectItem) => {
         const copyState = cloneDeep(itemsState);
         copyState.forEach((obj, index) => {
-            copyState[index].selected = item.value === obj.value;
+            copyState[index].selected = obj.value === item.value;
         });
         setItemsState(copyState);
-    };
-
-    const changeSelectedItem = value => {
-        const item = itemsState.find(itemState => itemState.value === value);
-        if (onChange) {
-            onChange(item);
-        }
-        setItems(item);
-        setSelectedItem(item);
+        onChange({
+            ...item,
+            selected: true
+        });
+        setModalVisible(false);
     };
 
     return (
         <View>
             <TouchableNativeFeedback
                 onPress={() => {
-                    setIsModalVisible(true);
+                    setModalVisible(true);
                 }}
             >
                 <View>
@@ -69,12 +60,9 @@ const Select: FC<Props> = ({
                     </TextValue>
                 </View>
             </TouchableNativeFeedback>
-            <Modal
-                isVisible={isModalVisible}
-                setIsVisible={setIsModalVisible}
-                items={itemsState}
-                setSelectedItem={changeSelectedItem}
-            />
+            <Modal isVisible={isModalVisible} setIsVisible={setModalVisible}>
+                <ItemListSelect items={itemsState} onChange={selectItem} />
+            </Modal>
         </View>
     );
 };

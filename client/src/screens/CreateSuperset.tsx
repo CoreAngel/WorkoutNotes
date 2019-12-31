@@ -54,7 +54,7 @@ const CreateSuperset: FC<Props> = ({ exercises, addSupersetAction }: Props) => {
         });
     };
 
-    const onSelect = (pickerItem: PickerItem) => {
+    const onChange = (pickerItem: PickerItem) => {
         const exercise = exercises.find(
             item => item.id.toString() === pickerItem.value
         );
@@ -149,7 +149,7 @@ const CreateSuperset: FC<Props> = ({ exercises, addSupersetAction }: Props) => {
                     keyExtractor={(item, index) => `${item.id}/${index}`}
                 />
                 <AddItemContainer>
-                    <Picker items={listItems} onSelect={onSelect} />
+                    <Picker items={listItems} onChange={onChange} />
                 </AddItemContainer>
             </ExercisesContainer>
             <SaveButtonContainer>
