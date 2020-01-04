@@ -12,7 +12,38 @@ import {
 } from './types';
 
 const initialState: SupersetStore = {
-    supersets: [],
+    supersets: [
+        {
+            id: 0,
+            name: 'superset 1',
+            desc: 'desc',
+            exercises: [
+                {
+                    exerciseId: 0,
+                    order: 0
+                },
+                {
+                    exerciseId: 1,
+                    order: 1
+                }
+            ]
+        },
+        {
+            id: 1,
+            name: 'superset 2',
+            desc: 'desc',
+            exercises: [
+                {
+                    exerciseId: 1,
+                    order: 0
+                },
+                {
+                    exerciseId: 2,
+                    order: 1
+                }
+            ]
+        }
+    ],
     index: 0
 };
 
