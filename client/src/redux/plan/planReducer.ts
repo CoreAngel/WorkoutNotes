@@ -23,7 +23,7 @@ const planReducer = (state = initialState, action: PlanAction) => {
             addAction.plan.id = state.index;
             return {
                 ...state,
-                supersets: [...state.plans, addAction.plan],
+                plans: [...state.plans, addAction.plan],
                 index: state.index + 1
             };
         }
@@ -31,7 +31,7 @@ const planReducer = (state = initialState, action: PlanAction) => {
             const deleteAction = action as DeletePlanAction;
             return {
                 ...state,
-                supersets: [
+                plans: [
                     ...state.plans.filter(
                         sup => sup.id !== deleteAction.plan.id
                     )
@@ -46,11 +46,11 @@ const planReducer = (state = initialState, action: PlanAction) => {
             if (index < 0) {
                 return state;
             }
-            const copySupersets = [...state.plans];
-            copySupersets[index] = modifyAction.plan;
+            const copyPlans = [...state.plans];
+            copyPlans[index] = modifyAction.plan;
             return {
                 ...state,
-                supersets: [...copySupersets]
+                plans: [...copyPlans]
             };
         }
         case SET_INDEX: {
