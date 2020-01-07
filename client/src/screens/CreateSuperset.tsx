@@ -66,34 +66,29 @@ const CreateSuperset: FC<Props> = ({ exercises, addSupersetAction }: Props) => {
         }
     };
 
-    const onUp = (index: number) => {
-        if (index <= 0) {
-            return;
-        }
-
+    const swapExercises = (i1: number, i2: number) => {
         const copyExercises = cloneDeep(state.exercises);
-        const temp = copyExercises[index];
-        copyExercises[index] = copyExercises[index - 1];
-        copyExercises[index - 1] = temp;
+        const temp = copyExercises[i1];
+        copyExercises[i1] = copyExercises[i2];
+        copyExercises[i2] = temp;
         setState({
             ...state,
             exercises: copyExercises
         });
     };
 
+    const onUp = (index: number) => {
+        if (index <= 0) {
+            return;
+        }
+        swapExercises(index, index - 1);
+    };
+
     const onDown = (index: number) => {
         if (index >= state.exercises.length - 1) {
             return;
         }
-
-        const copyExercises = cloneDeep(state.exercises);
-        const temp = copyExercises[index];
-        copyExercises[index] = copyExercises[index + 1];
-        copyExercises[index + 1] = temp;
-        setState({
-            ...state,
-            exercises: copyExercises
-        });
+        swapExercises(index, index + 1);
     };
 
     const onDelete = (index: number) => {
