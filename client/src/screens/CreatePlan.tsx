@@ -18,11 +18,11 @@ import {
     PickerSectionItem
 } from '../components/inputs/PickerSection';
 
-interface Props {
+type Props = {
     exercises: Exercise[];
     supersets: Superset[];
     addPlanAction: typeof addPlan;
-}
+};
 
 enum Type {
     EXERCISE,
@@ -39,11 +39,11 @@ type StateSuperset = StateExercise & {
     exercises: string[];
 };
 
-interface State {
+type State = {
     name: string;
     desc: string;
     exercises: StateExercise[];
-}
+};
 
 const CreatePlan: FC<Props> = ({
     exercises,

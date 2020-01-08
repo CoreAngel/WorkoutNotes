@@ -9,7 +9,7 @@ enum CheckBoxState {
     CHECKED = 1
 }
 
-interface Props {
+type Props = {
     onChange: (status: boolean) => void;
     label: string;
     defaultValue: boolean;
@@ -21,7 +21,7 @@ interface Props {
     activeLabelColor?: string;
     fillColor?: string;
     animationDuration?: number;
-}
+};
 
 const CheckBox: FC<Props> = ({
     onChange,
@@ -68,26 +68,20 @@ const CheckBox: FC<Props> = ({
                 onPress={() => {
                     if (isAnimated) return;
                     setValue(!value);
-                    if (onChange) {
-                        onChange(!value);
-                    }
+                    onChange(!value);
                 }}
             >
                 <View>
                     <CheckBoxBorder
-                        styles={{
-                            size,
-                            borderSize
-                        }}
+                        size={size}
+                        borderSize={borderSize}
                         style={styleBorder}
                     />
                     <CheckBoxBG
-                        styles={{
-                            size,
-                            borderSize,
-                            activeBorderColor,
-                            fillColor
-                        }}
+                        size={size}
+                        borderSize={borderSize}
+                        activeBorderColor={activeBorderColor}
+                        fillColor={fillColor}
                         style={styleBG}
                     />
                     <SvgContainer>
@@ -125,36 +119,32 @@ const Label = styled(DefaultAnimatedTextFont)`
     margin-bottom: auto;
 `;
 
-interface CheckBoxBorderProps {
-    styles: {
-        size: number;
-        borderSize: number;
-    };
-}
+type CheckBoxBorderProps = {
+    size: number;
+    borderSize: number;
+};
 
 const CheckBoxBorder = styled(Animated.View)<CheckBoxBorderProps>`
-    width: ${({ styles }) => styles.size};
-    height: ${({ styles }) => styles.size};
-    border-width: ${({ styles }) => styles.borderSize};
-    border-radius: ${({ styles }) => styles.size / 8};
+    width: ${({ size }) => size};
+    height: ${({ size }) => size};
+    border-width: ${({ borderSize }) => borderSize}px;
+    border-radius: ${({ size }) => size / 8}px;
 `;
 
-interface CheckBoxBGProps {
-    styles: {
-        size: number;
-        borderSize: number;
-        activeBorderColor: string;
-        fillColor: string;
-    };
-}
+type CheckBoxBGProps = {
+    size: number;
+    borderSize: number;
+    activeBorderColor: string;
+    fillColor: string;
+};
 
 const CheckBoxBG = styled(Animated.View)<CheckBoxBGProps>`
-    width: ${({ styles }) => styles.size};
-    height: ${({ styles }) => styles.size};
-    background-color: ${({ styles }) => styles.fillColor};
-    border-radius: ${({ styles }) => styles.size / 8};
-    border-width: ${({ styles }) => styles.borderSize};
-    border-color: ${({ styles }) => styles.activeBorderColor};
+    width: ${({ size }) => size};
+    height: ${({ size }) => size};
+    background-color: ${({ fillColor }) => fillColor};
+    border-radius: ${({ size }) => size / 8};
+    border-width: ${({ borderSize }) => borderSize};
+    border-color: ${({ activeBorderColor }) => activeBorderColor};
     position: absolute;
     left: 0;
     right: 0;

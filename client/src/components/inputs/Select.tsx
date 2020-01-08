@@ -8,12 +8,12 @@ import ItemListSelect, { SelectItem } from './modal/ItemListSelect';
 
 export { SelectItem };
 
-interface Props {
+type Props = {
     items: SelectItem[];
     onChange: (item: SelectItem) => void;
     arrowColor?: string;
     pickerTextColor?: string;
-}
+};
 
 const Select: FC<Props> = ({
     items,
@@ -46,16 +46,8 @@ const Select: FC<Props> = ({
                 }}
             >
                 <View>
-                    <ArrowIcon
-                        styles={{
-                            arrowColor
-                        }}
-                    />
-                    <TextValue
-                        styles={{
-                            pickerTextColor
-                        }}
-                    >
+                    <ArrowIcon color={arrowColor} />
+                    <TextValue color={pickerTextColor}>
                         {selectedItem.label}
                     </TextValue>
                 </View>
@@ -67,11 +59,9 @@ const Select: FC<Props> = ({
     );
 };
 
-interface ArrowIconProps {
-    styles: {
-        arrowColor: string;
-    };
-}
+type ArrowIconProps = {
+    color: string;
+};
 
 const ArrowIcon = styled.View<ArrowIconProps>`
     height: 0;
@@ -81,21 +71,19 @@ const ArrowIcon = styled.View<ArrowIconProps>`
     border-right-width: 5px;
     border-bottom-width: 0;
     border-color: transparent;
-    border-top-color: ${({ styles }) => styles.arrowColor};
+    border-top-color: ${({ color }) => color};
     position: absolute;
     right: 10px;
     top: 50%;
     transform: translateY(-3px);
 `;
 
-interface TextValueProps {
-    styles: {
-        pickerTextColor: string;
-    };
-}
+type TextValueProps = {
+    color: string;
+};
 
 const TextValue = styled(DefaultTextFont)<TextValueProps>`
-    color: ${({ styles }) => styles.pickerTextColor};
+    color: ${({ color }) => color};
     padding: 10px 30px 10px 10px;
 `;
 

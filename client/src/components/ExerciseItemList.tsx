@@ -3,13 +3,13 @@ import styled from 'styled-components/native';
 import { Colors, DefaultTextFont } from '../utils';
 import { DeleteIcon, DownIcon, UpIcon } from './icons';
 
-interface Props {
+type Props = {
     index: number;
     name: string;
     onDelete: (index: number) => void;
     onUp: (index: number) => void;
     onDown: (index: number) => void;
-}
+};
 
 const ExerciseItemList: FC<Props> = ({
     index,

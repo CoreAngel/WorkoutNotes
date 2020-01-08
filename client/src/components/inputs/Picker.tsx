@@ -6,10 +6,10 @@ import ItemListPicker, { PickerItem } from './modal/ItemListPicker';
 
 export { PickerItem };
 
-interface Props {
+type Props = {
     items: PickerItem[];
     onChange: (item: PickerItem) => void;
-}
+};
 
 const Select: FC<Props> = ({ items, onChange }: Props) => {
     const [isModalVisible, setModalVisible] = useState(false);

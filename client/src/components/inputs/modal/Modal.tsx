@@ -4,11 +4,11 @@ import { Dimensions, Modal as ReactModal } from 'react-native';
 import { Colors } from '../../../utils';
 import { Button } from '../../buttons';
 
-interface Props {
+type Props = {
     isVisible: boolean;
     setIsVisible: (state: boolean) => void;
     children: ReactElement;
-}
+};
 
 const Modal: FC<Props> = ({ isVisible, setIsVisible, children }: Props) => {
     return (

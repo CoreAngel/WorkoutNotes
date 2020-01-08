@@ -3,14 +3,14 @@ import styled from 'styled-components/native';
 import { Colors, DefaultTextFont } from '../utils';
 import { DeleteIcon, DownIcon, UpIcon } from './icons';
 
-interface Props {
+type Props = {
     index: number;
     name: string;
     exercises: string[];
     onDelete: (index: number) => void;
     onUp: (index: number) => void;
     onDown: (index: number) => void;
-}
+};
 
 const SupersetItemList: FC<Props> = ({
     index,
@@ -20,6 +20,13 @@ const SupersetItemList: FC<Props> = ({
     onDown,
     onUp
 }: Props) => {
+    const exercisesWithId = exercises.map((item, exIndex) => {
+        return {
+            id: exIndex,
+            item
+        };
+    });
+
     return (
         <Container>
             <NameContainer>
@@ -34,8 +41,8 @@ const SupersetItemList: FC<Props> = ({
                 </IconsContainer>
             </NameContainer>
             <ExercisesContainer>
-                {exercises.map((item, exIndex) => (
-                    <ExerciseText key={index}>{exIndex}</ExerciseText>
+                {exercisesWithId.map(({ item, id }) => (
+                    <ExerciseText key={id}>{item}</ExerciseText>
                 ))}
             </ExercisesContainer>
         </Container>

@@ -31,9 +31,9 @@ const timeItems = Time.map(item => {
     };
 });
 
-interface Props {
+type Props = {
     addExerciseAction: typeof addExercise;
-}
+};
 
 const AddExercise: FC<Props> = ({ addExerciseAction }: Props) => {
     const [state, setState] = useState({

@@ -8,17 +8,22 @@ interface Props {
 }
 
 const ProfileIcon: FC<Props> = ({ width, height }: Props) => {
-    const ProfileContainer = styled.View`
-        aspect-ratio: 1;
-        width: ${width != null ? width : 'auto'};
-        height: ${height != null ? height : 'auto'};
-    `;
-
     return (
-        <ProfileContainer>
+        <ProfileContainer height={height} width={width}>
             <Profile />
         </ProfileContainer>
     );
 };
+
+type ProfileContainerProps = {
+    width: string;
+    height: string;
+};
+
+const ProfileContainer = styled.View<ProfileContainerProps>`
+    aspect-ratio: 1;
+    width: ${({ width }) => width};
+    height: ${({ height }) => height};
+`;
 
 export default ProfileIcon;

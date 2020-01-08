@@ -2,24 +2,28 @@ import React, { FC } from 'react';
 import styled from 'styled-components/native';
 import Play from '../../../assets/svg/play.svg';
 
-interface Props {
+type Props = {
     width?: string;
     height?: string;
-}
+};
 
 const PlayIcon: FC<Props> = ({ width, height }: Props) => {
-    const ArrowContainer = styled.View`
-        aspect-ratio: 1;
-        width: ${width != null ? width : 'auto'};
-        height: ${height != null ? height : 'auto'};
-        transform: translateX(2px);
-    `;
-
     return (
-        <ArrowContainer>
+        <PlayContainer height={height} width={width}>
             <Play />
-        </ArrowContainer>
+        </PlayContainer>
     );
 };
+
+type PlayContainerProps = {
+    width: string;
+    height: string;
+};
+
+const PlayContainer = styled.View<PlayContainerProps>`
+    aspect-ratio: 1;
+    width: ${({ width }) => width};
+    height: ${({ height }) => height};
+`;
 
 export default PlayIcon;

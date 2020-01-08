@@ -4,11 +4,11 @@ import { NavigationDrawerProp } from 'react-navigation-drawer';
 import { Header } from 'react-navigation-stack';
 import { Colors, DefaultTextFont } from '../../utils';
 import { LogoIcon, ProfileIcon } from '../icons';
-import { drawer } from '../../navigation/NavigationService';
+import { drawer } from '../../navigation';
 
-interface Props {
+type Props = {
     navigation: NavigationDrawerProp;
-}
+};
 
 const HomeHeader: FC<Props> = ({ navigation }: Props) => {
     return (

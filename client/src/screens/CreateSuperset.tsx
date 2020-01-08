@@ -13,16 +13,16 @@ import { Exercise } from '../redux/exercise/types';
 import { PickerItem } from '../components/inputs/Picker';
 import { Superset, SupersetExercise } from '../redux/superset/types';
 
-interface Props {
+type Props = {
     exercises: Exercise[];
     addSupersetAction: typeof addSuperset;
-}
+};
 
-interface State {
+type State = {
     name: string;
     desc: string;
     exercises: Exercise[];
-}
+};
 
 const CreateSuperset: FC<Props> = ({ exercises, addSupersetAction }: Props) => {
     const [state, setState] = useState<State>({

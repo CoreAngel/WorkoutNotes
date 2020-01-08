@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, ReactElement } from 'react';
 import {
     SectionList,
     SectionListData,
@@ -8,31 +8,31 @@ import {
 import styled from 'styled-components/native';
 import { Colors, DefaultTextFont } from '../../../utils';
 
-export interface PickerItem {
+export type PickerItem = {
     label: string;
     value: string;
-}
+};
 
-export interface PickerSectionItem {
+export type PickerSectionItem = {
     title: string;
     onClick: (item: PickerItem) => void;
     data: PickerItem[];
-}
+};
 
-interface Props {
+type Props = {
     items: PickerSectionItem[];
     setVisible: (value: boolean) => void;
-}
+};
 
 const ItemListSelect: FC<Props> = ({ items, setVisible }: Props) => {
-    type paramsRender = {
+    type RenderItemParams = {
         item: PickerItem;
         section: SectionListData<PickerItem>;
     };
     const renderItem: SectionListRenderItem<PickerItem> = ({
         item,
         section
-    }: paramsRender) => {
+    }: RenderItemParams) => {
         const sectionPicker = section as PickerSectionItem;
         return (
             <TouchableNativeFeedback
@@ -46,17 +46,17 @@ const ItemListSelect: FC<Props> = ({ items, setVisible }: Props) => {
         );
     };
 
-    type paramsSection = { section: SectionListData<PickerItem> };
+    type SectionParams = { section: SectionListData<PickerItem> };
     type RenderSectionType = (info: {
         section: SectionListData<PickerItem>;
-    }) => React.ReactElement | null;
-    const renderSection: RenderSectionType = ({ section }: paramsSection) => {
+    }) => ReactElement | null;
+    const renderSection: RenderSectionType = ({ section }: SectionParams) => {
         const sectionPicker = section as PickerSectionItem;
         return <SectionText>{sectionPicker.title}</SectionText>;
     };
 
     const SectionListPicker = SectionList as SectionList<PickerItem>;
-    const ItemList = (
+    const itemList = (
         <List>
             <SectionListPicker
                 sections={items}
@@ -67,9 +67,9 @@ const ItemListSelect: FC<Props> = ({ items, setVisible }: Props) => {
         </List>
     );
 
-    const NoItems = <NoItemsInfo>No items</NoItemsInfo>;
+    const noItems = <NoItemsInfo>No items</NoItemsInfo>;
 
-    return items.length > 0 ? ItemList : NoItems;
+    return items.length > 0 ? itemList : noItems;
 };
 
 const List = styled.View`

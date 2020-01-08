@@ -1,13 +1,13 @@
 import { Animated } from 'react-native';
 import { useState, useEffect } from 'react';
 
-interface Props {
+type Props = {
     doAnimation: boolean;
     duration: number;
     fromValue: number;
     toValue: number;
     defaultValue: number;
-}
+};
 
 const useAnimation = ({
     doAnimation,

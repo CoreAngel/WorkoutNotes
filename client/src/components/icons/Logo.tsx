@@ -2,23 +2,28 @@ import React, { FC } from 'react';
 import styled from 'styled-components/native';
 import Logo from '../../../assets/svg/logo.svg';
 
-interface Props {
+type Props = {
     width?: string;
     height?: string;
-}
+};
 
-const LogoIcon: FC<Props> = ({ width, height }: Props) => {
-    const LogoContainer = styled.View`
-        aspect-ratio: 1;
-        width: ${width != null ? width : 'auto'};
-        height: ${height != null ? height : 'auto'};
-    `;
-
+const LogoIcon: FC<Props> = ({ width = 'auto', height = 'auto' }: Props) => {
     return (
-        <LogoContainer>
+        <LogoContainer height={height} width={width}>
             <Logo />
         </LogoContainer>
     );
 };
+
+type LogoContainerProps = {
+    width: string;
+    height: string;
+};
+
+const LogoContainer = styled.View<LogoContainerProps>`
+    aspect-ratio: 1;
+    width: ${({ width }) => width};
+    height: ${({ height }) => height};
+`;
 
 export default LogoIcon;

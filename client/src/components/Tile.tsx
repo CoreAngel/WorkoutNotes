@@ -3,13 +3,13 @@ import styled from 'styled-components/native';
 import { RoundedButton, RoundedButtonType } from './buttons';
 import { Colors, DefaultTextFont } from '../utils';
 
-interface Props {
-    title: String;
-    desc: String;
-    button: RoundedButtonType;
-}
+type Props = {
+    title: string;
+    desc: string;
+    buttonType: RoundedButtonType;
+};
 
-const Tile: FC<Props> = ({ title, desc, button }: Props) => {
+const Tile: FC<Props> = ({ title, desc, buttonType }: Props) => {
     return (
         <Container>
             <TextContainer>
@@ -17,7 +17,7 @@ const Tile: FC<Props> = ({ title, desc, button }: Props) => {
                 <Desc>{desc}</Desc>
             </TextContainer>
             <ButtonContainer>
-                <RoundedButton type={button} />
+                <RoundedButton type={buttonType} />
             </ButtonContainer>
         </Container>
     );

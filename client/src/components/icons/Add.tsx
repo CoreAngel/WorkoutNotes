@@ -2,23 +2,28 @@ import React, { FC } from 'react';
 import styled from 'styled-components/native';
 import Add from '../../../assets/svg/add.svg';
 
-interface Props {
+type Props = {
     width?: string;
     height?: string;
-}
+};
 
-const AddIcon: FC<Props> = ({ width, height }: Props) => {
-    const ArrowContainer = styled.View`
-        aspect-ratio: 1;
-        width: ${width != null ? width : 'auto'};
-        height: ${height != null ? height : 'auto'};
-    `;
-
+const AddIcon: FC<Props> = ({ width = 'auto', height = 'auto' }: Props) => {
     return (
-        <ArrowContainer>
+        <AddContainer width={width} height={height}>
             <Add />
-        </ArrowContainer>
+        </AddContainer>
     );
 };
+
+type AddContainerProps = {
+    width: string;
+    height: string;
+};
+
+const AddContainer = styled.View<AddContainerProps>`
+    aspect-ratio: 1;
+    width: ${({ width }) => width};
+    height: ${({ height }) => height};
+`;
 
 export default AddIcon;

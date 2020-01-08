@@ -3,10 +3,10 @@ import { TouchableWithoutFeedback } from 'react-native';
 import styled from 'styled-components/native';
 import { Colors, DefaultTextFont } from '../../utils';
 
-interface Props {
-    label: String;
-    path: String;
-}
+type Props = {
+    label: string;
+    path: string;
+};
 
 const DrawerOption: FC<Props> = ({ label, path }: Props) => {
     return (

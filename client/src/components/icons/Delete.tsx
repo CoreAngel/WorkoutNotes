@@ -5,34 +5,50 @@ import { Colors } from '../../utils';
 
 interface Props {
     onClick: () => void;
-    width?: number;
-    height?: number;
+    width?: string;
+    height?: string;
 }
 
-const DeleteIcon: FC<Props> = ({ onClick, height = 20, width = 18 }: Props) => {
-    const Container = styled.View`
-        height: ${height}px;
-        width: ${width}px;
-        flex-direction: row;
-    `;
-
-    const Icon = styled.View`
-        background-color: ${Colors.PRIMARY};
-        height: 3px;
-        width: ${width}px;
-        transform: translateY(${height / 2 - 1}px);
-    `;
-
+const DeleteIcon: FC<Props> = ({
+    onClick,
+    height = '20px',
+    width = '18px'
+}: Props) => {
     return (
         <Button>
             <TouchableWithoutFeedback onPress={onClick}>
-                <Container>
-                    <Icon />
+                <Container height={height} width={width}>
+                    <Icon height={height} width={width} />
                 </Container>
             </TouchableWithoutFeedback>
         </Button>
     );
 };
+
+type ContainerProps = {
+    width: string;
+    height: string;
+};
+
+const Container = styled.View<ContainerProps>`
+    height: ${({ height }) => height};
+    width: ${({ width }) => width};
+    flex-direction: row;
+`;
+
+type IconProps = {
+    width: string;
+    height: string;
+};
+
+const Icon = styled.View<IconProps>`
+    background-color: ${Colors.PRIMARY};
+    height: 3px;
+    width: ${({ width }) => width};
+    transform: translateY(
+        ${({ height }) => Number.parseInt(height, 10) / 2 - 1}px
+    );
+`;
 
 const Button = styled.View`
     margin-left: 8px;

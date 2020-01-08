@@ -6,14 +6,14 @@ import Tile from '../components/Tile';
 import { HomeHeader } from '../components/navigation';
 import { RoundedButtonType } from '../components/buttons';
 
-interface NavigationOptions {
+type NavigationOptions = {
     navigationOptions: object;
-}
+};
 type HomeScreen<Props> = FC<Props> & NavigationOptions;
 
-interface Props {
+type Props = {
     navigation: NavigationSwitchProp<{ screen: string }>;
-}
+};
 
 const data = [
     {
@@ -58,7 +58,7 @@ const Home: HomeScreen<Props> = () => {
                         <Tile
                             title={item.title}
                             desc={item.desc}
-                            button={item.button}
+                            buttonType={item.button}
                         />
                     </TileContainer>
                 );

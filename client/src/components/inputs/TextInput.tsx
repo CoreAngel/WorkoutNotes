@@ -15,14 +15,14 @@ enum InputState {
 
 const AnimationDuration = 200;
 
-interface Props {
+type Props = {
     label: string;
     onChangeText: (text: string) => void;
     onEndEditing?: (
         e: NativeSyntheticEvent<TextInputEndEditingEventData>
     ) => void;
     error?: string;
-}
+};
 
 const TextInput: FC<Props> = ({
     label,
@@ -79,9 +79,7 @@ const TextInput: FC<Props> = ({
                             text,
                             active: true
                         });
-                        if (onChangeText) {
-                            onChangeText(text);
-                        }
+                        onChangeText(text);
                     }}
                     onFocus={() =>
                         setInputState({

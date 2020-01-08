@@ -3,18 +3,18 @@ import { FlatList, TouchableNativeFeedback } from 'react-native';
 import styled from 'styled-components/native';
 import { Colors, DefaultTextFont } from '../../../utils';
 
-export interface PickerItem {
+export type PickerItem = {
     label: string;
     value: string;
-}
+};
 
-interface Props {
+type Props = {
     items: PickerItem[];
     onChange: (item: PickerItem) => void;
-}
+};
 
 const ItemListSelect: FC<Props> = ({ onChange, items }: Props) => {
-    const ItemList = (
+    const itemList = (
         <List>
             <FlatList
                 data={items}
@@ -34,9 +34,9 @@ const ItemListSelect: FC<Props> = ({ onChange, items }: Props) => {
         </List>
     );
 
-    const NoItems = <NoItemsInfo>No items</NoItemsInfo>;
+    const noItems = <NoItemsInfo>No items</NoItemsInfo>;
 
-    return items.length > 0 ? ItemList : NoItems;
+    return items.length > 0 ? itemList : noItems;
 };
 
 const List = styled.View`

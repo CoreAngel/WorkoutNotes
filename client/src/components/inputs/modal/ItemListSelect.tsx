@@ -3,16 +3,16 @@ import { FlatList, TouchableNativeFeedback } from 'react-native';
 import styled from 'styled-components/native';
 import { Colors, DefaultTextFont } from '../../../utils';
 
-export interface SelectItem {
+export type SelectItem = {
     label: string;
     value: string;
     selected: boolean;
-}
+};
 
-interface Props {
+type Props = {
     items: SelectItem[];
     onChange: (item: SelectItem) => void;
-}
+};
 
 const ItemListSelect: FC<Props> = ({ items, onChange }: Props) => {
     const ItemList = (
@@ -26,11 +26,7 @@ const ItemListSelect: FC<Props> = ({ items, onChange }: Props) => {
                                 onChange(item);
                             }}
                         >
-                            <ItemText
-                                styles={{
-                                    selected: item.selected
-                                }}
-                            >
+                            <ItemText selected={item.selected}>
                                 {item.label}
                             </ItemText>
                         </TouchableNativeFeedback>
@@ -51,16 +47,11 @@ const List = styled.View`
 `;
 
 interface ItemTextProps {
-    styles: {
-        selected: boolean;
-    };
+    selected: boolean;
 }
 
 const ItemText = styled(DefaultTextFont)<ItemTextProps>`
-    color: ${({ styles }) =>
-        styles.selected || styles.selected === undefined
-            ? Colors.WHITE
-            : Colors.WHITE70};
+    color: ${({ selected }) => (selected ? Colors.WHITE : Colors.WHITE70)};
     font-size: 18px;
     padding: 10px 10px;
 `;

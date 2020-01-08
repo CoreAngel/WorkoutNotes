@@ -9,9 +9,9 @@ import ItemListPickerSection, {
 
 export { PickerItem, PickerSectionItem };
 
-interface Props {
+type Props = {
     items: PickerSectionItem[];
-}
+};
 
 const Select: FC<Props> = ({ items }: Props) => {
     const [isModalVisible, setModalVisible] = useState(false);
