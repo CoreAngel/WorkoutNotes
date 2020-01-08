@@ -9,11 +9,7 @@ type Props = {
     height?: string;
 };
 
-const DownIcon: FC<Props> = ({
-    onClick,
-    height = '20px',
-    width = '26px'
-}: Props) => {
+const DownIcon: FC<Props> = ({ onClick, height = '20px', width = '26px' }: Props) => {
     return (
         <Button>
             <TouchableWithoutFeedback onPress={onClick}>
@@ -46,8 +42,7 @@ const LeftArm = styled.View<ArmProps>`
     background-color: ${Colors.GRAY};
     height: 3px;
     width: ${({ width }) => Number.parseInt(width, 10) / 2}px;
-    transform: translateX(-${({ width }) => Number.parseInt(width, 10) / 2}px)
-        rotate(30deg)
+    transform: translateX(-${({ width }) => Number.parseInt(width, 10) / 2}px) rotate(30deg)
         translateX(${({ width }) => Number.parseInt(width, 10) / 2}px)
         translateY(${({ height }) => Number.parseInt(height, 10) / 2 + 6}px);
 `;
@@ -56,8 +51,7 @@ const RightArm = styled.View<ArmProps>`
     background-color: ${Colors.GRAY};
     height: 3px;
     width: ${({ width }) => Number.parseInt(width, 10) / 2}px;
-    transform: translateX(${({ width }) => Number.parseInt(width, 10) / 2}px)
-        rotate(-30deg)
+    transform: translateX(${({ width }) => Number.parseInt(width, 10) / 2}px) rotate(-30deg)
         translateX(-${({ width }) => Number.parseInt(width, 10) / 2}px)
         translateY(${({ height }) => Number.parseInt(height, 10) / 2 + 6}px);
 `;

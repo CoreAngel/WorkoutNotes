@@ -20,9 +20,6 @@ const reducers = combineReducers({
     plan: planReducer
 });
 
-const store = createStore(
-    reducers,
-    applyMiddleware(thunkMiddleware, loggerMiddleware)
-);
+const store = createStore(reducers, applyMiddleware(thunkMiddleware, loggerMiddleware));
 
 export default store;

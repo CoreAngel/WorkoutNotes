@@ -14,18 +14,13 @@ export interface ResolveSuperset {
     exercises: ResolveExercise[];
 }
 
-const resolveSuperset = (
-    superset: Superset,
-    exercises?: Exercise[]
-): ResolveSuperset => {
+const resolveSuperset = (superset: Superset, exercises?: Exercise[]): ResolveSuperset => {
     const exercisesStore = exercises || store.getState().exercise.exercises;
     const supersetExercises = superset.exercises;
 
     const resolvedExercises = exercisesStore
         .reduce((acc, ex): ResolveExercise[] => {
-            const exercise = supersetExercises.find(
-                supEx => supEx.exerciseId === ex.id
-            );
+            const exercise = supersetExercises.find(supEx => supEx.exerciseId === ex.id);
             if (exercise) {
                 const resolvedExercise: ResolveExercise = {
                     exercise: ex,

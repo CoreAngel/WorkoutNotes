@@ -12,14 +12,7 @@ type Props = {
     onDown: (index: number) => void;
 };
 
-const SupersetItemList: FC<Props> = ({
-    index,
-    name,
-    exercises,
-    onDelete,
-    onDown,
-    onUp
-}: Props) => {
+const SupersetItemList: FC<Props> = ({ index, name, exercises, onDelete, onDown, onUp }: Props) => {
     const exercisesWithId = exercises.map((item, exIndex) => {
         return {
             id: exIndex,

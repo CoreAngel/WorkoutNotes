@@ -8,11 +8,7 @@ type Props = {
     color?: string;
 };
 
-const Button: FC<Props> = ({
-    label,
-    onClick,
-    color = Colors.PRIMARY
-}: Props) => {
+const Button: FC<Props> = ({ label, onClick, color = Colors.PRIMARY }: Props) => {
     return (
         <TouchableButton color={color} onPress={onClick}>
             <Text>{label}</Text>

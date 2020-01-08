@@ -62,18 +62,12 @@ const supersetReducer = (state = initialState, action: SupersetAction) => {
             const deleteAction = action as DeleteSupersetAction;
             return {
                 ...state,
-                supersets: [
-                    ...state.supersets.filter(
-                        sup => sup.id !== deleteAction.superset.id
-                    )
-                ]
+                supersets: [...state.supersets.filter(sup => sup.id !== deleteAction.superset.id)]
             };
         }
         case MODIFY_SUPERSET: {
             const modifyAction = action as ModifySupersetAction;
-            const index = state.supersets.findIndex(
-                item => item.id === modifyAction.superset.id
-            );
+            const index = state.supersets.findIndex(item => item.id === modifyAction.superset.id);
             if (index < 0) {
                 return state;
             }

@@ -11,13 +11,7 @@ type Props = {
     onDown: (index: number) => void;
 };
 
-const ExerciseItemList: FC<Props> = ({
-    index,
-    name,
-    onDelete,
-    onDown,
-    onUp
-}: Props) => {
+const ExerciseItemList: FC<Props> = ({ index, name, onDelete, onDown, onUp }: Props) => {
     return (
         <Container>
             <TextContainer>

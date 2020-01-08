@@ -13,10 +13,7 @@ import { addPlan } from '../redux/plan/planActions';
 import { Superset } from '../redux/superset/types';
 import { Exercise } from '../redux/exercise/types';
 import resolveSuperset from '../redux/resolver';
-import {
-    PickerItem,
-    PickerSectionItem
-} from '../components/inputs/PickerSection';
+import { PickerItem, PickerSectionItem } from '../components/inputs/PickerSection';
 
 type Props = {
     exercises: Exercise[];
@@ -45,11 +42,7 @@ type State = {
     exercises: StateExercise[];
 };
 
-const CreatePlan: FC<Props> = ({
-    exercises,
-    supersets,
-    addPlanAction
-}: Props) => {
+const CreatePlan: FC<Props> = ({ exercises, supersets, addPlanAction }: Props) => {
     const [state, setState] = useState<State>({
         name: '',
         desc: '',
@@ -248,9 +241,7 @@ const CreatePlan: FC<Props> = ({
                             />
                         );
                     }}
-                    keyExtractor={(item, index) =>
-                        `${item.type}/${item.id}/${index}`
-                    }
+                    keyExtractor={(item, index) => `${item.type}/${item.id}/${index}`}
                 />
                 <AddItemContainer>
                     <PickerSection items={items} />

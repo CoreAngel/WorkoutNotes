@@ -79,7 +79,4 @@ export interface SetIndexAction {
     index: number;
 }
 
-export type ExerciseAction =
-    | AddExerciseAction
-    | DeleteExerciseAction
-    | SetIndexAction;
+export type ExerciseAction = AddExerciseAction | DeleteExerciseAction | SetIndexAction;

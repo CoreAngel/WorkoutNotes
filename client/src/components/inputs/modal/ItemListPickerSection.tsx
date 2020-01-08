@@ -29,10 +29,7 @@ const ItemListSelect: FC<Props> = ({ items, setVisible }: Props) => {
         item: PickerItem;
         section: SectionListData<PickerItem>;
     };
-    const renderItem: SectionListRenderItem<PickerItem> = ({
-        item,
-        section
-    }: RenderItemParams) => {
+    const renderItem: SectionListRenderItem<PickerItem> = ({ item, section }: RenderItemParams) => {
         const sectionPicker = section as PickerSectionItem;
         return (
             <TouchableNativeFeedback

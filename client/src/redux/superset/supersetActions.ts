@@ -1,10 +1,4 @@
-import {
-    ADD_SUPERSET,
-    DELETE_SUPERSET,
-    MODIFY_SUPERSET,
-    SET_INDEX,
-    Superset
-} from './types';
+import { ADD_SUPERSET, DELETE_SUPERSET, MODIFY_SUPERSET, SET_INDEX, Superset } from './types';
 
 export const addSuperset = (superset: Superset) => ({
     type: ADD_SUPERSET,

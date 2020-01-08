@@ -15,9 +15,7 @@ interface SafeAreaWithSetStatusBarHeight<SafeAreaViewProps>
 }
 
 if (Platform.OS === 'android') {
-    (SafeAreaView as SafeAreaWithSetStatusBarHeight<
-        SafeAreaViewProps
-    >).setStatusBarHeight(0);
+    (SafeAreaView as SafeAreaWithSetStatusBarHeight<SafeAreaViewProps>).setStatusBarHeight(0);
 }
 
 const RobotoRegular = require('./assets/fonts/Roboto-Regular.ttf');

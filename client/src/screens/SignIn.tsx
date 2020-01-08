@@ -1,11 +1,5 @@
 import React, { FC, useState } from 'react';
-import {
-    View,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    ActivityIndicator
-} from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { Card, Button, Input } from 'react-native-elements';
 import { NavigationSwitchProp } from 'react-navigation';
 import { Colors } from '../utils';
@@ -41,11 +35,7 @@ const SignIn: FC<Props> = ({ navigation }: Props) => {
     return (
         <View style={styles.container}>
             <Card>
-                <Input
-                    containerStyle={styles.input}
-                    placeholder="Name..."
-                    label="Name"
-                />
+                <Input containerStyle={styles.input} placeholder="Name..." label="Name" />
                 <Input
                     containerStyle={styles.input}
                     secureTextEntry
@@ -62,9 +52,7 @@ const SignIn: FC<Props> = ({ navigation }: Props) => {
                             onPress={() => setLoader(!loader)}
                         />
                         <Text style={styles.divider}>or</Text>
-                        <TouchableOpacity
-                            onPress={() => navigation.navigate('signUp')}
-                        >
+                        <TouchableOpacity onPress={() => navigation.navigate('signUp')}>
                             <Text style={styles.text}>Sign Up</Text>
                         </TouchableOpacity>
                     </View>

@@ -31,18 +31,12 @@ const planReducer = (state = initialState, action: PlanAction) => {
             const deleteAction = action as DeletePlanAction;
             return {
                 ...state,
-                plans: [
-                    ...state.plans.filter(
-                        sup => sup.id !== deleteAction.plan.id
-                    )
-                ]
+                plans: [...state.plans.filter(sup => sup.id !== deleteAction.plan.id)]
             };
         }
         case MODIFY_PLAN: {
             const modifyAction = action as ModifyPlanAction;
-            const index = state.plans.findIndex(
-                item => item.id === modifyAction.plan.id
-            );
+            const index = state.plans.findIndex(item => item.id === modifyAction.plan.id);
             if (index < 0) {
                 return state;
             }

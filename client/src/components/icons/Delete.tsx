@@ -9,11 +9,7 @@ interface Props {
     height?: string;
 }
 
-const DeleteIcon: FC<Props> = ({
-    onClick,
-    height = '20px',
-    width = '18px'
-}: Props) => {
+const DeleteIcon: FC<Props> = ({ onClick, height = '20px', width = '18px' }: Props) => {
     return (
         <Button>
             <TouchableWithoutFeedback onPress={onClick}>
@@ -45,9 +41,7 @@ const Icon = styled.View<IconProps>`
     background-color: ${Colors.PRIMARY};
     height: 3px;
     width: ${({ width }) => width};
-    transform: translateY(
-        ${({ height }) => Number.parseInt(height, 10) / 2 - 1}px
-    );
+    transform: translateY(${({ height }) => Number.parseInt(height, 10) / 2 - 1}px);
 `;
 
 const Button = styled.View`

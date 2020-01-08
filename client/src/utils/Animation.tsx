@@ -9,13 +9,7 @@ type Props = {
     defaultValue: number;
 };
 
-const useAnimation = ({
-    doAnimation,
-    duration,
-    fromValue,
-    toValue,
-    defaultValue
-}: Props) => {
+const useAnimation = ({ doAnimation, duration, fromValue, toValue, defaultValue }: Props) => {
     const [animation] = useState(new Animated.Value(defaultValue));
     const [isAnimated, setIsAnimated] = useState(false);
 

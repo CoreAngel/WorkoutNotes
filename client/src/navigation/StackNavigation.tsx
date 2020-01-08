@@ -1,15 +1,5 @@
-import {
-    createStackNavigator,
-    StackViewTransitionConfigs
-} from 'react-navigation-stack';
-import {
-    Home,
-    AddExercise,
-    SignUp,
-    SignIn,
-    CreateSuperset,
-    CreatePlan
-} from '../screens';
+import { createStackNavigator, StackViewTransitionConfigs } from 'react-navigation-stack';
+import { Home, AddExercise, SignUp, SignIn, CreateSuperset, CreatePlan } from '../screens';
 import { Colors } from '../utils';
 
 const StackNavigator = createStackNavigator(

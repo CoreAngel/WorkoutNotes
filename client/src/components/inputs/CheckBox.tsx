@@ -42,9 +42,7 @@ const CheckBox: FC<Props> = ({
         duration: animationDuration,
         fromValue: CheckBoxState.UNCHECKED,
         toValue: CheckBoxState.CHECKED,
-        defaultValue: defaultValue
-            ? CheckBoxState.CHECKED
-            : CheckBoxState.UNCHECKED
+        defaultValue: defaultValue ? CheckBoxState.CHECKED : CheckBoxState.UNCHECKED
     });
 
     const styleBorder = {
@@ -72,11 +70,7 @@ const CheckBox: FC<Props> = ({
                 }}
             >
                 <View>
-                    <CheckBoxBorder
-                        size={size}
-                        borderSize={borderSize}
-                        style={styleBorder}
-                    />
+                    <CheckBoxBorder size={size} borderSize={borderSize} style={styleBorder} />
                     <CheckBoxBG
                         size={size}
                         borderSize={borderSize}

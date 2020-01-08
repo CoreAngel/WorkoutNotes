@@ -42,16 +42,10 @@ const Drawer: FC<DrawerContentComponentProps> = () => {
             </CloseIconContainer>
             <OptionContainer>
                 {data
-                    .filter(
-                        item => item.auth === undefined || item.auth === false
-                    )
+                    .filter(item => item.auth === undefined || item.auth === false)
                     .map(item => {
                         return (
-                            <DrawerOption
-                                key={item.label}
-                                label={item.label}
-                                path={item.path}
-                            />
+                            <DrawerOption key={item.label} label={item.label} path={item.path} />
                         );
                     })}
             </OptionContainer>

@@ -75,11 +75,7 @@ const exerciseReducer = (state = initialState, action: ExerciseAction) => {
             const deleteAction = action as DeleteExerciseAction;
             return {
                 ...state,
-                exercises: [
-                    ...state.exercises.filter(
-                        ex => ex.id !== deleteAction.exercise.id
-                    )
-                ]
+                exercises: [...state.exercises.filter(ex => ex.id !== deleteAction.exercise.id)]
             };
         }
         case SET_INDEX: {

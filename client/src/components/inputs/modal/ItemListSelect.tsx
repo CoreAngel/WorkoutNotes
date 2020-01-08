@@ -26,9 +26,7 @@ const ItemListSelect: FC<Props> = ({ items, onChange }: Props) => {
                                 onChange(item);
                             }}
                         >
-                            <ItemText selected={item.selected}>
-                                {item.label}
-                            </ItemText>
+                            <ItemText selected={item.selected}>{item.label}</ItemText>
                         </TouchableNativeFeedback>
                     );
                 }}

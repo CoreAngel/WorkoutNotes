@@ -47,9 +47,7 @@ const Select: FC<Props> = ({
             >
                 <View>
                     <ArrowIcon color={arrowColor} />
-                    <TextValue color={pickerTextColor}>
-                        {selectedItem.label}
-                    </TextValue>
+                    <TextValue color={pickerTextColor}>{selectedItem.label}</TextValue>
                 </View>
             </TouchableNativeFeedback>
             <Modal isVisible={isModalVisible} setIsVisible={setModalVisible}>

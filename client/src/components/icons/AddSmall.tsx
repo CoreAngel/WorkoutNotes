@@ -9,11 +9,7 @@ type Props = {
     height?: string;
 };
 
-const AddSmallIcon: FC<Props> = ({
-    onClick,
-    height = '18px',
-    width = '18px'
-}: Props) => {
+const AddSmallIcon: FC<Props> = ({ onClick, height = '18px', width = '18px' }: Props) => {
     return (
         <Button>
             <TouchableWithoutFeedback onPress={onClick}>
@@ -47,9 +43,7 @@ const HorizontalArm = styled.View<ArmProps>`
     position: absolute;
     height: 3px;
     width: ${({ width }) => width};
-    transform: translateY(
-        ${({ width }) => Number.parseInt(width, 10) / 2 - 1}px
-    );
+    transform: translateY(${({ width }) => Number.parseInt(width, 10) / 2 - 1}px);
 `;
 
 const VerticalArm = styled.View<ArmProps>`
@@ -57,8 +51,7 @@ const VerticalArm = styled.View<ArmProps>`
     position: absolute;
     height: 3px;
     width: ${({ width }) => width};
-    transform: rotate(90deg)
-        translateY(${({ width }) => Number.parseInt(width, 10) / 2 - 1}px);
+    transform: rotate(90deg) translateY(${({ width }) => Number.parseInt(width, 10) / 2 - 1}px);
 `;
 
 const Button = styled.View`

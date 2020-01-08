@@ -5,13 +5,7 @@ import { connect } from 'react-redux';
 import { Colors, DefaultTextFont } from '../utils';
 import { TextInput, CheckBox, Select } from '../components/inputs';
 import { Button } from '../components/buttons';
-import {
-    Exercise,
-    Time,
-    TimeUnit,
-    Weight,
-    WeightUnit
-} from '../redux/exercise/types';
+import { Exercise, Time, TimeUnit, Weight, WeightUnit } from '../redux/exercise/types';
 import { SelectItem } from '../components/inputs/Select';
 import { addExercise } from '../redux/exercise/exerciseActions';
 

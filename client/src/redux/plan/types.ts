@@ -41,8 +41,4 @@ export interface SetIndexAction {
     index: number;
 }
 
-export type PlanAction =
-    | AddPlanAction
-    | DeletePlanAction
-    | ModifyPlanAction
-    | SetIndexAction;
+export type PlanAction = AddPlanAction | DeletePlanAction | ModifyPlanAction | SetIndexAction;

@@ -20,10 +20,7 @@ const Select: FC<Props> = ({ items }: Props) => {
         <View>
             <AddSmallIcon onClick={() => setModalVisible(true)} />
             <Modal isVisible={isModalVisible} setIsVisible={setModalVisible}>
-                <ItemListPickerSection
-                    items={items}
-                    setVisible={setModalVisible}
-                />
+                <ItemListPickerSection items={items} setVisible={setModalVisible} />
             </Modal>
         </View>
     );

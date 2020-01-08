@@ -6,9 +6,7 @@ import setTopLevelNavigator from './NavigationService';
 const NavigationContainer = createAppContainer(DrawerNavigation);
 
 const Navigation: FC = () => (
-    <NavigationContainer
-        ref={navigatorRef => setTopLevelNavigator(navigatorRef)}
-    />
+    <NavigationContainer ref={navigatorRef => setTopLevelNavigator(navigatorRef)} />
 );
 
 export default Navigation;

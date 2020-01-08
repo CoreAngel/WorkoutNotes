@@ -1,10 +1,5 @@
 import React, { FC, useState, useEffect } from 'react';
-import {
-    Animated,
-    NativeSyntheticEvent,
-    TextInputEndEditingEventData,
-    View
-} from 'react-native';
+import { Animated, NativeSyntheticEvent, TextInputEndEditingEventData, View } from 'react-native';
 import styled from 'styled-components/native';
 import { DefaultAnimatedTextFont, DefaultTextFont, Colors } from '../../utils';
 
@@ -18,18 +13,11 @@ const AnimationDuration = 200;
 type Props = {
     label: string;
     onChangeText: (text: string) => void;
-    onEndEditing?: (
-        e: NativeSyntheticEvent<TextInputEndEditingEventData>
-    ) => void;
+    onEndEditing?: (e: NativeSyntheticEvent<TextInputEndEditingEventData>) => void;
     error?: string;
 };
 
-const TextInput: FC<Props> = ({
-    label,
-    onChangeText,
-    onEndEditing,
-    error = ''
-}: Props) => {
+const TextInput: FC<Props> = ({ label, onChangeText, onEndEditing, error = '' }: Props) => {
     const [inputState, setInputState] = useState({
         text: '',
         active: false

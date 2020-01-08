@@ -55,9 +55,7 @@ const CreateSuperset: FC<Props> = ({ exercises, addSupersetAction }: Props) => {
     };
 
     const onChange = (pickerItem: PickerItem) => {
-        const exercise = exercises.find(
-            item => item.id.toString() === pickerItem.value
-        );
+        const exercise = exercises.find(item => item.id.toString() === pickerItem.value);
         if (exercise) {
             setState({
                 ...state,
