@@ -3,17 +3,18 @@ import styled from 'styled-components/native';
 import { FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import { cloneDeep } from 'lodash';
-import { Colors, DefaultTextFont } from '../utils';
-import { TextInput, PickerSection } from '../components/inputs';
+import Colors from '../utils/Colors';
+import { DefaultText } from '../components/DefaultText';
+import TextInput from '../components/inputs/TextInput';
+import PickerSection, { PickerItem, PickerSectionItem } from '../components/inputs/PickerSection';
 import ExerciseItemList from '../components/ExerciseItemList';
 import SupersetItemList from '../components/SupersetItemList';
-import { Button } from '../components/buttons';
+import Button from '../components/buttons/Button';
 import { Store as GlobalStore } from '../redux/store';
 import { addPlan } from '../redux/plan/planActions';
 import { Superset } from '../redux/superset/types';
 import { Exercise } from '../redux/exercise/types';
 import resolveSuperset from '../redux/resolver';
-import { PickerItem, PickerSectionItem } from '../components/inputs/PickerSection';
 
 type Props = {
     exercises: Exercise[];
@@ -265,7 +266,7 @@ const TextInputContainer = styled.View`
     margin-bottom: 20px;
 `;
 
-const ExercisesLabel = styled(DefaultTextFont)`
+const ExercisesLabel = styled(DefaultText)`
     color: ${Colors.WHITE70};
     margin-top: 30px;
 `;

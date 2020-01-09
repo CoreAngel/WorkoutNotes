@@ -1,7 +1,8 @@
 import React, { FC } from 'react';
 import styled from 'styled-components/native';
-import { RoundedButton, RoundedButtonType } from './buttons';
-import { Colors, DefaultTextFont } from '../utils';
+import RoundedButton, { RoundedButtonType } from './buttons/RoundedButton';
+import Colors from '../utils/Colors';
+import { DefaultText } from './DefaultText';
 
 type Props = {
     title: string;
@@ -35,12 +36,12 @@ const TextContainer = styled.View`
     max-width: 70%;
 `;
 
-const Title = styled(DefaultTextFont)`
+const Title = styled(DefaultText)`
     color: ${Colors.WHITE};
     font-size: 25px;
 `;
 
-const Desc = styled(DefaultTextFont)`
+const Desc = styled(DefaultText)`
     color: ${Colors.WHITE70};
     font-size: 14px;
     margin-top: 10px;

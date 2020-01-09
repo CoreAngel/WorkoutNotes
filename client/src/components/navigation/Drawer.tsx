@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 import { DrawerContentComponentProps } from 'react-navigation-drawer';
-import { Colors } from '../../utils';
+import Colors from '../../utils/Colors';
 import { CloseIcon } from '../icons';
 import DrawerOption from './DrawerOption';
 

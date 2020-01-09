@@ -6,7 +6,8 @@ import {
     TouchableNativeFeedback
 } from 'react-native';
 import styled from 'styled-components/native';
-import { Colors, DefaultTextFont } from '../../../utils';
+import Colors from '../../../utils/Colors';
+import { DefaultText } from '../../DefaultText';
 
 export type PickerItem = {
     label: string;
@@ -73,13 +74,13 @@ const List = styled.View`
     max-height: 250px;
 `;
 
-const ItemText = styled(DefaultTextFont)`
+const ItemText = styled(DefaultText)`
     color: ${Colors.WHITE};
     font-size: 18px;
     padding: 10px 10px;
 `;
 
-const SectionText = styled(DefaultTextFont)`
+const SectionText = styled(DefaultText)`
     color: ${Colors.WHITE70};
     font-size: 16px;
     padding: 5px 5px;
@@ -88,7 +89,7 @@ const SectionText = styled(DefaultTextFont)`
     border-bottom-width: 1px;
 `;
 
-const NoItemsInfo = styled(DefaultTextFont)`
+const NoItemsInfo = styled(DefaultText)`
     color: ${Colors.WHITE};
     font-size: 18px;
     padding: 10px 10px;

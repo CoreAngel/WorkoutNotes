@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'styled-components/native';
-import { Colors, DefaultTextFont } from '../utils';
+import Colors from '../utils/Colors';
+import { DefaultText } from './DefaultText';
 import { DeleteIcon, DownIcon, UpIcon } from './icons';
 
 type Props = {
@@ -66,11 +67,11 @@ const IconsContainer = styled.View`
     flex-wrap: nowrap;
 `;
 
-const ItemText = styled(DefaultTextFont)`
+const ItemText = styled(DefaultText)`
     color: ${Colors.WHITE};
 `;
 
-const ExerciseText = styled(DefaultTextFont)`
+const ExerciseText = styled(DefaultText)`
     font-size: 14px;
     color: ${Colors.WHITE70};
 `;

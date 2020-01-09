@@ -2,7 +2,7 @@ import React, { FC, useState } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { Card, Button, Input } from 'react-native-elements';
 import { NavigationSwitchProp } from 'react-navigation';
-import { Colors } from '../utils';
+import Colors from '../utils/Colors';
 
 const styles = StyleSheet.create({
     container: {

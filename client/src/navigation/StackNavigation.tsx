@@ -1,6 +1,6 @@
 import { createStackNavigator, StackViewTransitionConfigs } from 'react-navigation-stack';
 import { Home, AddExercise, SignUp, SignIn, CreateSuperset, CreatePlan } from '../screens';
-import { Colors } from '../utils';
+import Colors from '../utils/Colors';
 
 const StackNavigator = createStackNavigator(
     {

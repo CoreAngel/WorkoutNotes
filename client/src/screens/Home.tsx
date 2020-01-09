@@ -4,7 +4,7 @@ import { NavigationSwitchProp } from 'react-navigation';
 import styled from 'styled-components/native';
 import Tile from '../components/Tile';
 import { HomeHeader } from '../components/navigation';
-import { RoundedButtonType } from '../components/buttons';
+import { RoundedButtonType } from '../components/buttons/RoundedButton';
 
 type NavigationOptions = {
     navigationOptions: object;

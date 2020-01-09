@@ -1,17 +1,15 @@
 import React, { FC, useState } from 'react';
 import { View } from 'react-native';
-import { AddSmallIcon } from '../icons';
-import Modal from './modal/Modal';
-import ItemListPicker, { PickerItem } from './modal/ItemListPicker';
-
-export { PickerItem };
+import { AddSmallIcon } from '../../icons';
+import Modal from '../Modal';
+import ItemListPicker, { PickerItem } from './ItemListPicker';
 
 type Props = {
     items: PickerItem[];
     onChange: (item: PickerItem) => void;
 };
 
-const Select: FC<Props> = ({ items, onChange }: Props) => {
+const Picker: FC<Props> = ({ items, onChange }: Props) => {
     const [isModalVisible, setModalVisible] = useState(false);
 
     const selectItem = (item: PickerItem) => {
@@ -30,4 +28,4 @@ const Select: FC<Props> = ({ items, onChange }: Props) => {
     );
 };
 
-export default Select;
+export default Picker;

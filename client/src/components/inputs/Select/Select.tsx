@@ -2,11 +2,10 @@ import React, { FC, useState } from 'react';
 import { TouchableNativeFeedback, View } from 'react-native';
 import { cloneDeep } from 'lodash';
 import styled from 'styled-components/native';
-import { Colors, DefaultTextFont } from '../../utils';
-import Modal from './modal/Modal';
-import ItemListSelect, { SelectItem } from './modal/ItemListSelect';
-
-export { SelectItem };
+import Colors from '../../../utils/Colors';
+import { DefaultText } from '../../DefaultText';
+import Modal from '../Modal';
+import ItemListSelect, { SelectItem } from './ItemListSelect';
 
 type Props = {
     items: SelectItem[];
@@ -80,7 +79,7 @@ type TextValueProps = {
     color: string;
 };
 
-const TextValue = styled(DefaultTextFont)<TextValueProps>`
+const TextValue = styled(DefaultText)<TextValueProps>`
     color: ${({ color }) => color};
     padding: 10px 30px 10px 10px;
 `;

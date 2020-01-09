@@ -1,13 +1,8 @@
 import React, { FC, useState } from 'react';
 import { View } from 'react-native';
-import { AddSmallIcon } from '../icons';
-import Modal from './modal/Modal';
-import ItemListPickerSection, {
-    PickerItem,
-    PickerSectionItem
-} from './modal/ItemListPickerSection';
-
-export { PickerItem, PickerSectionItem };
+import { AddSmallIcon } from '../../icons';
+import Modal from '../Modal';
+import ItemListPickerSection, { PickerSectionItem } from './ItemListPickerSection';
 
 type Props = {
     items: PickerSectionItem[];

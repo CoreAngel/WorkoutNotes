@@ -2,7 +2,9 @@ import React, { FC, useState } from 'react';
 import { Animated, TouchableWithoutFeedback, View } from 'react-native';
 import styled from 'styled-components/native';
 import Svg, { Path } from 'react-native-svg';
-import { Colors, DefaultAnimatedTextFont, useAnimation } from '../../utils';
+import useAnimation from '../../hooks/useAnimation';
+import { DefaultAnimatedText } from '../DefaultText';
+import Colors from '../../utils/Colors';
 
 enum CheckBoxState {
     UNCHECKED = 0,
@@ -107,7 +109,7 @@ const SvgContainer = styled.View`
     bottom: 0;
 `;
 
-const Label = styled(DefaultAnimatedTextFont)`
+const Label = styled(DefaultAnimatedText)`
     margin-left: 20px;
     margin-top: auto;
     margin-bottom: auto;

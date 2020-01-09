@@ -1,7 +1,8 @@
 import React, { FC } from 'react';
 import { FlatList, TouchableNativeFeedback } from 'react-native';
 import styled from 'styled-components/native';
-import { Colors, DefaultTextFont } from '../../../utils';
+import Colors from '../../../utils/Colors';
+import { DefaultText } from '../../DefaultText';
 
 export type SelectItem = {
     label: string;
@@ -48,13 +49,13 @@ interface ItemTextProps {
     selected: boolean;
 }
 
-const ItemText = styled(DefaultTextFont)<ItemTextProps>`
+const ItemText = styled(DefaultText)<ItemTextProps>`
     color: ${({ selected }) => (selected ? Colors.WHITE : Colors.WHITE70)};
     font-size: 18px;
     padding: 10px 10px;
 `;
 
-const NoItemsInfo = styled(DefaultTextFont)`
+const NoItemsInfo = styled(DefaultText)`
     color: ${Colors.WHITE};
     font-size: 18px;
     padding: 10px 10px;

@@ -3,14 +3,15 @@ import styled from 'styled-components/native';
 import { FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import { cloneDeep } from 'lodash';
-import { Colors, DefaultTextFont } from '../utils';
-import { TextInput, Picker } from '../components/inputs';
+import Colors from '../utils/Colors';
+import { DefaultText } from '../components/DefaultText';
+import Picker, { PickerItem } from '../components/inputs/Picker';
+import TextInput from '../components/inputs/TextInput';
 import ExerciseItemList from '../components/ExerciseItemList';
-import { Button } from '../components/buttons';
+import Button from '../components/buttons/Button';
 import { Store as GlobalStore } from '../redux/store';
 import { addSuperset } from '../redux/superset/supersetActions';
 import { Exercise } from '../redux/exercise/types';
-import { PickerItem } from '../components/inputs/Picker';
 import { Superset, SupersetExercise } from '../redux/superset/types';
 
 type Props = {
@@ -163,7 +164,7 @@ const TextInputContainer = styled.View`
     margin-bottom: 20px;
 `;
 
-const ExercisesLabel = styled(DefaultTextFont)`
+const ExercisesLabel = styled(DefaultText)`
     color: ${Colors.WHITE70};
     margin-top: 30px;
 `;

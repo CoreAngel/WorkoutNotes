@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import { SafeAreaView, SafeAreaViewProps } from 'react-navigation';
 import store from './src/redux/store';
 import Navigation from './src/navigation/Navigation';
-import { Colors } from './src/utils';
+import Colors from './src/utils/Colors';
 
 interface SafeAreaWithSetStatusBarHeight<SafeAreaViewProps>
     extends React.ComponentClass<SafeAreaViewProps> {

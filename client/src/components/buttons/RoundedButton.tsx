@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { View } from 'react-native';
 import styled from 'styled-components/native';
-import { Colors } from '../../utils';
+import Colors from '../../utils/Colors';
 import { ArrowIcon, AddIcon, PlayIcon } from '../icons';
 
 export enum RoundedButtonType {
@@ -15,7 +15,7 @@ type Props = {
     size?: string;
 };
 
-export const RoundedButton: FC<Props> = ({ type, size = '56px' }: Props) => {
+const RoundedButton: FC<Props> = ({ type, size = '56px' }: Props) => {
     return (
         <View>
             <TouchableButton size={size} activeOpacity={0.7}>
@@ -38,3 +38,5 @@ const TouchableButton = styled.TouchableOpacity<TouchableButtonProps>`
     border-radius: 9999px;
     padding: 20px;
 `;
+
+export default RoundedButton;

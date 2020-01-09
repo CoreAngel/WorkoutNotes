@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'styled-components/native';
-import { Colors, DefaultTextFont } from '../../utils';
+import Colors from '../../utils/Colors';
+import { DefaultText } from '../DefaultText';
 
 type Props = {
     label: string;
@@ -26,7 +27,7 @@ const TouchableButton = styled.TouchableOpacity<TouchableButtonProps>`
     border-radius: 3px;
 `;
 
-const Text = styled(DefaultTextFont)`
+const Text = styled(DefaultText)`
     color: ${Colors.WHITE};
 `;
 

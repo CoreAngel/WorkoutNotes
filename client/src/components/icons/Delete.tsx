@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'styled-components/native';
 import { TouchableWithoutFeedback } from 'react-native';
-import { Colors } from '../../utils';
+import Colors from '../../utils/Colors';
 
 interface Props {
     onClick: () => void;

@@ -2,11 +2,13 @@ import React, { FC, useState } from 'react';
 import styled from 'styled-components/native';
 import { cloneDeep } from 'lodash';
 import { connect } from 'react-redux';
-import { Colors, DefaultTextFont } from '../utils';
-import { TextInput, CheckBox, Select } from '../components/inputs';
-import { Button } from '../components/buttons';
+import Colors from '../utils/Colors';
+import { DefaultText } from '../components/DefaultText';
+import Select, { SelectItem } from '../components/inputs/Select';
+import CheckBox from '../components/inputs/CheckBox';
+import TextInput from '../components/inputs/TextInput';
+import Button from '../components/buttons/Button';
 import { Exercise, Time, TimeUnit, Weight, WeightUnit } from '../redux/exercise/types';
-import { SelectItem } from '../components/inputs/Select';
 import { addExercise } from '../redux/exercise/exerciseActions';
 
 const weightItems = Weight.map(item => {
@@ -160,7 +162,7 @@ const TextInputContainer = styled.View`
     margin-bottom: 20px;
 `;
 
-const SettingsLabel = styled(DefaultTextFont)`
+const SettingsLabel = styled(DefaultText)`
     color: ${Colors.WHITE70};
     margin-top: 30px;
 `;

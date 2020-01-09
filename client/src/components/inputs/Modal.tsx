@@ -1,8 +1,8 @@
 import React, { FC, ReactElement } from 'react';
 import styled from 'styled-components/native';
 import { Dimensions, Modal as ReactModal } from 'react-native';
-import { Colors } from '../../../utils';
-import { Button } from '../../buttons';
+import Colors from '../../utils/Colors';
+import Button from '../buttons/Button';
 
 type Props = {
     isVisible: boolean;
