@@ -3,7 +3,7 @@ import { FlatList } from 'react-native';
 import { NavigationSwitchProp } from 'react-navigation';
 import styled from 'styled-components/native';
 import Tile from '../components/Tile';
-import { HomeHeader } from '../components/navigation';
+import HomeHeader from '../components/navigation/HomeHeader';
 import { RoundedButtonType } from '../components/buttons/RoundedButton';
 
 type NavigationOptions = {

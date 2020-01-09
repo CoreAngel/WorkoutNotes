@@ -1,4 +1,4 @@
-import React, { FC, ReactElement } from 'react';
+import React, { FC, ReactNode } from 'react';
 import styled from 'styled-components/native';
 import { Dimensions, Modal as ReactModal } from 'react-native';
 import Colors from '../../utils/Colors';
@@ -7,7 +7,7 @@ import Button from '../buttons/Button';
 type Props = {
     isVisible: boolean;
     setIsVisible: (state: boolean) => void;
-    children: ReactElement;
+    children: ReactNode;
 };
 
 const Modal: FC<Props> = ({ isVisible, setIsVisible, children }: Props) => {

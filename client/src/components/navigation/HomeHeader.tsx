@@ -5,13 +5,15 @@ import { Header } from 'react-navigation-stack';
 import Colors from '../../utils/Colors';
 import { DefaultText } from '../DefaultText';
 import { LogoIcon, ProfileIcon } from '../icons';
-import { drawer } from '../../navigation';
+import { drawer } from '../../navigation/navigationService';
 
 type Props = {
     navigation: NavigationDrawerProp;
 };
 
 const HomeHeader: FC<Props> = ({ navigation }: Props) => {
+    const { open } = drawer;
+
     return (
         <Container>
             <HeaderContainer>
@@ -19,7 +21,7 @@ const HomeHeader: FC<Props> = ({ navigation }: Props) => {
                     <LogoIcon />
                     <AppName>Workout Notes</AppName>
                 </LogotypeContainer>
-                <ProfileButton onPress={drawer.open}>
+                <ProfileButton onPress={open}>
                     <ProfileIcon />
                 </ProfileButton>
             </HeaderContainer>

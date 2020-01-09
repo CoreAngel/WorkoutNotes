@@ -6,13 +6,12 @@ import Constants from 'expo-constants';
 import { Provider } from 'react-redux';
 import { SafeAreaView, SafeAreaViewProps } from 'react-navigation';
 import store from './src/redux/store';
-import Navigation from './src/navigation/Navigation';
+import Navigation from './src/components/navigation/Navigation';
 import Colors from './src/utils/Colors';
 
-interface SafeAreaWithSetStatusBarHeight<SafeAreaViewProps>
-    extends React.ComponentClass<SafeAreaViewProps> {
+type SafeAreaWithSetStatusBarHeight<SafeAreaViewProps> = React.ComponentClass<SafeAreaViewProps> & {
     setStatusBarHeight(height: number): void;
-}
+};
 
 if (Platform.OS === 'android') {
     (SafeAreaView as SafeAreaWithSetStatusBarHeight<SafeAreaViewProps>).setStatusBarHeight(0);
