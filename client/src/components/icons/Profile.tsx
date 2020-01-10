@@ -7,7 +7,7 @@ interface Props {
     height?: string;
 }
 
-const ProfileIcon: FC<Props> = ({ width, height }: Props) => {
+const ProfileIcon: FC<Props> = ({ width = 'auto', height = 'auto' }: Props) => {
     return (
         <ProfileContainer height={height} width={width}>
             <Profile />
