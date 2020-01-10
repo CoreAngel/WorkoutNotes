@@ -12,13 +12,14 @@ export enum RoundedButtonType {
 
 type Props = {
     type: RoundedButtonType;
+    onClick: () => void;
     size?: string;
 };
 
-const RoundedButton: FC<Props> = ({ type, size = '56px' }: Props) => {
+const RoundedButton: FC<Props> = ({ type, onClick, size = '56px' }: Props) => {
     return (
         <View>
-            <TouchableButton size={size} activeOpacity={0.7}>
+            <TouchableButton size={size} activeOpacity={0.7} onPress={onClick}>
                 {type === RoundedButtonType.ARROW && <ArrowIcon />}
                 {type === RoundedButtonType.ADD && <AddIcon />}
                 {type === RoundedButtonType.PLAY && <PlayIcon />}

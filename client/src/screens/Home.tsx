@@ -55,7 +55,12 @@ const Home: HomeScreen<Props> = () => {
             renderItem={({ item }) => {
                 return (
                     <TileContainer key={item.id}>
-                        <Tile title={item.title} desc={item.desc} buttonType={item.button} />
+                        <Tile
+                            title={item.title}
+                            desc={item.desc}
+                            buttonType={item.button}
+                            onClick={() => {}}
+                        />
                     </TileContainer>
                 );
             }}

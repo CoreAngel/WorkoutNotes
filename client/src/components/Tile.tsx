@@ -7,10 +7,11 @@ import { DefaultText } from './DefaultText';
 type Props = {
     title: string;
     desc: string;
+    onClick: () => void;
     buttonType: RoundedButtonType;
 };
 
-const Tile: FC<Props> = ({ title, desc, buttonType }: Props) => {
+const Tile: FC<Props> = ({ title, desc, onClick, buttonType }: Props) => {
     return (
         <Container>
             <TextContainer>
@@ -18,7 +19,7 @@ const Tile: FC<Props> = ({ title, desc, buttonType }: Props) => {
                 <Desc>{desc}</Desc>
             </TextContainer>
             <ButtonContainer>
-                <RoundedButton type={buttonType} />
+                <RoundedButton type={buttonType} onClick={onClick} />
             </ButtonContainer>
         </Container>
     );
