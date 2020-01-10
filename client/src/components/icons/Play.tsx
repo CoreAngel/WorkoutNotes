@@ -7,7 +7,7 @@ type Props = {
     height?: string;
 };
 
-const PlayIcon: FC<Props> = ({ width, height }: Props) => {
+const PlayIcon: FC<Props> = ({ width = 'auto', height = 'auto' }: Props) => {
     return (
         <PlayContainer height={height} width={width}>
             <Play />
