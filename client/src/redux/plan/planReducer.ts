@@ -12,7 +12,50 @@ import {
 } from './types';
 
 const initialState: PlanStore = {
-    plans: [],
+    plans: [
+        {
+            id: 0,
+            name: 'plan 1',
+            desc: 'desc 1',
+            exercises: [
+                {
+                    id: 0,
+                    order: 0
+                },
+                {
+                    id: 1,
+                    order: 2
+                }
+            ],
+            supersets: [
+                {
+                    id: 0,
+                    order: 1
+                }
+            ]
+        },
+        {
+            id: 1,
+            name: 'plan 2',
+            desc: 'desc 2',
+            exercises: [
+                {
+                    id: 1,
+                    order: 1
+                },
+                {
+                    id: 2,
+                    order: 2
+                }
+            ],
+            supersets: [
+                {
+                    id: 1,
+                    order: 0
+                }
+            ]
+        }
+    ],
     index: 0
 };
 
