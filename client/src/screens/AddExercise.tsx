@@ -4,6 +4,7 @@ import { cloneDeep } from 'lodash';
 import { connect } from 'react-redux';
 import Colors from '../utils/Colors';
 import { DefaultText } from '../components/DefaultText';
+import ScrollContainer from '../components/ScrollContainer';
 import Select, { SelectItem } from '../components/inputs/Select';
 import CheckBox from '../components/inputs/CheckBox';
 import TextInput from '../components/inputs/TextInput';
@@ -109,8 +110,14 @@ const AddExercise: FC<Props> = ({ addExerciseAction }: Props) => {
         addExerciseAction(exercise);
     };
 
+    const absoluteSaveButton = (
+        <SaveButtonContainer>
+            <Button label="Save" onClick={saveExercise} />
+        </SaveButtonContainer>
+    );
+
     return (
-        <Container>
+        <ScrollContainer absoluteChild={absoluteSaveButton}>
             <TextInputContainer>
                 <TextInput onChangeText={onChangeName} label="Name" />
             </TextInputContainer>
@@ -144,19 +151,9 @@ const AddExercise: FC<Props> = ({ addExerciseAction }: Props) => {
                     <Select items={timeItems} onChange={onChangeTimeUnit} />
                 </OptionWithSelect>
             </SettingsContainer>
-            <SaveButtonContainer>
-                <Button label="Save" onClick={saveExercise} />
-            </SaveButtonContainer>
-        </Container>
+        </ScrollContainer>
     );
 };
-
-const Container = styled.View`
-    margin: 30px 20px;
-    padding: 20px;
-    background-color: ${Colors.SECONDARY};
-    flex: 1;
-`;
 
 const TextInputContainer = styled.View`
     margin-bottom: 20px;

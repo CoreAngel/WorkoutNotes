@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { cloneDeep } from 'lodash';
 import Colors from '../utils/Colors';
 import { DefaultText } from '../components/DefaultText';
+import ScrollContainer from '../components/ScrollContainer';
 import TextInput from '../components/inputs/TextInput';
 import PickerSection, { PickerItem, PickerSectionItem } from '../components/inputs/PickerSection';
 import ExerciseItemList from '../components/ExerciseItemList';
@@ -210,8 +211,14 @@ const CreatePlan: FC<Props> = ({ exercises, supersets, addPlanAction }: Props) =
         });
     };
 
+    const absoluteSaveButton = (
+        <SaveButtonContainer>
+            <Button label="Save" onClick={savePlan} />
+        </SaveButtonContainer>
+    );
+
     return (
-        <Container>
+        <ScrollContainer absoluteChild={absoluteSaveButton}>
             <TextInputContainer>
                 <TextInput onChangeText={onChangeName} label="Name" />
             </TextInputContainer>
@@ -248,19 +255,9 @@ const CreatePlan: FC<Props> = ({ exercises, supersets, addPlanAction }: Props) =
                     <PickerSection items={items} />
                 </AddItemContainer>
             </ExercisesContainer>
-            <SaveButtonContainer>
-                <Button label="Save" onClick={savePlan} />
-            </SaveButtonContainer>
-        </Container>
+        </ScrollContainer>
     );
 };
-
-const Container = styled.View`
-    margin: 30px 20px;
-    padding: 20px;
-    background-color: ${Colors.SECONDARY};
-    flex: 1;
-`;
 
 const TextInputContainer = styled.View`
     margin-bottom: 20px;
@@ -283,8 +280,9 @@ const AddItemContainer = styled.View`
 `;
 
 const SaveButtonContainer = styled.View`
-    margin-top: auto;
-    margin-left: auto;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
 `;
 
 const mapStateToProps = (state: GlobalStore) => {

@@ -9,6 +9,7 @@ import Picker, { PickerItem } from '../components/inputs/Picker';
 import TextInput from '../components/inputs/TextInput';
 import ExerciseItemList from '../components/ExerciseItemList';
 import Button from '../components/buttons/Button';
+import ScrollContainer from '../components/ScrollContainer';
 import { Store as GlobalStore } from '../redux/store';
 import { addSuperset } from '../redux/superset/supersetActions';
 import { Exercise } from '../redux/exercise/types';
@@ -117,8 +118,14 @@ const CreateSuperset: FC<Props> = ({ exercises, addSupersetAction }: Props) => {
         addSupersetAction(superset);
     };
 
+    const absoluteSaveButton = (
+        <SaveButtonContainer>
+            <Button label="Save" onClick={saveSuperset} />
+        </SaveButtonContainer>
+    );
+
     return (
-        <Container>
+        <ScrollContainer absoluteChild={absoluteSaveButton}>
             <TextInputContainer>
                 <TextInput onChangeText={onChangeName} label="Name" />
             </TextInputContainer>
@@ -146,19 +153,9 @@ const CreateSuperset: FC<Props> = ({ exercises, addSupersetAction }: Props) => {
                     <Picker items={listItems} onChange={onChange} />
                 </AddItemContainer>
             </ExercisesContainer>
-            <SaveButtonContainer>
-                <Button label="Save" onClick={saveSuperset} />
-            </SaveButtonContainer>
-        </Container>
+        </ScrollContainer>
     );
 };
-
-const Container = styled.View`
-    margin: 30px 20px;
-    padding: 20px;
-    background-color: ${Colors.SECONDARY};
-    flex: 1;
-`;
 
 const TextInputContainer = styled.View`
     margin-bottom: 20px;
@@ -181,8 +178,9 @@ const AddItemContainer = styled.View`
 `;
 
 const SaveButtonContainer = styled.View`
-    margin-top: auto;
-    margin-left: auto;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
 `;
 
 const mapStateToProps = (state: GlobalStore) => {
