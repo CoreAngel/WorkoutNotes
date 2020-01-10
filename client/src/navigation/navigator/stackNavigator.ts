@@ -1,5 +1,13 @@
 import { createStackNavigator, StackViewTransitionConfigs } from 'react-navigation-stack';
-import { Home, AddExercise, SignUp, SignIn, CreateSuperset, CreatePlan } from '../../screens';
+import {
+    Home,
+    AddExercise,
+    SignUp,
+    SignIn,
+    CreateSuperset,
+    CreatePlan,
+    RunPlan
+} from '../../screens';
 import Colors from '../../utils/Colors';
 
 const stackNavigator = createStackNavigator(
@@ -8,11 +16,12 @@ const stackNavigator = createStackNavigator(
         AddExercise,
         CreateSuperset,
         CreatePlan,
+        RunPlan,
         signIn: SignIn,
         signUp: SignUp
     },
     {
-        initialRouteName: 'CreatePlan',
+        initialRouteName: 'RunPlan',
         transitionConfig: () => StackViewTransitionConfigs.SlideFromRightIOS,
         cardStyle: {
             backgroundColor: Colors.DARK
