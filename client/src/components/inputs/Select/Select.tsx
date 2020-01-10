@@ -22,7 +22,7 @@ const Select: FC<Props> = ({
 }: Props) => {
     const [isModalVisible, setModalVisible] = useState(false);
     const [itemsState, setItemsState] = useState(items);
-    const selectedItem = items.filter(item => item.selected).pop();
+    const selectedItem = itemsState.filter(item => item.selected).pop();
 
     const selectItem = (item: SelectItem) => {
         const copyState = cloneDeep(itemsState);
