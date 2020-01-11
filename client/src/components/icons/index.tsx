@@ -8,6 +8,7 @@ import DownIcon from './Down';
 import UpIcon from './Up';
 import DeleteIcon from './Delete';
 import AddSmallIcon from './AddSmall';
+import EditIcon from './Edit';
 
 export {
     ArrowIcon,
@@ -19,5 +20,6 @@ export {
     DownIcon,
     UpIcon,
     DeleteIcon,
-    AddSmallIcon
+    AddSmallIcon,
+    EditIcon
 };

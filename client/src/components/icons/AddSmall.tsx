@@ -55,8 +55,7 @@ const VerticalArm = styled.View<ArmProps>`
 `;
 
 const Button = styled.View`
-    margin-left: 8px;
-    margin-right: 8px;
+    margin: 0 8px;
 `;
 
 export default AddSmallIcon;
