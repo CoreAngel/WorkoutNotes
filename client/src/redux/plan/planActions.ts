@@ -1,21 +1,24 @@
-import { ADD_PLAN, DELETE_PLAN, MODIFY_PLAN, SET_INDEX, Plan } from './types';
+import {
+    ADD_PLAN,
+    AddPlanAction,
+    DELETE_PLAN,
+    DeletePlanAction,
+    MODIFY_PLAN,
+    ModifyPlanAction,
+    Plan
+} from './types';
 
-export const addPlan = (plan: Plan) => ({
+export const addPlan = (plan: Plan): AddPlanAction => ({
     type: ADD_PLAN,
     plan
 });
 
-export const deletePlan = (plan: Plan) => ({
+export const deletePlan = (plan: Plan): DeletePlanAction => ({
     type: DELETE_PLAN,
     plan
 });
 
-export const modifyPlan = (plan: Plan) => ({
+export const modifyPlan = (plan: Plan): ModifyPlanAction => ({
     type: MODIFY_PLAN,
     plan
-});
-
-export const setIndex = (index: number) => ({
-    type: SET_INDEX,
-    index
 });

@@ -20,7 +20,6 @@ const PREFIX = 'plan';
 export const ADD_PLAN = `${PREFIX}/ADD_PLAN`;
 export const DELETE_PLAN = `${PREFIX}/DELETE_PLAN`;
 export const MODIFY_PLAN = `${PREFIX}/MODIFY_PLAN`;
-export const SET_INDEX = `${PREFIX}/SET_INDEX`;
 
 export interface AddPlanAction {
     type: typeof ADD_PLAN;
@@ -36,9 +35,4 @@ export interface ModifyPlanAction {
     plan: Plan;
 }
 
-export interface SetIndexAction {
-    type: typeof SET_INDEX;
-    index: number;
-}
-
-export type PlanAction = AddPlanAction | DeletePlanAction | ModifyPlanAction | SetIndexAction;
+export type PlanAction = AddPlanAction | DeletePlanAction | ModifyPlanAction;

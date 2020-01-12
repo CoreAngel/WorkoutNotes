@@ -6,8 +6,6 @@ import {
     PlanAction,
     MODIFY_PLAN,
     ModifyPlanAction,
-    SET_INDEX,
-    SetIndexAction,
     PlanStore
 } from './types';
 
@@ -56,7 +54,7 @@ const initialState: PlanStore = {
             ]
         }
     ],
-    index: 0
+    index: 2
 };
 
 const planReducer = (state = initialState, action: PlanAction) => {
@@ -88,13 +86,6 @@ const planReducer = (state = initialState, action: PlanAction) => {
             return {
                 ...state,
                 plans: [...copyPlans]
-            };
-        }
-        case SET_INDEX: {
-            const setIndexAction = action as SetIndexAction;
-            return {
-                ...state,
-                index: setIndexAction.index
             };
         }
         default:

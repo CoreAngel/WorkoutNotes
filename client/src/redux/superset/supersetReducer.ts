@@ -6,8 +6,6 @@ import {
     SupersetAction,
     MODIFY_SUPERSET,
     ModifySupersetAction,
-    SET_INDEX,
-    SetIndexAction,
     SupersetStore
 } from './types';
 
@@ -44,7 +42,7 @@ const initialState: SupersetStore = {
             ]
         }
     ],
-    index: 0
+    index: 2
 };
 
 const supersetReducer = (state = initialState, action: SupersetAction) => {
@@ -76,13 +74,6 @@ const supersetReducer = (state = initialState, action: SupersetAction) => {
             return {
                 ...state,
                 supersets: [...copySupersets]
-            };
-        }
-        case SET_INDEX: {
-            const setIndexAction = action as SetIndexAction;
-            return {
-                ...state,
-                index: setIndexAction.index
             };
         }
         default:

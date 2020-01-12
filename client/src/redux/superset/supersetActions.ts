@@ -1,21 +1,24 @@
-import { ADD_SUPERSET, DELETE_SUPERSET, MODIFY_SUPERSET, SET_INDEX, Superset } from './types';
+import {
+    ADD_SUPERSET,
+    AddSupersetAction,
+    DELETE_SUPERSET,
+    DeleteSupersetAction,
+    MODIFY_SUPERSET,
+    ModifySupersetAction,
+    Superset
+} from './types';
 
-export const addSuperset = (superset: Superset) => ({
+export const addSuperset = (superset: Superset): AddSupersetAction => ({
     type: ADD_SUPERSET,
     superset
 });
 
-export const deleteSuperset = (superset: Superset) => ({
+export const deleteSuperset = (superset: Superset): DeleteSupersetAction => ({
     type: DELETE_SUPERSET,
     superset
 });
 
-export const modifySuperset = (superset: Superset) => ({
+export const modifySuperset = (superset: Superset): ModifySupersetAction => ({
     type: MODIFY_SUPERSET,
     superset
-});
-
-export const setIndex = (index: number) => ({
-    type: SET_INDEX,
-    index
 });

@@ -19,7 +19,6 @@ const PREFIX = 'superset';
 export const ADD_SUPERSET = `${PREFIX}/ADD_SUPERSET`;
 export const DELETE_SUPERSET = `${PREFIX}/DELETE_SUPERSET`;
 export const MODIFY_SUPERSET = `${PREFIX}/MODIFY_SUPERSET`;
-export const SET_INDEX = `${PREFIX}/SET_INDEX`;
 
 export interface AddSupersetAction {
     type: typeof ADD_SUPERSET;
@@ -35,13 +34,4 @@ export interface ModifySupersetAction {
     superset: Superset;
 }
 
-export interface SetIndexAction {
-    type: typeof SET_INDEX;
-    index: number;
-}
-
-export type SupersetAction =
-    | AddSupersetAction
-    | DeleteSupersetAction
-    | ModifySupersetAction
-    | SetIndexAction;
+export type SupersetAction = AddSupersetAction | DeleteSupersetAction | ModifySupersetAction;
