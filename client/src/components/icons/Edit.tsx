@@ -52,7 +52,7 @@ const RotateContainer = styled.View`
 const Arrow = styled.View`
     height: 0;
     width: 0;
-    border-right-width: 8px;
+    border-right-width: 7px;
     border-top-width: 2px;
     border-bottom-width: 2px;
     border-left-width: 0;
@@ -64,7 +64,7 @@ const Arrow = styled.View`
 
 const Rect = styled.View`
     background-color: ${Colors.PRIMARY};
-    width: 18px;
+    width: 16px;
     height: 4px;
 `;
 
