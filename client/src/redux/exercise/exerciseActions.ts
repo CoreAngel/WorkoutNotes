@@ -1,16 +1,24 @@
-import { ADD_EXERCISE, DELETE_EXERCISE, Exercise, SET_INDEX } from './types';
+import {
+    ADD_EXERCISE,
+    AddExerciseAction,
+    DELETE_EXERCISE,
+    DeleteExerciseAction,
+    Exercise
+} from './types';
 
-export const addExercise = (exercise: Exercise) => ({
-    type: ADD_EXERCISE,
-    exercise
-});
+export const addExercise = (exercise: Exercise): AddExerciseAction => {
+    const fullExercise: Exercise = {
+        ...exercise,
+        workouts: [],
+        index: 0
+    };
+    return {
+        type: ADD_EXERCISE,
+        exercise: fullExercise
+    };
+};
 
-export const deleteExercise = (exercise: Exercise) => ({
+export const deleteExercise = (exercise: Exercise): DeleteExerciseAction => ({
     type: DELETE_EXERCISE,
     exercise
-});
-
-export const setIndex = (index: number) => ({
-    type: SET_INDEX,
-    index
 });

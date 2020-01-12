@@ -4,11 +4,7 @@ import {
     DELETE_EXERCISE,
     DeleteExerciseAction,
     ExerciseAction,
-    ExerciseStore,
-    SET_INDEX,
-    SetIndexAction,
-    TimeUnit,
-    WeightUnit
+    ExerciseStore
 } from './types';
 
 const initialState: ExerciseStore = {
@@ -17,46 +13,28 @@ const initialState: ExerciseStore = {
             id: 0,
             name: 'Bench press',
             desc: 'description',
-            weight: {
-                checked: true,
-                unit: WeightUnit.KG,
-                body: false
-            },
-            time: {
-                checked: false,
-                unit: TimeUnit.MIN
-            }
+            addBody: false,
+            index: 0,
+            workouts: []
         },
         {
             id: 1,
             name: 'Squad',
             desc: 'description',
-            weight: {
-                checked: true,
-                unit: WeightUnit.KG,
-                body: false
-            },
-            time: {
-                checked: false,
-                unit: TimeUnit.MIN
-            }
+            addBody: false,
+            index: 0,
+            workouts: []
         },
         {
             id: 2,
             name: 'Dead lift',
             desc: 'description',
-            weight: {
-                checked: true,
-                unit: WeightUnit.KG,
-                body: false
-            },
-            time: {
-                checked: false,
-                unit: TimeUnit.MIN
-            }
+            addBody: false,
+            index: 0,
+            workouts: []
         }
     ],
-    index: 0
+    index: 3
 };
 
 const exerciseReducer = (state = initialState, action: ExerciseAction) => {
@@ -76,13 +54,6 @@ const exerciseReducer = (state = initialState, action: ExerciseAction) => {
             return {
                 ...state,
                 exercises: [...state.exercises.filter(ex => ex.id !== deleteAction.exercise.id)]
-            };
-        }
-        case SET_INDEX: {
-            const setIndexAction = action as SetIndexAction;
-            return {
-                ...state,
-                index: setIndexAction.index
             };
         }
         default:
