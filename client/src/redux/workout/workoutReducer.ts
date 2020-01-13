@@ -18,38 +18,64 @@ const initialState: WorkoutStore = {
             exercises: [
                 {
                     exerciseId: 0,
+                    workoutId: 0,
                     order: 0
                 },
                 {
                     exerciseId: 2,
+                    workoutId: 0,
                     order: 2
                 }
             ],
             supersets: [
                 {
                     order: 1,
-                    exercisesId: [1, 2]
+                    exercises: [
+                        {
+                            exerciseId: 0,
+                            workoutId: 0,
+                            order: 0
+                        },
+                        {
+                            exerciseId: 1,
+                            workoutId: 0,
+                            order: 1
+                        }
+                    ]
                 }
             ]
         },
         {
-            id: 0,
+            id: 1,
             date: new Date().toDateString(),
-            planId: 1,
+            name: 'Without plan id',
             exercises: [
                 {
                     exerciseId: 0,
+                    workoutId: 0,
                     order: 0
                 },
                 {
                     exerciseId: 2,
+                    workoutId: 0,
                     order: 2
                 }
             ],
             supersets: [
                 {
                     order: 1,
-                    exercisesId: [1, 2]
+                    exercises: [
+                        {
+                            exerciseId: 0,
+                            workoutId: 0,
+                            order: 0
+                        },
+                        {
+                            exerciseId: 1,
+                            workoutId: 0,
+                            order: 1
+                        }
+                    ]
                 }
             ]
         }

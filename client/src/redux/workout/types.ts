@@ -1,16 +1,18 @@
 export type WorkoutExercise = {
     exerciseId: number;
+    workoutId: number;
     order: number;
 };
 
 export type WorkoutSuperset = {
-    exercisesId: number[];
+    exercises: WorkoutExercise[];
     order: number;
 };
 
 export type Workout = {
     id?: number;
-    planId: number;
+    planId?: number;
+    name?: string;
     date: string;
     exercises: WorkoutExercise[];
     supersets: WorkoutSuperset[];
