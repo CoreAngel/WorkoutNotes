@@ -15,7 +15,7 @@ import { Store as GlobalStore } from '../redux/store';
 import { addPlan } from '../redux/plan/planActions';
 import { Superset } from '../redux/superset/types';
 import { Exercise } from '../redux/exercise/types';
-import resolveSuperset from '../redux/resolver';
+import Resolver from '../redux/resolver';
 
 type Props = {
     exercises: Exercise[];
@@ -69,7 +69,7 @@ const CreatePlan: FC<Props> = ({ exercises, supersets, addPlanAction }: Props) =
         if (!foundSuperset) {
             return;
         }
-        const resolverSuperset = resolveSuperset(foundSuperset);
+        const resolverSuperset = Resolver.resolveSuperset(foundSuperset);
         const exercisesNames = resolverSuperset.exercises
             .sort((i1, i2) => i1.order - i2.order)
             .map(it => it.exercise.name);
