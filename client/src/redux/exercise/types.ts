@@ -10,7 +10,7 @@ export type Set = {
 
 export type WorkoutExercise = {
     id?: number;
-    planId: number;
+    workoutId: number;
     sets: Set[];
 };
 
@@ -23,6 +23,11 @@ export type Exercise = {
     index?: number;
 };
 
+export type WorkoutExercisePayload = {
+    workout: WorkoutExercise;
+    exerciseId: number;
+};
+
 export type ExerciseStore = {
     exercises: Exercise[];
     index: number;
@@ -31,6 +36,10 @@ export type ExerciseStore = {
 const PREFIX = 'exercise';
 export const ADD_EXERCISE = `${PREFIX}/ADD_EXERCISE`;
 export const DELETE_EXERCISE = `${PREFIX}/DELETE_EXERCISE`;
+export const ADD_WORKOUT_EXERCISE = `${PREFIX}/ADD_WORKOUT_EXERCISE`;
+export const MULTI_ADD_WORKOUT_EXERCISE = `${PREFIX}/MULTI_ADD_WORKOUT_EXERCISE`;
+export const MODIFY_WORKOUT_EXERCISE = `${PREFIX}/MODIFY_WORKOUT_EXERCISE`;
+export const DELETE_WORKOUT_EXERCISE = `${PREFIX}/DELETE_WORKOUT_EXERCISE`;
 
 export interface AddExerciseAction {
     type: typeof ADD_EXERCISE;
@@ -41,4 +50,30 @@ export interface DeleteExerciseAction {
     exercise: Exercise;
 }
 
-export type ExerciseAction = AddExerciseAction | DeleteExerciseAction;
+export interface AddWorkoutExerciseAction {
+    type: typeof ADD_WORKOUT_EXERCISE;
+    payload: WorkoutExercisePayload;
+}
+
+export interface MultiAddWorkoutExerciseAction {
+    type: typeof MULTI_ADD_WORKOUT_EXERCISE;
+    payload: WorkoutExercisePayload[];
+}
+
+export interface ModifyWorkoutExerciseAction {
+    type: typeof MODIFY_WORKOUT_EXERCISE;
+    payload: WorkoutExercisePayload;
+}
+
+export interface DeleteWorkoutExerciseAction {
+    type: typeof DELETE_WORKOUT_EXERCISE;
+    payload: WorkoutExercisePayload;
+}
+
+export type ExerciseAction =
+    | AddExerciseAction
+    | MultiAddWorkoutExerciseAction
+    | DeleteExerciseAction
+    | AddWorkoutExerciseAction
+    | ModifyWorkoutExerciseAction
+    | DeleteWorkoutExerciseAction;
