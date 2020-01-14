@@ -77,15 +77,16 @@ const planReducer = (state = initialState, action: PlanAction) => {
         }
         case MODIFY_PLAN: {
             const modifyAction = action as ModifyPlanAction;
-            const index = state.plans.findIndex(item => item.id === modifyAction.plan.id);
-            if (index < 0) {
-                return state;
-            }
-            const copyPlans = [...state.plans];
-            copyPlans[index] = modifyAction.plan;
+            const plans = state.plans.map(item => {
+                if (item.id === modifyAction.plan.id) {
+                    return modifyAction.plan;
+                }
+                return item;
+            });
+
             return {
                 ...state,
-                plans: [...copyPlans]
+                plans: [...plans]
             };
         }
         default:

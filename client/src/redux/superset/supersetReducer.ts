@@ -65,15 +65,16 @@ const supersetReducer = (state = initialState, action: SupersetAction) => {
         }
         case MODIFY_SUPERSET: {
             const modifyAction = action as ModifySupersetAction;
-            const index = state.supersets.findIndex(item => item.id === modifyAction.superset.id);
-            if (index < 0) {
-                return state;
-            }
-            const copySupersets = [...state.supersets];
-            copySupersets[index] = modifyAction.superset;
+            const supersets = state.supersets.map(item => {
+                if (item.id === modifyAction.superset.id) {
+                    return modifyAction.superset;
+                }
+                return item;
+            });
+
             return {
                 ...state,
-                supersets: [...copySupersets]
+                supersets: [...supersets]
             };
         }
         default:
