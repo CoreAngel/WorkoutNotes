@@ -6,7 +6,11 @@ import {
     DELETE_WORKOUT,
     DeleteWorkoutAction,
     MODIFY_WORKOUT,
-    ModifyWorkoutAction
+    ModifyWorkoutAction,
+    SET_WORKOUT_ACTIVE,
+    SET_WORKOUT_INACTIVE,
+    SetWorkoutActiveAction,
+    SetWorkoutInactiveAction
 } from './types';
 
 const initialState: WorkoutStore = {
@@ -15,6 +19,7 @@ const initialState: WorkoutStore = {
             id: 0,
             date: new Date().toDateString(),
             planId: 0,
+            active: false,
             exercises: [
                 {
                     exerciseId: 0,
@@ -49,6 +54,7 @@ const initialState: WorkoutStore = {
             id: 1,
             date: new Date().toDateString(),
             name: 'Without plan id',
+            active: true,
             exercises: [
                 {
                     exerciseId: 0,
@@ -87,31 +93,67 @@ const workoutReducer = (state = initialState, action: WorkoutAction) => {
     switch (action.type) {
         case ADD_WORKOUT: {
             const addAction = action as AddWorkoutAction;
-            addAction.workout.id = state.index;
+            addAction.workout.id =
+                addAction.workout.id === undefined ? state.index : addAction.workout.id;
             return {
                 ...state,
                 workouts: [...state.workouts, addAction.workout],
-                index: state.index + 1
+                index: addAction.workout.id === undefined ? state.index + 1 : addAction.workout.id
+            };
+        }
+        case SET_WORKOUT_ACTIVE: {
+            const setActiveAction = action as SetWorkoutActiveAction;
+            const workouts = state.workouts.map(item => {
+                if (item.id === setActiveAction.workoutId) {
+                    return {
+                        ...item,
+                        active: true
+                    };
+                }
+                return item;
+            });
+
+            return {
+                ...state,
+                workouts: [...workouts]
+            };
+        }
+        case SET_WORKOUT_INACTIVE: {
+            const setInactiveAction = action as SetWorkoutInactiveAction;
+            const workouts = state.workouts.map(item => {
+                if (item.id === setInactiveAction.workoutId) {
+                    return {
+                        ...item,
+                        active: false
+                    };
+                }
+                return item;
+            });
+
+            return {
+                ...state,
+                workouts: [...workouts]
             };
         }
         case DELETE_WORKOUT: {
             const deleteAction = action as DeleteWorkoutAction;
             return {
                 ...state,
-                supersets: [...state.workouts.filter(sup => sup.id !== deleteAction.workout.id)]
+                workouts: [...state.workouts.filter(sup => sup.id !== deleteAction.workout.id)]
             };
         }
         case MODIFY_WORKOUT: {
             const modifyAction = action as ModifyWorkoutAction;
-            const index = state.workouts.findIndex(item => item.id === modifyAction.workout.id);
-            if (index < 0) {
-                return state;
-            }
-            const copySupersets = [...state.workouts];
-            copySupersets[index] = modifyAction.workout;
+            const workouts = state.workouts.map(item => {
+                if (item.id === modifyAction.workout.id) {
+                    return modifyAction.workout;
+                }
+                return item;
+            });
+
             return {
                 ...state,
-                supersets: [...copySupersets]
+                workouts: [...workouts]
             };
         }
         default:
