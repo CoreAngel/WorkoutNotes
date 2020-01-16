@@ -7,10 +7,8 @@ import {
     DeleteWorkoutAction,
     MODIFY_WORKOUT,
     ModifyWorkoutAction,
-    SET_WORKOUT_ACTIVE,
-    SET_WORKOUT_INACTIVE,
-    SetWorkoutActiveAction,
-    SetWorkoutInactiveAction
+    SET_WORKOUT_FINISHED,
+    SetWorkoutFinishedAction
 } from './types';
 
 const initialState: WorkoutStore = {
@@ -19,7 +17,7 @@ const initialState: WorkoutStore = {
             id: 0,
             date: new Date().toDateString(),
             planId: 0,
-            active: false,
+            finished: false,
             exercises: [
                 {
                     exerciseId: 0,
@@ -54,7 +52,7 @@ const initialState: WorkoutStore = {
             id: 1,
             date: new Date().toDateString(),
             name: 'Without plan id',
-            active: true,
+            finished: true,
             exercises: [
                 {
                     exerciseId: 0,
@@ -101,30 +99,13 @@ const workoutReducer = (state = initialState, action: WorkoutAction) => {
                 index: addAction.workout.id === undefined ? state.index + 1 : addAction.workout.id
             };
         }
-        case SET_WORKOUT_ACTIVE: {
-            const setActiveAction = action as SetWorkoutActiveAction;
+        case SET_WORKOUT_FINISHED: {
+            const setFinishedAction = action as SetWorkoutFinishedAction;
             const workouts = state.workouts.map(item => {
-                if (item.id === setActiveAction.workoutId) {
+                if (item.id === setFinishedAction.workoutId) {
                     return {
                         ...item,
                         active: true
-                    };
-                }
-                return item;
-            });
-
-            return {
-                ...state,
-                workouts: [...workouts]
-            };
-        }
-        case SET_WORKOUT_INACTIVE: {
-            const setInactiveAction = action as SetWorkoutInactiveAction;
-            const workouts = state.workouts.map(item => {
-                if (item.id === setInactiveAction.workoutId) {
-                    return {
-                        ...item,
-                        active: false
                     };
                 }
                 return item;
