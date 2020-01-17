@@ -5,6 +5,7 @@ export type WorkoutExercise = {
 };
 
 export type WorkoutSuperset = {
+    supersetId: number;
     exercises: WorkoutExercise[];
     order: number;
 };

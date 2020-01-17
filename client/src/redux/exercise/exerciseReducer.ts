@@ -23,7 +23,36 @@ const initialState: ExerciseStore = {
             desc: 'description',
             addBody: false,
             index: 0,
-            workouts: []
+            workouts: [
+                {
+                    workoutId: 0,
+                    id: 0,
+                    sets: [
+                        {
+                            index: 0,
+                            goal: {
+                                reps: 2,
+                                weight: 120
+                            },
+                            achieved: {
+                                reps: 3,
+                                weight: 150
+                            }
+                        },
+                        {
+                            index: 1,
+                            goal: {
+                                reps: 2,
+                                weight: 120
+                            },
+                            achieved: {
+                                reps: 3,
+                                weight: 150
+                            }
+                        }
+                    ]
+                }
+            ]
         },
         {
             id: 1,
@@ -31,7 +60,36 @@ const initialState: ExerciseStore = {
             desc: 'description',
             addBody: false,
             index: 0,
-            workouts: []
+            workouts: [
+                {
+                    workoutId: 0,
+                    id: 0,
+                    sets: [
+                        {
+                            index: 0,
+                            goal: {
+                                reps: 2,
+                                weight: 120
+                            },
+                            achieved: {
+                                reps: 3,
+                                weight: 150
+                            }
+                        },
+                        {
+                            index: 1,
+                            goal: {
+                                reps: 2,
+                                weight: 120
+                            },
+                            achieved: {
+                                reps: 3,
+                                weight: 150
+                            }
+                        }
+                    ]
+                }
+            ]
         },
         {
             id: 2,
@@ -39,7 +97,36 @@ const initialState: ExerciseStore = {
             desc: 'description',
             addBody: false,
             index: 0,
-            workouts: []
+            workouts: [
+                {
+                    workoutId: 0,
+                    id: 0,
+                    sets: [
+                        {
+                            index: 0,
+                            goal: {
+                                reps: 2,
+                                weight: 120
+                            },
+                            achieved: {
+                                reps: 3,
+                                weight: 150
+                            }
+                        },
+                        {
+                            index: 1,
+                            goal: {
+                                reps: 2,
+                                weight: 120
+                            },
+                            achieved: {
+                                reps: 3,
+                                weight: 150
+                            }
+                        }
+                    ]
+                }
+            ]
         }
     ],
     index: 3

@@ -4,6 +4,7 @@ export type Result = {
 };
 
 export type Set = {
+    index: number;
     goal: Result | null;
     achieved: Result;
 };

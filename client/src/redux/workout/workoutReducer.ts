@@ -33,6 +33,7 @@ const initialState: WorkoutStore = {
             supersets: [
                 {
                     order: 1,
+                    supersetId: 0,
                     exercises: [
                         {
                             exerciseId: 0,
@@ -68,6 +69,7 @@ const initialState: WorkoutStore = {
             supersets: [
                 {
                     order: 1,
+                    supersetId: 0,
                     exercises: [
                         {
                             exerciseId: 0,

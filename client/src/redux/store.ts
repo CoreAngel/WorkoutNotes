@@ -16,7 +16,7 @@ export type Store = {
     exercise: ExerciseStore;
     superset: SupersetStore;
     plan: PlanStore;
-    options: OptionsStore;
+    option: OptionsStore;
     workout: WorkoutStore;
 };
 
