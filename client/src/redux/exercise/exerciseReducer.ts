@@ -12,7 +12,13 @@ import {
     ExerciseAction,
     ExerciseStore,
     MODIFY_WORKOUT_EXERCISE,
-    ModifyWorkoutExerciseAction
+    ModifyWorkoutExerciseAction,
+    ADD_WORKOUT_EXERCISE_SET,
+    AddWorkoutExerciseSetAction,
+    MODIFY_WORKOUT_EXERCISE_SET,
+    ModifyWorkoutExerciseSetAction,
+    DELETE_WORKOUT_EXERCISE_SET,
+    DeleteWorkoutExerciseSetAction
 } from './types';
 
 const initialState: ExerciseStore = {
@@ -22,7 +28,7 @@ const initialState: ExerciseStore = {
             name: 'Bench press',
             desc: 'description',
             addBody: false,
-            index: 0,
+            index: 1,
             workouts: [
                 {
                     workoutId: 0,
@@ -30,6 +36,7 @@ const initialState: ExerciseStore = {
                     sets: [
                         {
                             index: 0,
+                            id: 0,
                             goal: {
                                 reps: 2,
                                 weight: 120
@@ -41,6 +48,7 @@ const initialState: ExerciseStore = {
                         },
                         {
                             index: 1,
+                            id: 1,
                             goal: {
                                 reps: 2,
                                 weight: 120
@@ -50,7 +58,8 @@ const initialState: ExerciseStore = {
                                 weight: 150
                             }
                         }
-                    ]
+                    ],
+                    setIndex: 2
                 }
             ]
         },
@@ -59,7 +68,7 @@ const initialState: ExerciseStore = {
             name: 'Squad',
             desc: 'description',
             addBody: false,
-            index: 0,
+            index: 1,
             workouts: [
                 {
                     workoutId: 0,
@@ -67,6 +76,7 @@ const initialState: ExerciseStore = {
                     sets: [
                         {
                             index: 0,
+                            id: 0,
                             goal: {
                                 reps: 2,
                                 weight: 120
@@ -78,6 +88,7 @@ const initialState: ExerciseStore = {
                         },
                         {
                             index: 1,
+                            id: 1,
                             goal: {
                                 reps: 2,
                                 weight: 120
@@ -87,7 +98,8 @@ const initialState: ExerciseStore = {
                                 weight: 150
                             }
                         }
-                    ]
+                    ],
+                    setIndex: 2
                 }
             ]
         },
@@ -96,7 +108,7 @@ const initialState: ExerciseStore = {
             name: 'Dead lift',
             desc: 'description',
             addBody: false,
-            index: 0,
+            index: 1,
             workouts: [
                 {
                     workoutId: 0,
@@ -104,6 +116,7 @@ const initialState: ExerciseStore = {
                     sets: [
                         {
                             index: 0,
+                            id: 0,
                             goal: {
                                 reps: 2,
                                 weight: 120
@@ -115,6 +128,7 @@ const initialState: ExerciseStore = {
                         },
                         {
                             index: 1,
+                            id: 1,
                             goal: {
                                 reps: 2,
                                 weight: 120
@@ -124,7 +138,8 @@ const initialState: ExerciseStore = {
                                 weight: 150
                             }
                         }
-                    ]
+                    ],
+                    setIndex: 2
                 }
             ]
         }
@@ -230,6 +245,106 @@ const exerciseReducer = (state = initialState, action: ExerciseAction) => {
                     return {
                         ...item,
                         workouts: [...workouts, workout]
+                    };
+                }
+                return item;
+            });
+
+            return {
+                ...state,
+                exercises
+            };
+        }
+        case ADD_WORKOUT_EXERCISE_SET: {
+            const addSetAction = action as AddWorkoutExerciseSetAction;
+            const { exerciseId, workoutId, set } = addSetAction.payload;
+
+            const exercises = state.exercises.map(item => {
+                if (item.id === exerciseId) {
+                    const workouts = item.workouts.map(workItem => {
+                        if (workItem.id === workoutId) {
+                            set.id = workItem.setIndex;
+
+                            return {
+                                ...workItem,
+                                setIndex: workItem.setIndex + 1,
+                                sets: [...workItem.sets, set]
+                            };
+                        }
+                        return workItem;
+                    });
+                    return {
+                        ...item,
+                        workouts: [...workouts]
+                    };
+                }
+                return item;
+            });
+
+            return {
+                ...state,
+                exercises
+            };
+        }
+        case MODIFY_WORKOUT_EXERCISE_SET: {
+            const modifySetAction = action as ModifyWorkoutExerciseSetAction;
+            const { exerciseId, workoutId, set } = modifySetAction.payload;
+
+            const exercises = state.exercises.map(item => {
+                if (item.id === exerciseId) {
+                    const workouts = item.workouts.map(workItem => {
+                        if (workItem.id === workoutId) {
+                            const sets = workItem.sets.filter(setItem => setItem.id !== set.id);
+                            return {
+                                ...workItem,
+                                sets: [...sets, set]
+                            };
+                        }
+                        return workItem;
+                    });
+
+                    return {
+                        ...item,
+                        workouts: [...workouts]
+                    };
+                }
+                return item;
+            });
+
+            return {
+                ...state,
+                exercises
+            };
+        }
+        case DELETE_WORKOUT_EXERCISE_SET: {
+            const deleteSetAction = action as DeleteWorkoutExerciseSetAction;
+            const { exerciseId, workoutId, set } = deleteSetAction.payload;
+
+            const exercises = state.exercises.map(item => {
+                if (item.id === exerciseId) {
+                    const workouts = item.workouts.map(workItem => {
+                        if (workItem.id === workoutId) {
+                            const sets = workItem.sets
+                                .filter(setItem => setItem.id !== set.id)
+                                .sort((i1, i2) => i1.index - i2.index)
+                                .map((setItem, index) => {
+                                    return {
+                                        ...setItem,
+                                        index
+                                    };
+                                });
+
+                            return {
+                                ...workItem,
+                                sets: [...sets]
+                            };
+                        }
+                        return workItem;
+                    });
+
+                    return {
+                        ...item,
+                        workouts: [...workouts]
                     };
                 }
                 return item;

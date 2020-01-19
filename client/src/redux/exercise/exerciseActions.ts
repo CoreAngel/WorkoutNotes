@@ -12,7 +12,14 @@ import {
     Exercise,
     MODIFY_WORKOUT_EXERCISE,
     ModifyWorkoutExerciseAction,
-    WorkoutExercisePayload
+    WorkoutExercisePayload,
+    WorkoutExerciseSetPayload,
+    ADD_WORKOUT_EXERCISE_SET,
+    AddWorkoutExerciseSetAction,
+    DeleteWorkoutExerciseSetAction,
+    DELETE_WORKOUT_EXERCISE_SET,
+    MODIFY_WORKOUT_EXERCISE_SET,
+    ModifyWorkoutExerciseSetAction
 } from './types';
 
 export const addExercise = (exercise: Exercise): AddExerciseAction => {
@@ -57,5 +64,26 @@ export const modifyWorkoutExerciseAction = (
     payload: WorkoutExercisePayload
 ): ModifyWorkoutExerciseAction => ({
     type: MODIFY_WORKOUT_EXERCISE,
+    payload
+});
+
+export const addWorkoutExerciseSetAction = (
+    payload: WorkoutExerciseSetPayload
+): AddWorkoutExerciseSetAction => ({
+    type: ADD_WORKOUT_EXERCISE_SET,
+    payload
+});
+
+export const deleteWorkoutExerciseSetAction = (
+    payload: WorkoutExerciseSetPayload
+): DeleteWorkoutExerciseSetAction => ({
+    type: DELETE_WORKOUT_EXERCISE_SET,
+    payload
+});
+
+export const modifyWorkoutExerciseSetAction = (
+    payload: WorkoutExerciseSetPayload
+): ModifyWorkoutExerciseSetAction => ({
+    type: MODIFY_WORKOUT_EXERCISE_SET,
     payload
 });
