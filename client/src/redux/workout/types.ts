@@ -1,6 +1,6 @@
 export type WorkoutExercise = {
     exerciseId: number;
-    workoutId: number;
+    exerciseWorkoutId: number;
     order: number;
 };
 

@@ -21,12 +21,12 @@ const initialState: WorkoutStore = {
             exercises: [
                 {
                     exerciseId: 0,
-                    workoutId: 0,
+                    exerciseWorkoutId: 0,
                     order: 0
                 },
                 {
                     exerciseId: 2,
-                    workoutId: 0,
+                    exerciseWorkoutId: 0,
                     order: 2
                 }
             ],
@@ -37,12 +37,12 @@ const initialState: WorkoutStore = {
                     exercises: [
                         {
                             exerciseId: 0,
-                            workoutId: 0,
+                            exerciseWorkoutId: 0,
                             order: 0
                         },
                         {
                             exerciseId: 1,
-                            workoutId: 0,
+                            exerciseWorkoutId: 0,
                             order: 1
                         }
                     ]
@@ -57,12 +57,12 @@ const initialState: WorkoutStore = {
             exercises: [
                 {
                     exerciseId: 0,
-                    workoutId: 0,
+                    exerciseWorkoutId: 0,
                     order: 0
                 },
                 {
                     exerciseId: 2,
-                    workoutId: 0,
+                    exerciseWorkoutId: 0,
                     order: 2
                 }
             ],
@@ -73,12 +73,12 @@ const initialState: WorkoutStore = {
                     exercises: [
                         {
                             exerciseId: 0,
-                            workoutId: 0,
+                            exerciseWorkoutId: 0,
                             order: 0
                         },
                         {
                             exerciseId: 1,
-                            workoutId: 0,
+                            exerciseWorkoutId: 0,
                             order: 1
                         }
                     ]
@@ -107,7 +107,7 @@ const workoutReducer = (state = initialState, action: WorkoutAction) => {
                 if (item.id === setFinishedAction.workoutId) {
                     return {
                         ...item,
-                        active: true
+                        finished: true
                     };
                 }
                 return item;
