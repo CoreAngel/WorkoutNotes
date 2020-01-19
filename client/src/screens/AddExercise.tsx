@@ -46,7 +46,8 @@ const AddExercise: FC<Props> = ({ addExerciseAction }: Props) => {
         const exercise: Exercise = {
             name: state.name,
             desc: state.desc,
-            addBody: state.addBody
+            addBody: state.addBody,
+            workouts: []
         };
         addExerciseAction(exercise);
     };
