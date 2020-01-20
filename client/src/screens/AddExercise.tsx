@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { NavigationStackProp } from 'react-navigation-stack';
 import Colors from '../utils/Colors';
 import { DefaultText } from '../components/DefaultText';
-import ScrollContainer from '../components/ScrollContainer';
+import ScrollContainerWithAutoScroll from '../components/ScrollContainerWithAutoScroll';
 import CheckBox from '../components/inputs/CheckBox';
 import TextInput from '../components/inputs/TextInput';
 import Button from '../components/buttons/Button';
@@ -74,7 +74,7 @@ const AddExercise: FC<Props> = ({ navigation, addExerciseAction, modifyExerciseA
     );
 
     return (
-        <ScrollContainer absoluteChild={absoluteSaveButton}>
+        <ScrollContainerWithAutoScroll absoluteChild={absoluteSaveButton}>
             <TextInputContainer>
                 <TextInput onChangeText={onChangeName} label="Name" defaultValue={state.name} />
             </TextInputContainer>
@@ -96,7 +96,7 @@ const AddExercise: FC<Props> = ({ navigation, addExerciseAction, modifyExerciseA
                     />
                 </Option>
             </SettingsContainer>
-        </ScrollContainer>
+        </ScrollContainerWithAutoScroll>
     );
 };
 

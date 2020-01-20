@@ -1,8 +1,23 @@
-import { CHANGE_WEIGHT_UNIT, ChangeWeightUnitAction, Weight } from './types';
+import {
+    CHANGE_WEIGHT_UNIT,
+    ChangeWeightUnitAction,
+    CLEAR_AUTH_TOKEN,
+    ClearAuthTokenAction,
+    SET_AUTH_TOKEN,
+    SetAuthTokenAction,
+    Weight
+} from './types';
 
-const changeWeightUnit = (unit: Weight): ChangeWeightUnitAction => ({
+export const changeWeightUnit = (unit: Weight): ChangeWeightUnitAction => ({
     type: CHANGE_WEIGHT_UNIT,
     unit
 });
 
-export default changeWeightUnit;
+export const setAuthToken = (token: string): SetAuthTokenAction => ({
+    type: SET_AUTH_TOKEN,
+    token
+});
+
+export const clearAuthToken = (): ClearAuthTokenAction => ({
+    type: CLEAR_AUTH_TOKEN
+});

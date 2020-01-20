@@ -3,7 +3,10 @@ import {
     CHANGE_WEIGHT_UNIT,
     ChangeWeightUnitAction,
     OptionsAction,
-    Weight
+    Weight,
+    SET_AUTH_TOKEN,
+    SetAuthTokenAction,
+    CLEAR_AUTH_TOKEN
 } from './types';
 
 const initialState: OptionsStore = {
@@ -20,7 +23,8 @@ const initialState: OptionsStore = {
             converter: 2.20462262,
             selected: false
         }
-    ]
+    ],
+    token: null
 };
 
 const optionsReducer = (state = initialState, action: OptionsAction) => {
@@ -39,6 +43,20 @@ const optionsReducer = (state = initialState, action: OptionsAction) => {
             return {
                 ...state,
                 weightUnits
+            };
+        }
+        case SET_AUTH_TOKEN: {
+            const setTokenAction = action as SetAuthTokenAction;
+            const { token } = setTokenAction;
+            return {
+                ...state,
+                token
+            };
+        }
+        case CLEAR_AUTH_TOKEN: {
+            return {
+                ...state,
+                token: null
             };
         }
         default:

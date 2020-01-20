@@ -10,7 +10,7 @@ import Picker, { PickerItem } from '../components/inputs/Picker';
 import TextInput from '../components/inputs/TextInput';
 import ExerciseItemList from '../components/ExerciseItemList';
 import Button from '../components/buttons/Button';
-import ScrollContainer from '../components/ScrollContainer';
+import ScrollContainerWithAutoScroll from '../components/ScrollContainerWithAutoScroll';
 import { Store as GlobalStore } from '../redux/store';
 import { addSuperset, modifySuperset } from '../redux/superset/supersetActions';
 import { Exercise } from '../redux/exercise/types';
@@ -184,7 +184,7 @@ const CreateSuperset: FC<Props> = ({
     );
 
     return (
-        <ScrollContainer absoluteChild={absoluteSaveButton}>
+        <ScrollContainerWithAutoScroll absoluteChild={absoluteSaveButton}>
             <TextInputContainer>
                 <TextInput onChangeText={onChangeName} label="Name" defaultValue={state.name} />
             </TextInputContainer>
@@ -216,7 +216,7 @@ const CreateSuperset: FC<Props> = ({
                     <Picker items={listItems} onChange={onChange} />
                 </AddItemContainer>
             </ExercisesContainer>
-        </ScrollContainer>
+        </ScrollContainerWithAutoScroll>
     );
 };
 

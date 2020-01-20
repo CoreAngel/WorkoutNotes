@@ -6,7 +6,7 @@ import { cloneDeep } from 'lodash';
 import { NavigationStackProp } from 'react-navigation-stack';
 import Colors from '../utils/Colors';
 import { DefaultText } from '../components/DefaultText';
-import ScrollContainer from '../components/ScrollContainer';
+import ScrollContainerWithAutoScroll from '../components/ScrollContainerWithAutoScroll';
 import TextInput from '../components/inputs/TextInput';
 import PickerSection, { PickerItem, PickerSectionItem } from '../components/inputs/PickerSection';
 import ExerciseItemList from '../components/ExerciseItemList';
@@ -308,7 +308,7 @@ const CreatePlan: FC<Props> = ({
     );
 
     return (
-        <ScrollContainer absoluteChild={absoluteSaveButton}>
+        <ScrollContainerWithAutoScroll absoluteChild={absoluteSaveButton}>
             <TextInputContainer>
                 <TextInput onChangeText={onChangeName} label="Name" defaultValue={state.name} />
             </TextInputContainer>
@@ -349,7 +349,7 @@ const CreatePlan: FC<Props> = ({
                     <PickerSection items={items} />
                 </AddItemContainer>
             </ExercisesContainer>
-        </ScrollContainer>
+        </ScrollContainerWithAutoScroll>
     );
 };
 
