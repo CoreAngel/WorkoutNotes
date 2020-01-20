@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import styled from 'styled-components/native';
-import { cloneDeep } from 'lodash';
 import { connect } from 'react-redux';
+import { NavigationStackProp } from 'react-navigation-stack';
 import Colors from '../utils/Colors';
 import { DefaultText } from '../components/DefaultText';
 import ScrollContainer from '../components/ScrollContainer';
@@ -9,18 +9,29 @@ import CheckBox from '../components/inputs/CheckBox';
 import TextInput from '../components/inputs/TextInput';
 import Button from '../components/buttons/Button';
 import { Exercise } from '../redux/exercise/types';
-import { addExercise } from '../redux/exercise/exerciseActions';
+import { addExercise, modifyExercise } from '../redux/exercise/exerciseActions';
+import store from '../redux/store';
 
 type Props = {
+    navigation: NavigationStackProp<{ exercise: Exercise | null }>;
     addExerciseAction: typeof addExercise;
+    modifyExerciseAction: typeof modifyExercise;
 };
 
-const AddExercise: FC<Props> = ({ addExerciseAction }: Props) => {
-    const [state, setState] = useState({
-        name: '',
-        desc: '',
-        addBody: false
-    });
+const AddExercise: FC<Props> = ({ navigation, addExerciseAction, modifyExerciseAction }: Props) => {
+    const setInitialState = (): Exercise => {
+        const { exercise } = navigation.state.params;
+        if (exercise !== null) {
+            return exercise;
+        }
+        return {
+            name: '',
+            desc: '',
+            addBody: false,
+            workouts: []
+        };
+    };
+    const [state, setState] = useState<Exercise>(setInitialState());
 
     const onChangeName = (text: string) => {
         setState({
@@ -37,19 +48,23 @@ const AddExercise: FC<Props> = ({ addExerciseAction }: Props) => {
     };
 
     const onChangeAddBodyStatus = (status: boolean) => {
-        const clonedState = cloneDeep(state);
-        clonedState.addBody = status;
-        setState({ ...clonedState });
+        setState({
+            ...state,
+            addBody: status
+        });
     };
 
     const saveExercise = () => {
-        const exercise: Exercise = {
-            name: state.name,
-            desc: state.desc,
-            addBody: state.addBody,
-            workouts: []
-        };
-        addExerciseAction(exercise);
+        if (state.id == null) {
+            addExerciseAction(state);
+            return;
+        }
+
+        const exercise = store.getState().exercise.exercises.find(item => item.id === state.id);
+        modifyExerciseAction({
+            ...state,
+            workouts: exercise.workouts
+        });
     };
 
     const absoluteSaveButton = (
@@ -61,10 +76,14 @@ const AddExercise: FC<Props> = ({ addExerciseAction }: Props) => {
     return (
         <ScrollContainer absoluteChild={absoluteSaveButton}>
             <TextInputContainer>
-                <TextInput onChangeText={onChangeName} label="Name" />
+                <TextInput onChangeText={onChangeName} label="Name" defaultValue={state.name} />
             </TextInputContainer>
             <TextInputContainer>
-                <TextInput onChangeText={onChangeDesc} label="Description" />
+                <TextInput
+                    onChangeText={onChangeDesc}
+                    label="Description"
+                    defaultValue={state.desc}
+                />
             </TextInputContainer>
 
             <SettingsLabel>Settings</SettingsLabel>
@@ -107,7 +126,8 @@ const SaveButtonContainer = styled.View`
 `;
 
 const mapDispatchToProps = {
-    addExerciseAction: addExercise
+    addExerciseAction: addExercise,
+    modifyExerciseAction: modifyExercise
 };
 
 export default connect(

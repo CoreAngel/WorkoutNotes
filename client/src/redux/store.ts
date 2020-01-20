@@ -1,5 +1,4 @@
 import { applyMiddleware, combineReducers, createStore } from 'redux';
-import loggerMiddleware from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
 import exerciseReducer from './exercise/exerciseReducer';
 import supersetReducer from './superset/supersetReducer';
@@ -28,6 +27,6 @@ const reducers = combineReducers({
     workout: workoutReducer
 });
 
-const store = createStore(reducers, applyMiddleware(thunkMiddleware, loggerMiddleware));
+const store = createStore(reducers, applyMiddleware(thunkMiddleware));
 
 export default store;

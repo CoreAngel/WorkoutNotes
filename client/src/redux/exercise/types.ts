@@ -44,6 +44,7 @@ export type ExerciseStore = {
 
 const PREFIX = 'exercise';
 export const ADD_EXERCISE = `${PREFIX}/ADD_EXERCISE`;
+export const MODIFY_EXERCISE = `${PREFIX}/MODIFY_EXERCISE`;
 export const DELETE_EXERCISE = `${PREFIX}/DELETE_EXERCISE`;
 export const ADD_WORKOUT_EXERCISE = `${PREFIX}/ADD_WORKOUT_EXERCISE`;
 export const MULTI_ADD_WORKOUT_EXERCISE = `${PREFIX}/MULTI_ADD_WORKOUT_EXERCISE`;
@@ -57,6 +58,12 @@ export interface AddExerciseAction {
     type: typeof ADD_EXERCISE;
     exercise: Exercise;
 }
+
+export interface ModifyExerciseAction {
+    type: typeof MODIFY_EXERCISE;
+    exercise: Exercise;
+}
+
 export interface DeleteExerciseAction {
     type: typeof DELETE_EXERCISE;
     exercise: Exercise;
@@ -106,4 +113,5 @@ export type ExerciseAction =
     | DeleteWorkoutExerciseAction
     | AddWorkoutExerciseSetAction
     | ModifyWorkoutExerciseSetAction
-    | DeleteWorkoutExerciseSetAction;
+    | DeleteWorkoutExerciseSetAction
+    | ModifyExerciseAction;

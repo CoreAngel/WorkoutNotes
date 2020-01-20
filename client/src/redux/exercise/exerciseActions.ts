@@ -19,7 +19,9 @@ import {
     DeleteWorkoutExerciseSetAction,
     DELETE_WORKOUT_EXERCISE_SET,
     MODIFY_WORKOUT_EXERCISE_SET,
-    ModifyWorkoutExerciseSetAction
+    ModifyWorkoutExerciseSetAction,
+    ModifyExerciseAction,
+    MODIFY_EXERCISE
 } from './types';
 
 export const addExercise = (exercise: Exercise): AddExerciseAction => {
@@ -31,6 +33,13 @@ export const addExercise = (exercise: Exercise): AddExerciseAction => {
     return {
         type: ADD_EXERCISE,
         exercise: fullExercise
+    };
+};
+
+export const modifyExercise = (exercise: Exercise): ModifyExerciseAction => {
+    return {
+        type: MODIFY_EXERCISE,
+        exercise
     };
 };
 

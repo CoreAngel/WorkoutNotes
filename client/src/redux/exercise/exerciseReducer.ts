@@ -18,7 +18,9 @@ import {
     MODIFY_WORKOUT_EXERCISE_SET,
     ModifyWorkoutExerciseSetAction,
     DELETE_WORKOUT_EXERCISE_SET,
-    DeleteWorkoutExerciseSetAction
+    DeleteWorkoutExerciseSetAction,
+    MODIFY_EXERCISE,
+    ModifyExerciseAction
 } from './types';
 
 const initialState: ExerciseStore = {
@@ -157,6 +159,15 @@ const exerciseReducer = (state = initialState, action: ExerciseAction) => {
                 ...state,
                 exercises: [...state.exercises, addAction.exercise],
                 index: state.index + 1
+            };
+        }
+        case MODIFY_EXERCISE: {
+            const modifyAction = action as ModifyExerciseAction;
+            const { id } = modifyAction.exercise;
+            const exercises = state.exercises.filter(item => item.id !== id);
+            return {
+                ...state,
+                exercises: [...exercises, modifyAction.exercise]
             };
         }
         case DELETE_EXERCISE: {

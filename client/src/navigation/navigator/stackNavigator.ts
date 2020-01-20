@@ -7,10 +7,29 @@ import {
     CreateSuperset,
     CreatePlan,
     RunPlan,
-    Workout
+    Workout,
+    Browse,
+    BrowseExercises,
+    BrowseSupersets,
+    BrowsePlans,
+    BrowseWorkouts
 } from '../../screens';
 import Colors from '../../utils/Colors';
-import { EXERCISE, HOME, PLAN, RUN_PLAN, SUPERSET, WORKOUT, SIGN_IN, SIGN_UP } from '../routes';
+import {
+    EXERCISE,
+    HOME,
+    PLAN,
+    RUN_PLAN,
+    SUPERSET,
+    WORKOUT,
+    SIGN_IN,
+    SIGN_UP,
+    BROWSE,
+    BROWSE_EXERCISES,
+    BROWSE_SUPERSETS,
+    BROWSE_PLANS,
+    BROWSE_WORKOUTS
+} from '../routes';
 
 const routes = {};
 routes[HOME] = Home;
@@ -19,6 +38,11 @@ routes[SUPERSET] = CreateSuperset;
 routes[PLAN] = CreatePlan;
 routes[RUN_PLAN] = RunPlan;
 routes[WORKOUT] = Workout;
+routes[BROWSE] = Browse;
+routes[BROWSE_EXERCISES] = BrowseExercises;
+routes[BROWSE_SUPERSETS] = BrowseSupersets;
+routes[BROWSE_PLANS] = BrowsePlans;
+routes[BROWSE_WORKOUTS] = BrowseWorkouts;
 routes[SIGN_IN] = SignIn;
 routes[SIGN_UP] = SignUp;
 

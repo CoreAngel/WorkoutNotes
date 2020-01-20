@@ -1,8 +1,9 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import styled from 'styled-components/native';
 import { FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import { cloneDeep } from 'lodash';
+import { NavigationStackProp } from 'react-navigation-stack';
 import Colors from '../utils/Colors';
 import { DefaultText } from '../components/DefaultText';
 import Picker, { PickerItem } from '../components/inputs/Picker';
@@ -11,27 +12,78 @@ import ExerciseItemList from '../components/ExerciseItemList';
 import Button from '../components/buttons/Button';
 import ScrollContainer from '../components/ScrollContainer';
 import { Store as GlobalStore } from '../redux/store';
-import { addSuperset } from '../redux/superset/supersetActions';
+import { addSuperset, modifySuperset } from '../redux/superset/supersetActions';
 import { Exercise } from '../redux/exercise/types';
 import { Superset, SupersetExercise } from '../redux/superset/types';
 
 type Props = {
+    navigation: NavigationStackProp<{ superset: Superset | null }>;
     exercises: Exercise[];
     addSupersetAction: typeof addSuperset;
+    modifySupersetAction: typeof modifySuperset;
 };
 
 type State = {
+    id?: number;
     name: string;
     desc: string;
     exercises: Exercise[];
 };
 
-const CreateSuperset: FC<Props> = ({ exercises, addSupersetAction }: Props) => {
-    const [state, setState] = useState<State>({
-        name: '',
-        desc: '',
-        exercises: []
-    });
+const CreateSuperset: FC<Props> = ({
+    exercises,
+    addSupersetAction,
+    modifySupersetAction,
+    navigation
+}: Props) => {
+    const setInitialState = () => {
+        const { superset } = navigation.state.params;
+        if (superset !== null) {
+            const { desc, name, id } = superset;
+            return {
+                id,
+                name,
+                desc,
+                exercises: []
+            };
+        }
+        return {
+            name: '',
+            desc: '',
+            exercises: []
+        };
+    };
+    const [state, setState] = useState<State>(setInitialState());
+
+    useEffect(() => {
+        const { superset } = navigation.state.params;
+        if (!superset || superset.id == null) {
+            return;
+        }
+
+        const supersetTyped = superset as Superset;
+
+        const exercisesInPlan = exercises.filter(item => {
+            return supersetTyped.exercises.some(someItem => someItem.exerciseId === item.id);
+        });
+
+        const finalExercises = supersetTyped.exercises
+            .map(item => {
+                const { exerciseId, order } = item;
+                return {
+                    exercise: exercisesInPlan.find(itemInPlan => itemInPlan.id === exerciseId),
+                    order
+                };
+            })
+            .sort((i1, i2) => i1.order - i2.order)
+            .map(item => item.exercise);
+
+        setState({
+            ...state,
+            exercises: finalExercises
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const listItems: PickerItem[] = exercises.map(
         (item): PickerItem => {
@@ -103,9 +155,11 @@ const CreateSuperset: FC<Props> = ({ exercises, addSupersetAction }: Props) => {
     };
 
     const saveSuperset = () => {
+        const { id, desc, name } = state;
         const superset: Superset = {
-            name: state.name,
-            desc: state.desc,
+            id,
+            name,
+            desc,
             exercises: state.exercises.map(
                 (item, index): SupersetExercise => {
                     return {
@@ -115,7 +169,12 @@ const CreateSuperset: FC<Props> = ({ exercises, addSupersetAction }: Props) => {
                 }
             )
         };
-        addSupersetAction(superset);
+
+        if (id == null) {
+            addSupersetAction(superset);
+        } else {
+            modifySupersetAction(superset);
+        }
     };
 
     const absoluteSaveButton = (
@@ -127,10 +186,14 @@ const CreateSuperset: FC<Props> = ({ exercises, addSupersetAction }: Props) => {
     return (
         <ScrollContainer absoluteChild={absoluteSaveButton}>
             <TextInputContainer>
-                <TextInput onChangeText={onChangeName} label="Name" />
+                <TextInput onChangeText={onChangeName} label="Name" defaultValue={state.name} />
             </TextInputContainer>
             <TextInputContainer>
-                <TextInput onChangeText={onChangeDesc} label="Description" />
+                <TextInput
+                    onChangeText={onChangeDesc}
+                    label="Description"
+                    defaultValue={state.desc}
+                />
             </TextInputContainer>
             <ExercisesLabel>Exercises</ExercisesLabel>
             <ExercisesContainer>
@@ -189,7 +252,8 @@ const mapStateToProps = (state: GlobalStore) => {
 };
 
 const mapDispatchToProps = {
-    addSupersetAction: addSuperset
+    addSupersetAction: addSuperset,
+    modifySupersetAction: modifySuperset
 };
 
 export default connect(

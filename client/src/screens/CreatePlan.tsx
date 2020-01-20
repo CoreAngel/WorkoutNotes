@@ -1,8 +1,9 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import styled from 'styled-components/native';
 import { FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import { cloneDeep } from 'lodash';
+import { NavigationStackProp } from 'react-navigation-stack';
 import Colors from '../utils/Colors';
 import { DefaultText } from '../components/DefaultText';
 import ScrollContainer from '../components/ScrollContainer';
@@ -12,15 +13,18 @@ import ExerciseItemList from '../components/ExerciseItemList';
 import SupersetItemList from '../components/SupersetItemList';
 import Button from '../components/buttons/Button';
 import { Store as GlobalStore } from '../redux/store';
-import { addPlan } from '../redux/plan/planActions';
+import { addPlan, modifyPlan } from '../redux/plan/planActions';
 import { Superset } from '../redux/superset/types';
 import { Exercise } from '../redux/exercise/types';
 import Resolver from '../redux/resolver';
+import { Plan } from '../redux/plan/types';
 
 type Props = {
     exercises: Exercise[];
     supersets: Superset[];
+    navigation: NavigationStackProp<{ plan: Plan | null }>;
     addPlanAction: typeof addPlan;
+    modifyPlanAction: typeof modifyPlan;
 };
 
 enum Type {
@@ -39,17 +43,94 @@ type StateSuperset = StateExercise & {
 };
 
 type State = {
+    id?: number;
     name: string;
     desc: string;
     exercises: StateExercise[];
 };
 
-const CreatePlan: FC<Props> = ({ exercises, supersets, addPlanAction }: Props) => {
-    const [state, setState] = useState<State>({
-        name: '',
-        desc: '',
-        exercises: []
-    });
+const CreatePlan: FC<Props> = ({
+    exercises,
+    supersets,
+    addPlanAction,
+    modifyPlanAction,
+    navigation
+}: Props) => {
+    const setInitialState = () => {
+        const { plan } = navigation.state.params;
+        if (plan !== null) {
+            const { id, name, desc } = plan;
+            return {
+                id,
+                name,
+                desc,
+                exercises: []
+            };
+        }
+
+        return {
+            name: '',
+            desc: '',
+            exercises: []
+        };
+    };
+    const [state, setState] = useState<State>(setInitialState());
+
+    useEffect(() => {
+        const { plan } = navigation.state.params;
+        if (!plan || plan.id == null) {
+            return;
+        }
+
+        const planTyped = plan as Plan;
+
+        const exercisesInPlan = exercises.filter(item => {
+            return planTyped.exercises.some(someItem => someItem.id === item.id);
+        });
+        const exercisesWithOrder = planTyped.exercises.map(item => {
+            const { id, name } = exercisesInPlan.find(exItem => exItem.id === item.id);
+            return {
+                obj: {
+                    id,
+                    name,
+                    type: Type.EXERCISE
+                },
+                order: item.order
+            };
+        });
+
+        const supersetsInPlan = supersets.filter(item => {
+            return planTyped.supersets.some(someItem => someItem.id === item.id);
+        });
+        const supersetsWithOrder = planTyped.supersets.map(item => {
+            const foundSuperset = supersetsInPlan.find(supItem => supItem.id === item.id);
+            const resolvedSuperset = Resolver.resolveSuperset(foundSuperset);
+            const exercisesNames = resolvedSuperset.exercises
+                .sort((i1, i2) => i1.order - i2.order)
+                .map(it => it.exercise.name);
+
+            const { id, name } = foundSuperset;
+            return {
+                obj: {
+                    id,
+                    name,
+                    type: Type.SUPERSET,
+                    exercises: exercisesNames
+                },
+                order: item.order
+            };
+        });
+
+        const finalExercises: StateExercise[] = [...exercisesWithOrder, ...supersetsWithOrder]
+            .sort((i1, i2) => i1.order - i2.order)
+            .map(item => item.obj);
+
+        setState({
+            ...state,
+            exercises: finalExercises
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const addExercise = (item: PickerItem) => {
         const exercise: StateExercise = {
@@ -63,14 +144,15 @@ const CreatePlan: FC<Props> = ({ exercises, supersets, addPlanAction }: Props) =
             exercises: [...state.exercises, exercise]
         });
     };
+
     const addSuperset = (item: PickerItem) => {
         const supersetId = Number.parseInt(item.value, 10);
         const foundSuperset = supersets.find(({ id }) => id === supersetId);
         if (!foundSuperset) {
             return;
         }
-        const resolverSuperset = Resolver.resolveSuperset(foundSuperset);
-        const exercisesNames = resolverSuperset.exercises
+        const resolvedSuperset = Resolver.resolveSuperset(foundSuperset);
+        const exercisesNames = resolvedSuperset.exercises
             .sort((i1, i2) => i1.order - i2.order)
             .map(it => it.exercise.name);
 
@@ -203,12 +285,20 @@ const CreatePlan: FC<Props> = ({ exercises, supersets, addPlanAction }: Props) =
                 };
             });
 
-        addPlanAction({
-            name: state.name,
-            desc: state.desc,
+        const { id, name, desc } = state;
+        const plan: Plan = {
+            id,
+            name,
+            desc,
             exercises: planExercises,
             supersets: planSupersets
-        });
+        };
+
+        if (id == null) {
+            addPlanAction(plan);
+        } else {
+            modifyPlanAction(plan);
+        }
     };
 
     const absoluteSaveButton = (
@@ -220,10 +310,14 @@ const CreatePlan: FC<Props> = ({ exercises, supersets, addPlanAction }: Props) =
     return (
         <ScrollContainer absoluteChild={absoluteSaveButton}>
             <TextInputContainer>
-                <TextInput onChangeText={onChangeName} label="Name" />
+                <TextInput onChangeText={onChangeName} label="Name" defaultValue={state.name} />
             </TextInputContainer>
             <TextInputContainer>
-                <TextInput onChangeText={onChangeDesc} label="Description" />
+                <TextInput
+                    onChangeText={onChangeDesc}
+                    label="Description"
+                    defaultValue={state.desc}
+                />
             </TextInputContainer>
             <ExercisesLabel>Exercises</ExercisesLabel>
             <ExercisesContainer>
@@ -294,7 +388,8 @@ const mapStateToProps = (state: GlobalStore) => {
 };
 
 const mapDispatchToProps = {
-    addPlanAction: addPlan
+    addPlanAction: addPlan,
+    modifyPlanAction: modifyPlan
 };
 
 export default connect(

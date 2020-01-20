@@ -9,7 +9,8 @@ import {
     navigateToRunPlan,
     navigateToAddExercise,
     navigateToCreatePlan,
-    navigateToCreateSuperset
+    navigateToCreateSuperset,
+    navigateToBrowse
 } from '../navigation/navigationActions';
 
 type HomeScreen<Props> = FC<Props> & {
@@ -33,21 +34,28 @@ const data = [
         title: 'Add exercise',
         desc: 'Add exercises to create a plan and supersets.',
         button: RoundedButtonType.ADD,
-        onClick: navigateToAddExercise
+        onClick: () => navigateToAddExercise(null)
     },
     {
         id: 3,
         title: 'Create superset',
         desc: 'Create superset from exercises.',
         button: RoundedButtonType.ADD,
-        onClick: navigateToCreateSuperset
+        onClick: () => navigateToCreateSuperset(null)
     },
     {
         id: 4,
         title: 'Create plan',
         desc: 'Create plan from exercises and supersets.',
         button: RoundedButtonType.ADD,
-        onClick: navigateToCreatePlan
+        onClick: () => navigateToCreatePlan(null)
+    },
+    {
+        id: 5,
+        title: 'Browse',
+        desc: 'Browse exercises, supersets, plan and workouts',
+        button: RoundedButtonType.ARROW,
+        onClick: () => navigateToBrowse()
     }
 ];
 

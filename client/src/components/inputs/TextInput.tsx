@@ -31,7 +31,7 @@ const TextInput: FC<Props> = ({
         active: false
     });
     const [labelAnimation] = useState(
-        new Animated.Value(defaultValue != null ? InputState.ACTIVE : InputState.INACTIVE)
+        new Animated.Value(inputState.text === '' ? InputState.INACTIVE : InputState.ACTIVE)
     );
 
     useEffect(() => {
