@@ -1,4 +1,4 @@
-import { navigate } from './navigationService';
+import { navigate, drawer } from './navigationService';
 import {
     BROWSE,
     BROWSE_EXERCISES,
@@ -6,8 +6,11 @@ import {
     BROWSE_SUPERSETS,
     BROWSE_WORKOUTS,
     EXERCISE,
+    HOME,
     PLAN,
     RUN_PLAN,
+    SIGN_IN,
+    SIGN_UP,
     SUPERSET,
     WORKOUT
 } from './routes';
@@ -71,4 +74,19 @@ export const navigateToBrowsePlans = () => {
 
 export const navigateToBrowseWorkouts = () => {
     navigate(BROWSE_WORKOUTS, { title: 'Browse: workouts' });
+};
+
+export const navigateToSignIn = () => {
+    drawer.close();
+    navigate(SIGN_IN, { title: 'Sign In' });
+};
+
+export const navigateToSignUp = () => {
+    drawer.close();
+    navigate(SIGN_UP, { title: 'Sign Up' });
+};
+
+export const navigateToHome = () => {
+    drawer.close();
+    navigate(HOME);
 };

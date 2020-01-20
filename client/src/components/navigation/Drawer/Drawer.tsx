@@ -6,34 +6,40 @@ import Colors from '../../../utils/Colors';
 import { CloseIcon } from '../../icons';
 import DrawerOption from './DrawerOption';
 import { drawer } from '../../../navigation/navigationService';
+import { navigateToSignIn, navigateToSignUp } from '../../../navigation/navigationActions';
 
 const data = [
+    // {
+    //     label: 'Measurement',
+    //     path: ''
+    // },
+    // {
+    //     label: 'Metrics',
+    //     path: ''
+    // },
     {
-        label: 'Measurement',
-        path: ''
-    },
-    {
-        label: 'Metrics',
-        path: ''
-    },
-    {
-        label: 'Sign in',
-        path: '',
+        label: 'Sign In',
+        onClick: navigateToSignIn,
+        noAuth: true,
         auth: false
     },
     {
-        label: 'Sign up',
-        path: '',
+        label: 'Sign Up',
+        onClick: navigateToSignUp,
+        noAuth: true,
         auth: false
     },
     {
         label: 'Logout',
-        path: '',
+        onClick: () => {},
+        noAuth: false,
         auth: true
     }
 ];
 
 const Drawer: FC<DrawerContentComponentProps> = () => {
+    const items = data.filter(item => !item.auth);
+
     return (
         <Container>
             <CloseIconContainer>
@@ -42,13 +48,10 @@ const Drawer: FC<DrawerContentComponentProps> = () => {
                 </TouchableOpacity>
             </CloseIconContainer>
             <OptionContainer>
-                {data
-                    .filter(item => item.auth === undefined || item.auth === false)
-                    .map(item => {
-                        return (
-                            <DrawerOption key={item.label} label={item.label} path={item.path} />
-                        );
-                    })}
+                {items.map(item => {
+                    const { onClick, label } = item;
+                    return <DrawerOption key={label} label={label} onClick={onClick} />;
+                })}
             </OptionContainer>
         </Container>
     );

@@ -6,12 +6,12 @@ import Colors from '../../../utils/Colors';
 
 type Props = {
     label: string;
-    path: string;
+    onClick: () => void;
 };
 
-const DrawerOption: FC<Props> = ({ label, path }: Props) => {
+const DrawerOption: FC<Props> = ({ label, onClick }: Props) => {
     return (
-        <TouchableWithoutFeedback onPress={() => {}}>
+        <TouchableWithoutFeedback onPress={onClick}>
             <OptionContainer>
                 <Option>{label}</Option>
             </OptionContainer>

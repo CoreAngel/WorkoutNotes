@@ -29,6 +29,7 @@ const TouchableButton = styled.TouchableOpacity<TouchableButtonProps>`
 
 const Text = styled(DefaultText)`
     color: ${Colors.WHITE};
+    text-align: center;
 `;
 
 export default Button;

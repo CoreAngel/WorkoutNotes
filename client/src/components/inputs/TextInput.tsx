@@ -13,16 +13,18 @@ const AnimationDuration = 200;
 
 type Props = {
     label: string;
-    defaultValue?: string;
     onChangeText: (text: string) => void;
+    type?: 'normal' | 'email' | 'password';
+    defaultValue?: string;
     onEndEditing?: (e: NativeSyntheticEvent<TextInputEndEditingEventData>) => void;
     error?: string;
 };
 
 const TextInput: FC<Props> = ({
     label,
-    defaultValue,
     onChangeText,
+    type = 'normal',
+    defaultValue,
     onEndEditing,
     error = ''
 }: Props) => {
@@ -65,12 +67,22 @@ const TextInput: FC<Props> = ({
         })
     };
 
+    const keyboardType = type === 'email' ? 'email-address' : 'default';
+    const secureTextEntry = type === 'password';
+    let autoCompleteType: 'off' | 'email' | 'password';
+    if (type === 'normal') autoCompleteType = null;
+    if (type === 'email') autoCompleteType = 'email';
+    if (type === 'password') autoCompleteType = 'password';
+
     return (
         <View>
             <Label style={labelStyle}>{label}</Label>
             <InputContainer style={borderBottomColor}>
                 <Input
                     value={inputState.text}
+                    keyboardType={keyboardType}
+                    secureTextEntry={secureTextEntry}
+                    autoCompleteType={autoCompleteType}
                     onChangeText={text => {
                         setInputState({
                             ...inputState,
