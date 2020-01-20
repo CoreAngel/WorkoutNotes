@@ -29,15 +29,17 @@ const BrowsePlans: FC<Props> = ({ workouts, plans, setWorkoutActiveAction }: Pro
     const data = workouts
         .sort((i1, i2) => i2.id - i1.id)
         .map(item => {
-            const name =
-                item.name != null
-                    ? item.name
-                    : plansInWorkouts.find(planItem => planItem.id === item.planId).name;
+            const plan =
+                item.planId != null &&
+                plansInWorkouts.find(planItem => planItem.id === item.planId);
+            const name = item.name != null ? item.name : plan.name;
+            const desc = plan != null ? plan.name : null;
 
             const { id, date } = item;
             return {
                 id,
                 name,
+                desc,
                 date,
                 workout: item
             };
@@ -53,11 +55,12 @@ const BrowsePlans: FC<Props> = ({ workouts, plans, setWorkoutActiveAction }: Pro
             contentContainerStyle={containerStyle}
             data={data}
             renderItem={({ item }) => {
-                const { id, name, date, workout } = item;
+                const { id, name, date, desc, workout } = item;
                 return (
                     <TileContainer key={id}>
                         <Tile
                             title={name}
+                            desc={desc}
                             date={DateFormatter(date)}
                             buttonType={RoundedButtonType.ARROW}
                             onClick={() => navigate(workout)}

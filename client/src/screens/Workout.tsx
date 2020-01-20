@@ -7,7 +7,7 @@ import WorkoutExercise from '../components/WorkoutExercise';
 import { Store } from '../redux/store';
 import { Workout } from '../redux/workout/types';
 import { Exercise } from '../redux/exercise/types';
-import { modifyWorkout } from '../redux/workout/workoutActions';
+import { modifyWorkout, setWorkoutFinished } from '../redux/workout/workoutActions';
 import {
     addWorkoutExerciseAction,
     multiAddWorkoutExerciseAction
@@ -24,6 +24,7 @@ import Picker, { PickerItem } from '../components/inputs/Picker';
 import { Superset } from '../redux/superset/types';
 import TextInput from '../components/inputs/TextInput';
 import useDebounce from '../hooks/useDebounce';
+import Button from '../components/buttons/Button';
 
 type Props = {
     exercises: Exercise[];
@@ -32,6 +33,7 @@ type Props = {
     modifyWorkoutAction: typeof modifyWorkout;
     addWorkoutExercise: typeof addWorkoutExerciseAction;
     multiAddWorkoutExercise: typeof multiAddWorkoutExerciseAction;
+    setWorkoutFinishedAction: typeof setWorkoutFinished;
 };
 
 const resolveWorkoutToWorkoutExercisesArray = (workout: Workout) => {
@@ -51,6 +53,7 @@ const WorkoutScreen: FC<Props> = ({
     modifyWorkoutAction,
     addWorkoutExercise,
     multiAddWorkoutExercise,
+    setWorkoutFinishedAction,
     exercises,
     supersets
 }: Props) => {
@@ -116,6 +119,10 @@ const WorkoutScreen: FC<Props> = ({
         setNameState(text);
     };
 
+    const endWorkout = () => {
+        setWorkoutFinishedAction(workout.id);
+    };
+
     return (
         <ScreenContainer>
             <ScrollViewScreenContainer>
@@ -134,7 +141,7 @@ const WorkoutScreen: FC<Props> = ({
                     </ContainerInputText>
                 )}
                 <Header>Workout</Header>
-                <Container>
+                <Container finished={workout.finished}>
                     <ExercisesContainer>
                         {resolvedExercises.map(item => {
                             const {
@@ -184,6 +191,9 @@ const WorkoutScreen: FC<Props> = ({
                         </OptionContainer>
                     </AddOptions>
                 </Container>
+                <WorkoutFinishedButtonContainer>
+                    {!workout.finished && <Button label="End workout" onClick={endWorkout} />}
+                </WorkoutFinishedButtonContainer>
             </ScrollViewScreenContainer>
             <Editor state={editorState} visible={editorVisible} setVisible={setEditorVisible} />
         </ScreenContainer>
@@ -222,10 +232,12 @@ const DateButton = styled.TouchableWithoutFeedback``;
 const DateText = styled(DefaultText)`
     color: ${Colors.WHITE70};
 `;
-
-const Container = styled.View`
+type ContainerProps = {
+    finished: boolean;
+};
+const Container = styled.View<ContainerProps>`
     background-color: ${Colors.SECONDARY};
-    padding: 20px 15px;
+    padding: 20px 15px ${({ finished }) => (finished ? 20 : 90)}px 15px;
 `;
 
 const ExercisesContainer = styled.View`
@@ -245,6 +257,12 @@ const ContainerInputText = styled.View`
     padding-top: 30px;
 `;
 
+const WorkoutFinishedButtonContainer = styled.View`
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+`;
+
 const mapStateToProps = (state: Store) => {
     const { exercise, workout, superset } = state;
     const activeWorkout = workout.workouts.find(item => item.active);
@@ -259,7 +277,8 @@ const mapStateToProps = (state: Store) => {
 const mapDispatchToProps = {
     modifyWorkoutAction: modifyWorkout,
     addWorkoutExercise: addWorkoutExerciseAction,
-    multiAddWorkoutExercise: multiAddWorkoutExerciseAction
+    multiAddWorkoutExercise: multiAddWorkoutExerciseAction,
+    setWorkoutFinishedAction: setWorkoutFinished
 };
 
 export default connect(
