@@ -21,6 +21,7 @@ export const loginSchema = ((): StringSchema => {
                         err.message = `Login length must be between ${min} and ${max} characters!`;
                         break;
                     case 'any.required':
+                    case 'any.empty':
                         err.message = 'Login is required field!';
                         break;
                 }
@@ -39,6 +40,7 @@ export const emailSchema = Joi.string()
                     err.message = 'Email is not valid email!';
                     break;
                 case 'any.required':
+                case 'any.empty':
                     err.message = 'Email is required field!';
                     break;
             }
@@ -62,6 +64,7 @@ export const passwordSchema = ((): StringSchema => {
                         err.message = `Password length must be between ${min} and ${max} characters!`;
                         break;
                     case 'any.required':
+                    case 'any.empty':
                         err.message = 'Password is required field!';
                         break;
                 }
@@ -77,6 +80,7 @@ export const confirmPasswordSchema = Joi.string()
         errors.map(err => {
             switch (err.type) {
                 case 'any.required':
+                case 'any.empty':
                     err.message = 'Confirm password is required field!';
                     break;
                 case 'any.allowOnly':

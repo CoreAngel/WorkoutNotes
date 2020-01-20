@@ -10,7 +10,7 @@ export class LoginErrorException extends AbstractErrorException {
         this.getResponse()
             .status(401)
             .send({
-                message: 'Incorrect login or password!'
+                errors: ['Incorrect login or password!']
             })
             .end();
     };
