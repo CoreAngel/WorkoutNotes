@@ -21,7 +21,7 @@ const ScrollContainer: FC<Props> = ({ children, absoluteChild, containerStyle }:
     });
     const scrollContainerRef = useRef<ScrollView>(null);
 
-    const scrollToEndWhenAddExercise = (width: number, height: number): void => {
+    const scrollToEndWhenSizeChange = (width: number, height: number): void => {
         if (height > containerSize.height) {
             scrollContainerRef.current.scrollToEnd();
         }
@@ -49,7 +49,7 @@ const ScrollContainer: FC<Props> = ({ children, absoluteChild, containerStyle }:
         <Container>
             <ScrollViewContainer
                 ref={scrollContainerRef}
-                onContentSizeChange={scrollToEndWhenAddExercise}
+                onContentSizeChange={scrollToEndWhenSizeChange}
                 contentContainerStyle={contentContainerStyle}
             >
                 {children}
