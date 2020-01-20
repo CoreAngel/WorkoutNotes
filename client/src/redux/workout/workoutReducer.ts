@@ -8,16 +8,19 @@ import {
     MODIFY_WORKOUT,
     ModifyWorkoutAction,
     SET_WORKOUT_FINISHED,
-    SetWorkoutFinishedAction
+    SetWorkoutFinishedAction,
+    SET_WORKOUT_ACTIVE,
+    SetWorkoutActiveAction
 } from './types';
 
 const initialState: WorkoutStore = {
     workouts: [
         {
             id: 0,
-            date: new Date().toDateString(),
+            date: new Date().toUTCString(),
             planId: 0,
             finished: false,
+            active: false,
             exercises: [
                 {
                     exerciseId: 0,
@@ -51,9 +54,10 @@ const initialState: WorkoutStore = {
         },
         {
             id: 1,
-            date: new Date().toDateString(),
+            date: new Date().toUTCString(),
             name: 'Without plan id',
             finished: true,
+            active: false,
             exercises: [
                 {
                     exerciseId: 0,
@@ -98,7 +102,7 @@ const workoutReducer = (state = initialState, action: WorkoutAction) => {
             return {
                 ...state,
                 workouts: [...state.workouts, addAction.workout],
-                index: addAction.workout.id === undefined ? state.index + 1 : addAction.workout.id
+                index: addAction.workout.id + 1
             };
         }
         case SET_WORKOUT_FINISHED: {
@@ -111,6 +115,20 @@ const workoutReducer = (state = initialState, action: WorkoutAction) => {
                     };
                 }
                 return item;
+            });
+
+            return {
+                ...state,
+                workouts: [...workouts]
+            };
+        }
+        case SET_WORKOUT_ACTIVE: {
+            const setActiveAction = action as SetWorkoutActiveAction;
+            const workouts = state.workouts.map(item => {
+                return {
+                    ...item,
+                    active: item.id === setActiveAction.workoutId
+                };
             });
 
             return {

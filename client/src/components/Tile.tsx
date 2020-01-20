@@ -4,19 +4,26 @@ import RoundedButton, { RoundedButtonType } from './buttons/RoundedButton';
 import Colors from '../utils/Colors';
 import { DefaultText } from './DefaultText';
 
+const tileSize = {
+    big: 140,
+    medium: 120,
+    small: 100
+};
+
 type Props = {
     title: string;
-    desc: string;
+    desc?: string;
+    tileType?: 'big' | 'medium' | 'small';
     onClick: () => void;
     buttonType: RoundedButtonType;
 };
 
-const Tile: FC<Props> = ({ title, desc, onClick, buttonType }: Props) => {
+const Tile: FC<Props> = ({ title, desc, onClick, buttonType, tileType = 'big' }: Props) => {
     return (
-        <Container>
+        <Container height={tileSize[tileType]}>
             <TextContainer>
                 <Title>{title}</Title>
-                <Desc>{desc}</Desc>
+                {tileType !== 'small' && <Desc>{desc}</Desc>}
             </TextContainer>
             <ButtonContainer>
                 <RoundedButton type={buttonType} onClick={onClick} />
@@ -25,11 +32,15 @@ const Tile: FC<Props> = ({ title, desc, onClick, buttonType }: Props) => {
     );
 };
 
-const Container = styled.View`
+type ContainerType = {
+    height: number;
+};
+
+const Container = styled.View<ContainerType>`
     background-color: ${Colors.SECONDARY};
     padding: 20px;
     flex-direction: row;
-    min-height: 140px;
+    min-height: ${({ height }) => height}px;
 `;
 
 const TextContainer = styled.View`

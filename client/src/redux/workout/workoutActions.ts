@@ -5,7 +5,9 @@ import {
     DeleteWorkoutAction,
     MODIFY_WORKOUT,
     ModifyWorkoutAction,
+    SET_WORKOUT_ACTIVE,
     SET_WORKOUT_FINISHED,
+    SetWorkoutActiveAction,
     SetWorkoutFinishedAction,
     Workout
 } from './types';
@@ -17,6 +19,11 @@ export const addWorkout = (workout: Workout): AddWorkoutAction => ({
 
 export const setWorkoutFinished = (workoutId: number): SetWorkoutFinishedAction => ({
     type: SET_WORKOUT_FINISHED,
+    workoutId
+});
+
+export const setWorkoutActive = (workoutId: number): SetWorkoutActiveAction => ({
+    type: SET_WORKOUT_ACTIVE,
     workoutId
 });
 

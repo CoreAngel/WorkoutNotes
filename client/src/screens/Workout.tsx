@@ -1,12 +1,12 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import styled from 'styled-components/native';
 import { batch, connect } from 'react-redux';
 import Colors from '../utils/Colors';
 import { DefaultText } from '../components/DefaultText';
 import WorkoutExercise from '../components/WorkoutExercise';
-import store, { Store } from '../redux/store';
+import { Store } from '../redux/store';
 import { Workout } from '../redux/workout/types';
-import { Exercise, WorkoutExercisePayload } from '../redux/exercise/types';
+import { Exercise } from '../redux/exercise/types';
 import { modifyWorkout } from '../redux/workout/workoutActions';
 import {
     addWorkoutExerciseAction,
@@ -14,30 +14,24 @@ import {
 } from '../redux/exercise/exerciseActions';
 import Editor, { EditorState } from '../components/inputs/Editor';
 import DateFormatter from '../utils/DateFormatter';
-import { getWorkoutExercise, getWorkoutExercisesFromWorkout } from '../selectors';
+import {
+    getWorkoutExercise,
+    getWorkoutExercisesFromWorkout,
+    getExercisesFromSupersetToAdd,
+    getExerciseToAdd
+} from '../selectors';
 import Picker, { PickerItem } from '../components/inputs/Picker';
 import { Superset } from '../redux/superset/types';
-
-type WorkoutIndexMapItem = {
-    exerciseId: number;
-    index: number;
-};
+import TextInput from '../components/inputs/TextInput';
+import useDebounce from '../hooks/useDebounce';
 
 type Props = {
-    indexes: {
-        workoutExercisesIndexMap: WorkoutIndexMapItem[];
-        workoutIndex: number;
-    };
     exercises: Exercise[];
     supersets: Superset[];
     workout: Workout;
     modifyWorkoutAction: typeof modifyWorkout;
     addWorkoutExercise: typeof addWorkoutExerciseAction;
     multiAddWorkoutExercise: typeof multiAddWorkoutExerciseAction;
-};
-
-const devSelectWorkout = () => {
-    return store.getState().workout.workouts[0];
 };
 
 const resolveWorkoutToWorkoutExercisesArray = (workout: Workout) => {
@@ -53,14 +47,15 @@ const resolveWorkoutToWorkoutExercisesArray = (workout: Workout) => {
 };
 
 const WorkoutScreen: FC<Props> = ({
-    indexes,
-    workout = devSelectWorkout(),
+    workout,
     modifyWorkoutAction,
     addWorkoutExercise,
     multiAddWorkoutExercise,
     exercises,
     supersets
 }: Props) => {
+    const [nameState, setNameState] = useState(workout.name);
+    const debounceName = useDebounce(nameState, 400);
     const [editorVisible, setEditorVisible] = useState(false);
     const [editorState, setEditorState] = useState<EditorState>({
         exerciseId: 0,
@@ -68,6 +63,16 @@ const WorkoutScreen: FC<Props> = ({
         setIndex: 0
     });
     const resolvedExercises = resolveWorkoutToWorkoutExercisesArray(workout);
+
+    useEffect(() => {
+        if (debounceName != null) {
+            modifyWorkoutAction({
+                ...workout,
+                name: debounceName
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [debounceName]);
 
     const setEditor = (state: EditorState) => {
         setEditorState(state);
@@ -89,36 +94,7 @@ const WorkoutScreen: FC<Props> = ({
     });
 
     const addExerciseToWorkout = (exerciseId: number) => {
-        const exercise = store.getState().exercise.exercises.find(item => item.id === exerciseId);
-        if (!exercise) {
-            return;
-        }
-
-        const exerciseWorkoutId = indexes.workoutExercisesIndexMap.find(
-            item => item.exerciseId === exerciseId
-        ).index;
-        const payloadExercise: WorkoutExercisePayload = {
-            exerciseId,
-            workout: {
-                id: exerciseWorkoutId,
-                setIndex: 0,
-                sets: [],
-                workoutId: workout.id
-            }
-        };
-
-        const payloadWorkout: Workout = {
-            ...workout,
-            exercises: [
-                ...workout.exercises,
-                {
-                    exerciseId,
-                    exerciseWorkoutId,
-                    order: workout.exercises.length + workout.supersets.length
-                }
-            ]
-        };
-
+        const { payloadExercise, payloadWorkout } = getExerciseToAdd(workout, exerciseId);
         batch(() => {
             addWorkoutExercise(payloadExercise);
             modifyWorkoutAction(payloadWorkout);
@@ -126,76 +102,18 @@ const WorkoutScreen: FC<Props> = ({
     };
 
     const addSupersetToWorkout = (supersetId: number) => {
-        const superset = store.getState().superset.supersets.find(item => item.id === supersetId);
-        if (!superset) {
-            return;
-        }
-
-        const exercisesArr = superset.exercises.map(item => {
-            return {
-                order: item.order,
-                exercise: store
-                    .getState()
-                    .exercise.exercises.find(exItem => exItem.id === item.exerciseId)
-            };
-        });
-
-        let exerciseWorkoutIdMap = indexes.workoutExercisesIndexMap;
-        const payloadsExercise = exercisesArr
-            .sort((i1, i2) => i1.order - i2.order)
-            .map(item => {
-                const { id } = item.exercise;
-
-                const exerciseWorkoutId = exerciseWorkoutIdMap.find(
-                    indItem => indItem.exerciseId === id
-                ).index;
-                const payloadExercise = {
-                    exerciseId: id,
-                    workout: {
-                        id: exerciseWorkoutId,
-                        setIndex: 0,
-                        sets: [],
-                        workoutId: workout.id
-                    }
-                };
-
-                exerciseWorkoutIdMap = exerciseWorkoutIdMap.map(indItem => {
-                    if (indItem.exerciseId === id) {
-                        return {
-                            ...indItem,
-                            index: indItem.index + 1
-                        };
-                    }
-                    return indItem;
-                });
-
-                return payloadExercise;
-            });
-
-        const payloadWorkout: Workout = {
-            ...workout,
-            supersets: [
-                ...workout.supersets,
-                {
-                    supersetId: superset.id,
-                    exercises: [
-                        ...payloadsExercise.map((item, index) => {
-                            return {
-                                order: index,
-                                exerciseId: item.exerciseId,
-                                exerciseWorkoutId: item.workout.id
-                            };
-                        })
-                    ],
-                    order: workout.exercises.length + workout.supersets.length
-                }
-            ]
-        };
-
+        const { payloadWorkout, payloadsExercise } = getExercisesFromSupersetToAdd(
+            workout,
+            supersetId
+        );
         batch(() => {
             multiAddWorkoutExercise(payloadsExercise);
             modifyWorkoutAction(payloadWorkout);
         });
+    };
+
+    const onChangeName = (text: string) => {
+        setNameState(text);
     };
 
     return (
@@ -206,10 +124,15 @@ const WorkoutScreen: FC<Props> = ({
                         <DateText>{DateFormatter(workout.date)}</DateText>
                     </DateButton>
                 </DateContainer>
-                <Header>Achievement</Header>
-                <Container>
-                    <Achievement>Bench Press - 120kgx8 - total in series 960kg</Achievement>
-                </Container>
+                {workout.planId == null && (
+                    <ContainerInputText>
+                        <TextInput
+                            label="Name"
+                            onChangeText={onChangeName}
+                            defaultValue={workout.name}
+                        />
+                    </ContainerInputText>
+                )}
                 <Header>Workout</Header>
                 <Container>
                     <ExercisesContainer>
@@ -305,10 +228,6 @@ const Container = styled.View`
     padding: 20px 15px;
 `;
 
-const Achievement = styled(DefaultText)`
-    color: ${Colors.WHITE70};
-`;
-
 const ExercisesContainer = styled.View`
     margin-bottom: 10px;
 `;
@@ -322,24 +241,18 @@ const OptionContainer = styled.View`
     margin-right: 15px;
 `;
 
+const ContainerInputText = styled.View`
+    padding-top: 30px;
+`;
+
 const mapStateToProps = (state: Store) => {
     const { exercise, workout, superset } = state;
-
-    const workoutExercisesIndexMap: WorkoutIndexMapItem[] = exercise.exercises.map(item => {
-        const { id, index } = item;
-        return {
-            exerciseId: id,
-            index
-        };
-    });
+    const activeWorkout = workout.workouts.find(item => item.active);
 
     return {
+        workout: activeWorkout,
         exercises: exercise.exercises,
-        supersets: superset.supersets,
-        indexes: {
-            workoutIndex: workout.index,
-            workoutExercisesIndexMap
-        }
+        supersets: superset.supersets
     };
 };
 

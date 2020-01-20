@@ -16,6 +16,7 @@ export type Workout = {
     name?: string;
     date: string;
     finished: boolean;
+    active: boolean;
     exercises: WorkoutExercise[];
     supersets: WorkoutSuperset[];
 };
@@ -28,6 +29,7 @@ export type WorkoutStore = {
 const PREFIX = 'workout';
 export const ADD_WORKOUT = `${PREFIX}/ADD_WORKOUT`;
 export const SET_WORKOUT_FINISHED = `${PREFIX}/SET_WORKOUT_FINISHED`;
+export const SET_WORKOUT_ACTIVE = `${PREFIX}/SET_WORKOUT_ACTIVE`;
 export const DELETE_WORKOUT = `${PREFIX}/DELETE_WORKOUT`;
 export const MODIFY_WORKOUT = `${PREFIX}/MODIFY_WORKOUT`;
 
@@ -38,6 +40,11 @@ export interface AddWorkoutAction {
 
 export interface SetWorkoutFinishedAction {
     type: typeof SET_WORKOUT_FINISHED;
+    workoutId: number;
+}
+
+export interface SetWorkoutActiveAction {
+    type: typeof SET_WORKOUT_ACTIVE;
     workoutId: number;
 }
 
@@ -55,4 +62,5 @@ export type WorkoutAction =
     | AddWorkoutAction
     | DeleteWorkoutAction
     | ModifyWorkoutAction
-    | SetWorkoutFinishedAction;
+    | SetWorkoutFinishedAction
+    | SetWorkoutActiveAction;

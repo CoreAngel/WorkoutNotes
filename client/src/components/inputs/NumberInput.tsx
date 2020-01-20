@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useState } from 'react';
 import styled from 'styled-components/native';
 import { AddSmallIcon, DeleteIcon } from '../icons';
 import Colors from '../../utils/Colors';
@@ -13,11 +13,6 @@ const NumberInput: FC<Props> = ({ fixedNumbersAfterDot, onChange, defaultValue }
     const [numberAsString, setNumberAsString] = useState(
         defaultValue.toFixed(fixedNumbersAfterDot)
     );
-
-    useEffect(() => {
-        setNumberAsString(defaultValue.toFixed(fixedNumbersAfterDot));
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [defaultValue]);
 
     const onChangeText = (text: string) => {
         const regex: RegExp = /[^(0-9).,]/gm;

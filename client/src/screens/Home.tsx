@@ -5,11 +5,16 @@ import styled from 'styled-components/native';
 import Tile from '../components/Tile';
 import HomeHeader from '../components/navigation/HomeHeader';
 import { RoundedButtonType } from '../components/buttons/RoundedButton';
+import {
+    navigateToRunPlan,
+    navigateToAddExercise,
+    navigateToCreatePlan,
+    navigateToCreateSuperset
+} from '../navigation/navigationActions';
 
-type NavigationOptions = {
+type HomeScreen<Props> = FC<Props> & {
     navigationOptions: object;
 };
-type HomeScreen<Props> = FC<Props> & NavigationOptions;
 
 type Props = {
     navigation: NavigationSwitchProp<{ screen: string }>;
@@ -20,25 +25,29 @@ const data = [
         id: 1,
         title: 'Run plan',
         desc: 'Run the established plan.',
-        button: RoundedButtonType.PLAY
+        button: RoundedButtonType.PLAY,
+        onClick: navigateToRunPlan
     },
     {
         id: 2,
         title: 'Add exercise',
         desc: 'Add exercises to create a plan and supersets.',
-        button: RoundedButtonType.ADD
+        button: RoundedButtonType.ADD,
+        onClick: navigateToAddExercise
     },
     {
         id: 3,
         title: 'Create superset',
         desc: 'Create superset from exercises.',
-        button: RoundedButtonType.ADD
+        button: RoundedButtonType.ADD,
+        onClick: navigateToCreateSuperset
     },
     {
         id: 4,
         title: 'Create plan',
         desc: 'Create plan from exercises and supersets.',
-        button: RoundedButtonType.ADD
+        button: RoundedButtonType.ADD,
+        onClick: navigateToCreatePlan
     }
 ];
 
@@ -53,14 +62,10 @@ const Home: HomeScreen<Props> = () => {
             contentContainerStyle={containerStyle}
             data={data}
             renderItem={({ item }) => {
+                const { id, onClick, desc, title, button } = item;
                 return (
-                    <TileContainer key={item.id}>
-                        <Tile
-                            title={item.title}
-                            desc={item.desc}
-                            buttonType={item.button}
-                            onClick={() => {}}
-                        />
+                    <TileContainer key={id}>
+                        <Tile title={title} desc={desc} buttonType={button} onClick={onClick} />
                     </TileContainer>
                 );
             }}

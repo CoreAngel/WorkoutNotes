@@ -13,17 +13,26 @@ const AnimationDuration = 200;
 
 type Props = {
     label: string;
+    defaultValue?: string;
     onChangeText: (text: string) => void;
     onEndEditing?: (e: NativeSyntheticEvent<TextInputEndEditingEventData>) => void;
     error?: string;
 };
 
-const TextInput: FC<Props> = ({ label, onChangeText, onEndEditing, error = '' }: Props) => {
+const TextInput: FC<Props> = ({
+    label,
+    defaultValue,
+    onChangeText,
+    onEndEditing,
+    error = ''
+}: Props) => {
     const [inputState, setInputState] = useState({
-        text: '',
+        text: defaultValue != null ? defaultValue : '',
         active: false
     });
-    const [labelAnimation] = useState(new Animated.Value(InputState.INACTIVE));
+    const [labelAnimation] = useState(
+        new Animated.Value(defaultValue != null ? InputState.ACTIVE : InputState.INACTIVE)
+    );
 
     useEffect(() => {
         if (inputState.active && inputState.text === '') {

@@ -5,6 +5,7 @@ import { DrawerContentComponentProps } from 'react-navigation-drawer';
 import Colors from '../../../utils/Colors';
 import { CloseIcon } from '../../icons';
 import DrawerOption from './DrawerOption';
+import { drawer } from '../../../navigation/navigationService';
 
 const data = [
     {
@@ -36,7 +37,7 @@ const Drawer: FC<DrawerContentComponentProps> = () => {
     return (
         <Container>
             <CloseIconContainer>
-                <TouchableOpacity onPress={null}>
+                <TouchableOpacity onPress={drawer.close}>
                     <CloseIcon height="25px" />
                 </TouchableOpacity>
             </CloseIconContainer>

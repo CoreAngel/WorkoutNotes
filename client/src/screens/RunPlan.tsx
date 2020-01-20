@@ -1,52 +1,129 @@
 import React, { FC, ReactElement } from 'react';
 import { SectionList, SectionListData, SectionListRenderItem } from 'react-native';
 import styled from 'styled-components/native';
-import { connect } from 'react-redux';
+import { batch, connect } from 'react-redux';
 import { DefaultText } from '../components/DefaultText';
 import Colors from '../utils/Colors';
 import { Store } from '../redux/store';
 import { Plan } from '../redux/plan/types';
 import { RoundedButtonType } from '../components/buttons/RoundedButton';
 import Tile from '../components/Tile';
+import { Workout } from '../redux/workout/types';
+import { navigateToWorkout } from '../navigation/navigationActions';
+import { addWorkout, setWorkoutActive, modifyWorkout } from '../redux/workout/workoutActions';
+import {
+    addWorkoutExerciseAction,
+    multiAddWorkoutExerciseAction
+} from '../redux/exercise/exerciseActions';
+import { getExercisesAndWorkoutFromPlan } from '../selectors';
+
+type RenderItem = {
+    id: number;
+    name: string;
+    desc: string;
+};
 
 type SectionListItems = {
     title: string;
     onClick: (id: number) => void;
     icon: RoundedButtonType;
-    data: Plan[];
+    data: RenderItem[];
 };
 
 type Props = {
     plans: Plan[];
+    workouts: Workout[];
+    addWorkoutAction: typeof addWorkout;
+    setWorkoutActiveAction: typeof setWorkoutActive;
+    addWorkoutExercise: typeof addWorkoutExerciseAction;
+    multiAddWorkoutExercise: typeof multiAddWorkoutExerciseAction;
+    modifyWorkoutAction: typeof modifyWorkout;
 };
 
-const RunPlan: FC<Props> = ({ plans }: Props) => {
+const RunPlan: FC<Props> = ({
+    plans,
+    workouts,
+    addWorkoutAction,
+    setWorkoutActiveAction,
+    multiAddWorkoutExercise
+}: Props) => {
     const dataPlans = plans.sort((p1, p2) => p1.id - p2.id);
-    const dataActive = dataPlans[0];
+
+    const runWorkout = (workoutId: number) => {
+        const workout = workouts.find(item => item.id === workoutId);
+        setWorkoutActiveAction(workoutId);
+        navigateToWorkout(workout);
+    };
+
+    const addWorkoutFromPlan = (planId: number): void => {
+        if (planId < 0) {
+            addWorkoutAction({
+                name: 'Empty workout',
+                finished: false,
+                active: false,
+                supersets: [],
+                exercises: [],
+                date: new Date().toUTCString()
+            });
+            return;
+        }
+
+        const { workout, exercises } = getExercisesAndWorkoutFromPlan(planId);
+
+        batch(() => {
+            multiAddWorkoutExercise(exercises);
+            addWorkoutAction(workout);
+        });
+    };
 
     const items: SectionListItems[] = [];
-    if (dataActive) {
+    if (workouts.length > 0) {
+        const data = workouts.map(item => {
+            const { id, name, planId } = item;
+            const plan = planId != null && plans.find(planItem => planItem.id === planId);
+
+            const itemName = planId != null ? plan.name : name;
+            const itemDesc = planId != null ? plan.desc : '';
+            return {
+                id,
+                name: itemName,
+                desc: itemDesc
+            };
+        });
         items.push({
             title: 'Active',
-            onClick: () => {},
+            onClick: runWorkout,
             icon: RoundedButtonType.ARROW,
-            data: [dataActive]
-        });
-    }
-    if (dataPlans.length) {
-        items.push({
-            title: 'Plans',
-            onClick: () => {},
-            icon: RoundedButtonType.PLAY,
-            data: dataPlans
+            data
         });
     }
 
-    type RenderItemParams = {
-        item: Plan;
-        section: SectionListData<Plan>;
+    const runEmptyPlanItem = {
+        id: -1,
+        name: 'Add empty workout',
+        desc: 'Add an empty workout and add the exercises you want.'
     };
-    const renderItem: SectionListRenderItem<Plan> = ({ item, section }: RenderItemParams) => {
+
+    const planItems = dataPlans.map(item => {
+        const { id, name, desc } = item;
+        return {
+            id,
+            name,
+            desc
+        };
+    });
+    items.push({
+        title: 'Plans',
+        onClick: addWorkoutFromPlan,
+        icon: RoundedButtonType.ADD,
+        data: [runEmptyPlanItem, ...planItems]
+    });
+
+    type RenderItemParams = {
+        item: RenderItem;
+        section: SectionListData<RenderItem>;
+    };
+    const renderItem: SectionListRenderItem<RenderItem> = ({ item, section }: RenderItemParams) => {
         const sectionList = section as SectionListItems;
         const { id, name, desc } = item;
         return (
@@ -54,6 +131,7 @@ const RunPlan: FC<Props> = ({ plans }: Props) => {
                 <Tile
                     title={name}
                     desc={desc}
+                    tileType="medium"
                     buttonType={sectionList.icon}
                     onClick={() => sectionList.onClick(id)}
                 />
@@ -61,8 +139,10 @@ const RunPlan: FC<Props> = ({ plans }: Props) => {
         );
     };
 
-    type SectionParams = { section: SectionListData<Plan> };
-    type RenderSectionType = (info: { section: SectionListData<Plan> }) => ReactElement | null;
+    type SectionParams = { section: SectionListData<RenderItem> };
+    type RenderSectionType = (info: {
+        section: SectionListData<RenderItem>;
+    }) => ReactElement | null;
     const renderSection: RenderSectionType = ({ section }: SectionParams) => {
         const sectionPicker = section as SectionListItems;
         return <Header>{sectionPicker.title}</Header>;
@@ -96,11 +176,25 @@ const TileContainer = styled.View`
 `;
 
 const mapStateToProps = (store: Store) => {
-    const { plan } = store;
+    const { plan, workout } = store;
+
+    const activeWorkouts = workout.workouts.filter(item => !item.finished);
 
     return {
+        workouts: activeWorkouts,
         plans: plan.plans
     };
 };
 
-export default connect(mapStateToProps)(RunPlan);
+const mapDispatchToProps = {
+    addWorkoutAction: addWorkout,
+    setWorkoutActiveAction: setWorkoutActive,
+    addWorkoutExercise: addWorkoutExerciseAction,
+    multiAddWorkoutExercise: multiAddWorkoutExerciseAction,
+    modifyWorkoutAction: modifyWorkout
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(RunPlan);
