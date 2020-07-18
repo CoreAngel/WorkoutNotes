@@ -13,7 +13,7 @@
         "expo": "^35.0.0",
         "expo-constants": "~7.0.0",
         "expo-font": "~7.0.0",
-        "lodash": "^4.17.15",
+        "lodash": "^4.17.19",
         "metro-config": "latest",
         "react": "16.8.3",
         "react-dom": "16.8.3",
